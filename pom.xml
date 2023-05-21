@@ -12,7 +12,7 @@
 	<artifactId>rest_contact_means-sb</artifactId>
 	<version>0.0.1-SNAPSHOT</version>
 	<name>Micro Contact_Means</name>
-	<description>Microservice in charge of managing the means of contacts for another micro orchestrator (Srping Boot 3 + Java 11) </description>
+	<description>Microservice in charge of managing the means of contacts for another micro orchestrator (Spring Boot 3 + Java 11) </description>
 	<properties>
 		<java.version>17</java.version>
 	</properties>
