@@ -1,4 +1,5 @@
-# Micro Contact_Means ([sdjr2-rest_contact_means-sb](https://github.com/JacintoRR396/sdjr2-rest_contact_means-sb))
+# Micro Contact_Means ([sdjr2--rest_contact_means--sb](https://github.com/JacintoRR396/sdjr2--rest_contact_means--sb))
+
 ![Badge category](https://img.shields.io/badge/Category-Micro-violet)
 ![Badge status](https://img.shields.io/badge/STATUS-EN%20DESAROLLO-9cf)
 ![Badge issues complete](https://img.shields.io/badge/ISSUES_DONE-4-green)
@@ -17,15 +18,18 @@
 ![Uml about contact means](readme_cover.png)
 
 ## 📖 Description of your project
+
 Microservice in charge of managing the means of contacts for another micro orchestrator some are :
 **contact**, **address**, **social media**, etc.
 
 ## 🛠️ Project functionalities
+
 - `Manage everything related to an address`: Some important information is the street, number, postal code, tc..
 - `Manage everything related to means of contact`: some means of contact are mobile phone, home phone and email.
 - `Manage everything related to socials media`: some social networks are facebook, twitter, instagram and youtube.
 
 ## 🔧 How users can use it
+
 ### 📁 Project access
 
 - Access the [github repository](https://github.com/JacintoRR396/sdjr2-rest_contact_means-sb) and you can **download** or **clone** it.
@@ -37,6 +41,7 @@ Microservice in charge of managing the means of contacts for another micro orche
 - Run the project in your desired port
 
 ## 💻 Used technology
+
 * Java 17
 * JUnit
 * Mockito
@@ -45,7 +50,5 @@ Microservice in charge of managing the means of contacts for another micro orche
 * Openapi
 
 ## 👥 Project authors
+
 [<img src="https://media.licdn.com/dms/image/C4E03AQHMBPf1Yboccg/profile-displayphoto-shrink_400_400/0/1618752909917?e=1690416000&v=beta&t=ExkLgyyO4_Bn5JSEE_RqBbqkbettGKYdiIaECLTkWps" width=115><br><sub>Jacinto Roldán Rodríguez</sub>](https://github.com/JacintoRR396)
-
-
-
