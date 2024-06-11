@@ -2,6 +2,10 @@ package com.sdjr2.rest_contact_meanssb.utils;
 
 public class UConstants {
 
+    private UConstants() {
+        throw new IllegalStateException("Utility class");
+    }
+
     // --- REG_EXP ---
     public static final String NAME_GENERIC_REGEX = "^[A-Z]{1}[a-zñA-Záéíóú\\s/]";
     public static final String INDEX_REGEX = "^(\\d{1,8})";
@@ -23,9 +27,4 @@ public class UConstants {
     public static final String S_FORMAT_DATE_BACK = "yyyy-MM-dd";
     public static final String S_FORMAT_TIME_BACK = "HH:mm:ss";
     public static final String S_FORMAT_DATETIME_BACK = "yyyy-MM-dd HH:mm:ss";
-
-    private UConstants() {
-        throw new IllegalStateException("Utility class");
-    }
-
 }

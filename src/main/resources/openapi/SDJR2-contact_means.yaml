@@ -1,0 +1,345 @@
+openapi: 3.0.2
+
+info:
+  title: 'SDJR2-Contact_Means'
+  description: 'Below is a list of available REST API calls for Contact Means'
+  contact:
+    name: 'Jacinto Roldán Rodríguez'
+    email: 'balbino.v12@gmail.com'
+    url: 'https://www.linkedin.com/in/jacintor2/'
+  version: '1.0.1'
+
+servers:
+  - url: 'https://{host}/contact_means'
+    variables:
+      host:
+        description: 'The environment where API is hosted'
+        enum:
+          # DEV
+          - core.dev.api.sdjr2.corp
+          # PRE
+          - core.pre.api.sdjr2.corp
+          # PRO
+          - core.api.sdjr2.corp
+        default: core.dev.api.sdjr2.corp
+
+paths:
+  /addresses:
+    get:
+      tags:
+        - SDJR2 Address
+      summary: 'Get all address with pagination, sorting and filters'
+      operationId: 'addressAllGET'
+      description: |-
+        Obtain <strong>all addresses</strong> ordered by postal code and a default pagination with limit of 10 elements and no offset. The allowed <em>filters</em> are: 
+        - postal_code.
+        - town.
+        - city.
+      parameters:
+        - $ref: '#/components/parameters/header-x-client-id'
+        - $ref: '#/components/parameters/query-limit'
+        - $ref: '#/components/parameters/query-offset'
+        - $ref: '#/components/parameters/query-postal-code'
+        - $ref: '#/components/parameters/query-town'
+        - $ref: '#/components/parameters/query-city'
+      responses:
+        '200':
+          $ref: '#/components/responses/AddressesResponse'
+      security:
+        - JWTProfile:
+            - sdjr2addresses.obtain
+      deprecated: false
+
+components:
+  schemas:
+    TypeUuid:
+      type: string
+      minLength: 36
+      maxLength: 36
+      pattern: '^[a-fA-F0-9]{8}-[a-fA-F0-9]{4}-[a-fA-F0-9]{4}-[a-fA-F0-9]{4}-[a-fA-F0-9]{12}$'
+      description: 'UUID identification type'
+      example: '2507b89c-b680-46df-9505-e0b6f78cf295'
+    TotalElements:
+      type: integer
+      format: int32
+      minimum: 0
+      maximum: 10000000
+      description: 'Total elements by search'
+      example: 10
+    TotalPages:
+      type: integer
+      format: int32
+      minimum: 0
+      maximum: 10000
+      description: 'Total pages by search'
+      example: 1
+    LocalDate:
+      type: string
+      format: date
+      description: 'Generic local date'
+      example: '2021-10-05'
+    AdditionalInfo:
+      type: string
+      minLength: 3
+      description: 'Additional info about a certain entity'
+      example: 'Perteneciente al desarrollador de la app'
+    Street:
+      type: string
+      minLength: 3
+      maxLength: 80
+      description: 'Street of a certain town'
+      example: 'Corredera'
+    StreetNumber:
+      type: string
+      minLength: 1
+      maxLength: 10
+      description: 'Number of a certain street'
+      example: '155A'
+    Town:
+      type: string
+      minLength: 3
+      maxLength: 60
+      description: 'Town of a certain province'
+      example: 'El Viso del Alcor'
+    City:
+      type: string
+      minLength: 3
+      maxLength: 40
+      description: 'Province of a certain country'
+      example: 'Sevilla'
+    Country:
+      type: string
+      minLength: 3
+      maxLength: 40
+      description: 'Country of a certain continet'
+      example: 'España'
+    PostalCode:
+      type: string
+      minLength: 5
+      maxLength: 5
+      pattern: '^(?:0[1-9]\d{3}|[1-4]\d{4}|5[0-2]\d{3})$'
+      description: 'Postal code of a town'
+      example: '41520'
+    AddressesResponse:
+      type: object
+      properties:
+        elements:
+          type: array
+          maxItems: 100
+          description: 'addresses response list object'
+          items:
+            $ref: '#/components/schemas/AddressResponse'
+        totalElements:
+          $ref: '#/components/schemas/TotalElements'
+        totalPages:
+          $ref: '#/components/schemas/TotalPages'
+      additionalProperties: false
+      title: 'AddressesResponse'
+      description: 'Addresses response object'
+    AddressResponse:
+      type: object
+      properties:
+        address_id:
+          $ref: '#/components/schemas/TypeUuid'
+        street:
+          $ref: '#/components/schemas/Street'
+        number:
+          $ref: '#/components/schemas/StreetNumber'
+        town:
+          $ref: '#/components/schemas/Town'
+        city:
+          $ref: '#/components/schemas/City'
+        country:
+          $ref: '#/components/schemas/Country'
+        postal_code:
+          $ref: '#/components/schemas/PostalCode'
+        additional_info:
+          $ref: '#/components/schemas/AdditionalInfo'
+      additionalProperties: false
+      title: 'AddressResponse'
+      description: 'Address response object'
+    AddressRequest:
+      type: object
+      required:
+        - street
+        - number
+        - postal_code
+      properties:
+        street:
+          $ref: '#/components/schemas/Street'
+        number:
+          $ref: '#/components/schemas/StreetNumber'
+        town:
+          $ref: '#/components/schemas/Town'
+        city:
+          $ref: '#/components/schemas/City'
+        country:
+          $ref: '#/components/schemas/Country'
+        postal_code:
+          $ref: '#/components/schemas/PostalCode'
+        additional_info:
+          $ref: '#/components/schemas/AdditionalInfo'
+      additionalProperties: false
+      title: 'AddressRequest'
+      description: 'Address request body object'
+    201CreatedResponse:
+      type: object
+      properties:
+        message:
+          type: string
+          minLength: 0
+          maxLength: 500
+          pattern: '^[a-zA-Z0-9 ]*$'
+          description: 'Request received and created by the server'
+          example: 'Request received and created'
+      additionalProperties: false
+      title: 'Request created'
+      description: 'Request received and created by the server'
+
+  parameters:
+    header-x-client-id:
+      name: x_client_id
+      in: header
+      required: true
+      description: Client ID header.
+      schema:
+        $ref: '#/components/schemas/TypeUuid'
+    path-address-id:
+      name: address_id
+      in: path
+      required: true
+      description: Global unique id for the requested address (address_id).
+      schema:
+        $ref: '#/components/schemas/TypeUuid'
+    query-limit:
+      name: limit
+      in: query
+      required: false
+      description: Number of rows to be included in the response. The default value is 10.
+      schema:
+        type: integer
+        format: int32
+        minimum: 0
+        maximum: 1000
+        default: 10
+        example: 10
+    query-offset:
+      name: offset
+      in: query
+      required: false
+      description: Last row retrieved in a previous response, in case of more rows than requested existed, and needed a new request for the next rows from that on (included).
+      schema:
+        type: integer
+        format: int32
+        minimum: 0
+        maximum: 10000
+        default: 0
+        example: 1
+    query-postal-code:
+      name: postal_code
+      in: query
+      required: false
+      description: postal code about some address.
+      schema:
+        $ref: '#/components/schemas/PostalCode'
+    query-town:
+      name: town
+      in: query
+      required: false
+      description: town about some address.
+      schema:
+        $ref: '#/components/schemas/Town'
+    query-city:
+      name: city
+      in: query
+      required: false
+      description: city about some address.
+      schema:
+        $ref: '#/components/schemas/City'
+
+  examples:
+    AddressesResponseExample:
+      value:
+        elements:
+          - address_id: '2507b89c-b680-46df-9505-e0b6f78cf295'
+            street: 'Corredera'
+            number: '155A'
+            town: 'El Viso del Alcor'
+            city: 'Sevilla'
+            country: 'España'
+            postal_code: '41520'
+            additional_info: 'Perteneciente al desarrollador de la app'
+        totalElements: 1
+        totalPages: 1
+    AddressResponseExample:
+      value:
+        address_id: '2507b89c-b680-46df-9505-e0b6f78cf295'
+        street: 'Corredera'
+        number: '155A'
+        town: 'El Viso del Alcor'
+        city: 'Sevilla'
+        country: 'España'
+        postal_code: '41520'
+        additional_info: 'Perteneciente al desarrollador de la app'
+    AddressRequestExample:
+      value:
+        street: 'Corredera'
+        number: '155A'
+        town: 'El Viso del Alcor'
+        city: 'Sevilla'
+        country: 'España'
+        postal_code: '41520'
+        additional_info: 'Perteneciente al desarrollador de la app'
+    201CreatedResponseExample:
+      value:
+        message: '201 Created'
+
+  requestBodies:
+    AddressesRequest:
+      required: true
+      description: 'Request body about a post or put operation'
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/AddressRequest'
+          examples:
+            BundleRequestExample:
+              $ref: '#/components/examples/AddressRequestExample'
+
+  responses:
+    AddressesResponse:
+      description: 'Response about a get all operation successfully completed'
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/AddressesResponse'
+          examples:
+            ResponseExample:
+              $ref: '#/components/examples/AddressesResponseExample'
+    201CreatedResponse:
+      description: 'Request body created'
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/201CreatedResponse'
+          examples:
+            201Example:
+              $ref: '#/components/examples/201CreatedResponseExample'
+
+  securitySchemes:
+    JWTProfile:
+      type: oauth2
+      description: 'OAuth Grant type, JWT Profile'
+      flows:
+        implicit:
+          authorizationUrl: 'http://$(authorization-url)'
+          scopes:
+            sdjr2addresses.obtain: get all addresses
+
+tags:
+  - name: SDJR2 Address
+  - name: SDJR2 Contact
+  - name: SDJR2 Social Media
+
+security:
+  - JWTProfile: [ ]
