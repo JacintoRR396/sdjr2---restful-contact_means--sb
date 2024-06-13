@@ -6,13 +6,13 @@
 	<parent>
 		<groupId>org.springframework.boot</groupId>
 		<artifactId>spring-boot-starter-parent</artifactId>
-		<version>3.1.0</version>
+		<version>3.3.0</version>
 		<relativePath/> <!-- lookup parent from repository -->
 	</parent>
 
 	<groupId>com.sdjr2</groupId>
 	<artifactId>rest--contact_means--sb</artifactId>
-	<version>0.0.2-SNAPSHOT</version>
+	<version>0.0.3-SNAPSHOT</version>
 	<name>Micro Contact_Means</name>
 	<description>Microservice in charge of managing the means of contacts for another micro orchestrator (Spring Boot 3 + Java 17)</description>
 
@@ -25,18 +25,17 @@
 		<project.reporting.outputEncoding>UTF-8</project.reporting.outputEncoding>
 
 		<!-- Dependencies -->
-		<spring-boot.version>3.1.0</spring-boot.version>
-		<org.projectlombok.version>1.18.28</org.projectlombok.version>
-		<org.mapstruct.version>1.5.4.Final</org.mapstruct.version>
-		<junit-jupiter.version>5.9.3</junit-jupiter.version>
-		<mockito.version>5.3.1</mockito.version>
+		<spring-boot.version>3.3.0</spring-boot.version>
+		<org.projectlombok.version>1.18.32</org.projectlombok.version>
+		<org.mapstruct.version>1.5.5.Final</org.mapstruct.version>
+		<junit-jupiter.version>5.10.2</junit-jupiter.version>
+		<mockito.version>5.12.0</mockito.version>
 		<org.apache.httpcomponents.httpclient.version>4.5.14</org.apache.httpcomponents.httpclient.version>
 		<com.fasterxml.jackson.core.version>2.15.2</com.fasterxml.jackson.core.version>
-		<com.google.code.gson.version>2.10.1</com.google.code.gson.version>
-		<org.yam.version>2.0</org.yam.version>
+		<org.yaml.version>2.0</org.yaml.version>
 
 		<!-- Plugins -->
-		<jacoco-plugin.version>0.8.10</jacoco-plugin.version>
+		<jacoco-plugin.version>0.8.12</jacoco-plugin.version>
 		<sonar.core.codeCoveragePlugin>jacoco</sonar.core.codeCoveragePlugin>
 		<sonar.jacoco.reportPath>${project.basedir}/../target/jacoco.exec</sonar.jacoco.reportPath>
 		<sonar.language>java</sonar.language>
@@ -48,7 +47,7 @@
 			<groupId>org.springframework.boot</groupId>
 			<artifactId>spring-boot-starter-web</artifactId>
 		</dependency>
-		<!-- Spring Boot : Spring JPA(DAO)+(ORM) -->
+		<!-- Spring Boot : Spring JPA(DAO)+(ORM) with Hibernate Validator -->
 		<dependency>
 			<groupId>org.springframework.boot</groupId>
 			<artifactId>spring-boot-starter-data-jpa</artifactId>
@@ -163,7 +162,7 @@
 			<artifactId>httpclient</artifactId>
 			<version>${org.apache.httpcomponents.httpclient.version}</version>
 		</dependency>
-		<!-- Extra : Jackson & Gson-->
+		<!-- Extra : Jackson -->
 		<dependency>
 			<groupId>com.fasterxml.jackson.core</groupId>
 			<artifactId>jackson-core</artifactId>
@@ -188,16 +187,11 @@
 			<artifactId>jackson-datatype-threetenbp</artifactId>
 			<version>2.6.4</version>
 		</dependency>
-		<dependency>
-			<groupId>com.google.code.gson</groupId>
-			<artifactId>gson</artifactId>
-			<version>${com.google.code.gson.version}</version>
-		</dependency>
-		<!-- Extra : YML -->
+		<!-- Extra : YAML -->
 		<dependency>
 			<groupId>org.yaml</groupId>
 			<artifactId>snakeyaml</artifactId>
-			<version>${org.yam.version}</version>
+			<version>${org.yaml.version}</version>
 		</dependency>
 	</dependencies>
 
