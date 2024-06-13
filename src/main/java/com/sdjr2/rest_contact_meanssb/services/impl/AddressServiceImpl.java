@@ -23,7 +23,7 @@ import java.util.List;
  * @author Jacinto R^2
  * @version 1.0
  * @category Service
- * @upgrade 24/06/11
+ * @upgrade 24/06/13
  * @since 23/06/10
  */
 @Service
@@ -31,7 +31,7 @@ import java.util.List;
 public class AddressServiceImpl implements IAddressService {
 
 	/**
-	 * Address dto request mapper object
+	 * Address mapper object
 	 */
 	private final AddressMapper addressMapper;
 

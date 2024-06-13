@@ -10,8 +10,7 @@ import org.mapstruct.MappingTarget;
 /**
  * {@link AddressMapper} class.
  * <p>
- * <strong>Service</strong> - Represents a converter about Address DTO Request {@link AddressDTO} to Entity
- * {@link AddressEntity}.
+ * <strong>Service</strong> - Represents a converter about Address DTO to Address Entity.
  * <p>
  * It uses the classes : 01. Level Access -> the dto {@link AddressDTO} 02. Level Data -> the entity
  * {@link AddressEntity}.
@@ -19,7 +18,7 @@ import org.mapstruct.MappingTarget;
  * @author Jacinto R^2
  * @version 1.0
  * @category Mapper
- * @upgrade 24/06/11
+ * @upgrade 24/06/13
  * @since 23/06/11
  */
 @Mapper(componentModel = "spring")
@@ -39,8 +38,8 @@ public abstract class AddressMapper {
 	@Mapping(source = "dto.city", target = "city")
 	@Mapping(source = "dto.country", target = "country")
 	@Mapping(source = "dto.postalCode", target = "postalCode")
-	@Mapping(source = "dto.latitude", target = "latitude")
 	@Mapping(source = "dto.longitude", target = "longitude")
+	@Mapping(source = "dto.latitude", target = "latitude")
 	@Mapping(source = "dto.additionalInfo", target = "additionalInfo")
 	public abstract AddressEntity toEntity ( AddressDTO dto, boolean isCreated );
 

@@ -49,9 +49,9 @@ public class MAddressServiceImpl implements IAddressService {
 	}
 
 	private void initData () {
-		this.addressRepo.add( new AddressEntity( 1, "Corredera", 155, "A", TOWN, CITY, COUNTRY, 41520, -5.7199300, 37.391060, "Vivo actualmente en el Piso" ) );
-		this.addressRepo.add( new AddressEntity( 2, "Velázquez", 17, null, TOWN, CITY, COUNTRY, 41520, -5.7199300, 37.391060, "Bajo" ) );
-		this.addressRepo.add( new AddressEntity( 3, "Avda Republica Nicaragua", 1, null, TOWN, CITY, COUNTRY, 41520, 37.391060, -5.7199300, "Piso" ) );
+		this.addressRepo.add( new AddressEntity( 1, "Corredera", "155", "A", TOWN, CITY, COUNTRY, "41520", -5.7199300, 37.391060, "Vivo actualmente en el Piso" ) );
+		this.addressRepo.add( new AddressEntity( 2, "Velázquez", "17", null, TOWN, CITY, COUNTRY, "41520", -5.7199300, 37.391060, "Bajo" ) );
+		this.addressRepo.add( new AddressEntity( 3, "Avda Republica Nicaragua", "1", null, TOWN, CITY, COUNTRY, "41520", 37.391060, -5.7199300, "Piso" ) );
 	}
 
 	@Override
