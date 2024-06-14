@@ -10,7 +10,7 @@ import org.mapstruct.MappingTarget;
 /**
  * {@link AddressMapper} class.
  * <p>
- * <strong>Service</strong> - Represents a converter about Address DTO to Address Entity.
+ * <strong>Mapper</strong> - Represents a converter about Address DTO and Address Entity.
  * <p>
  * It uses the classes : 01. Level Access -> the dto {@link AddressDTO} 02. Level Data -> the entity
  * {@link AddressEntity}.
@@ -18,7 +18,7 @@ import org.mapstruct.MappingTarget;
  * @author Jacinto R^2
  * @version 1.0
  * @category Mapper
- * @upgrade 24/06/13
+ * @upgrade 24/06/14
  * @since 23/06/11
  */
 @Mapper(componentModel = "spring")
