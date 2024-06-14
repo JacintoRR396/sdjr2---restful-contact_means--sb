@@ -1,0 +1,54 @@
+[
+  {
+    "id": 2,
+    "street": "Corredera",
+    "number": "155",
+    "letter": "A",
+    "town": "El Viso del Alcor",
+    "city": "Sevilla",
+    "country": "España",
+    "postalCode": "41520",
+    "longitude": -5.71993,
+    "latitude": 37.39106,
+    "additionalInfo": "Vivo actualmente en el Piso"
+  },
+  {
+    "id": 3,
+    "street": "Velázquez",
+    "number": "17",
+    "letter": null,
+    "town": "El Viso del Alcor",
+    "city": "Sevilla",
+    "country": "España",
+    "postalCode": "41520",
+    "longitude": -5.71993,
+    "latitude": 37.39106,
+    "additionalInfo": "Bajo"
+  },
+  {
+    "id": 4,
+    "street": "Avda Republica Nicaragua",
+    "number": "1",
+    "letter": null,
+    "town": "El Viso del Alcor",
+    "city": "Sevilla",
+    "country": "España",
+    "postalCode": "41520",
+    "longitude": -5.71993,
+    "latitude": 37.39106,
+    "additionalInfo": "Piso"
+  },
+  {
+    "id": 1,
+    "street": "Avda Piedra el Gallo",
+    "number": "22",
+    "letter": null,
+    "town": "El Viso del Alcor",
+    "city": "Sevilla",
+    "country": "España",
+    "postalCode": "41520",
+    "longitude": -5.71993,
+    "latitude": 37.39106,
+    "additionalInfo": "Pabellón de deportes Santa Lucía, Planta 1"
+  }
+]

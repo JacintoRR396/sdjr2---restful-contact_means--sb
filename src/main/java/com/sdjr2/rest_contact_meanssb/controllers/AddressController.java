@@ -2,7 +2,7 @@ package com.sdjr2.rest_contact_meanssb.controllers;
 
 import com.sdjr2.rest_contact_meanssb.models.dto.AddressDTO;
 import com.sdjr2.rest_contact_meanssb.repositories.entities.AddressEntity;
-import com.sdjr2.rest_contact_meanssb.services.IAddressService;
+import com.sdjr2.rest_contact_meanssb.services.AddressService;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.validation.Valid;
 import jakarta.validation.Validator;
@@ -21,12 +21,12 @@ import java.util.Set;
  * <strong>Controller</strong> - Represents a handler of request about Addresses.
  * <p>
  * It uses the classes : 01. Level Access -> the dto {@link AddressDTO} 02. Level Logic -> the service
- * {@link IAddressService} 03. Level Data -> the entity {@link AddressEntity}.
+ * {@link AddressService} 03. Level Data -> the entity {@link AddressEntity}.
  *
  * @author Jacinto R^2
  * @version 1.0
  * @category Controller
- * @upgrade 24/06/11
+ * @upgrade 24/06/13
  * @see Validator Validator validates all constraints.
  * @see HttpServletRequest HttpServletRequest provides request information for HTTP servlets.
  * @since 23/06/10
@@ -49,7 +49,7 @@ public class AddressController {
   /**
    * Address service object
    */
-  private final IAddressService addressService;
+  private final AddressService addressService;
 
   /*********** GET ALL ***********/
   @GetMapping

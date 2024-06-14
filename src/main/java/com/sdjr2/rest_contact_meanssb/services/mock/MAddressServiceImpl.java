@@ -3,7 +3,7 @@ package com.sdjr2.rest_contact_meanssb.services.mock;
 import com.sdjr2.rest_contact_meanssb.mappers.AddressMapper;
 import com.sdjr2.rest_contact_meanssb.models.dto.AddressDTO;
 import com.sdjr2.rest_contact_meanssb.repositories.entities.AddressEntity;
-import com.sdjr2.rest_contact_meanssb.services.IAddressService;
+import com.sdjr2.rest_contact_meanssb.services.AddressService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.http.HttpStatus;
@@ -16,7 +16,7 @@ import java.util.Objects;
 /**
  * {@link MAddressServiceImpl} class.
  * <p>
- * <strong>Service</strong> - Represents a service mock that implements to {@link IAddressService}.
+ * <strong>Service</strong> - Represents a service mock that implements to {@link AddressService}.
  *
  * @author Jacinto R^2
  * @version 1.0
@@ -25,7 +25,7 @@ import java.util.Objects;
  * @since 23/06/10
  */
 //@Service
-public class MAddressServiceImpl implements IAddressService {
+public class MAddressServiceImpl implements AddressService {
 
 	private static final String TOWN = "El Viso del Alcor";
 	private static final String CITY = "Sevilla";
