@@ -4,7 +4,10 @@ import com.sdjr2.rest_contact_meanssb.exceptions.AppExceptionCodeEnum;
 import com.sdjr2.rest_contact_meanssb.exceptions.CustomException;
 import com.sdjr2.rest_contact_meanssb.mappers.RespEntityErrorMapper;
 import com.sdjr2.rest_contact_meanssb.models.errors.RespEntityErrorDTO;
+import com.sdjr2.rest_contact_meanssb.utils.UConstants;
 import lombok.AllArgsConstructor;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.ConversionNotSupportedException;
 import org.springframework.beans.TypeMismatchException;
 import org.springframework.boot.context.properties.bind.BindException;
@@ -35,6 +38,8 @@ import org.springframework.web.servlet.NoHandlerFoundException;
 @AllArgsConstructor
 public class HandlerExceptionController {
 
+  private static final Logger LOGGER = LoggerFactory.getLogger( HandlerExceptionController.class);
+
   private final RespEntityErrorMapper respEntityErrorMapper;
 
   @ExceptionHandler({
@@ -59,8 +64,7 @@ public class HandlerExceptionController {
     ArithmeticException.class,
     MissingPathVariableException.class,
     ConversionNotSupportedException.class,
-    HttpMessageNotWritableException.class,
-    Throwable.class
+    HttpMessageNotWritableException.class
   })
   public ResponseEntity<RespEntityErrorDTO> handleEx500(Exception ex) {
     return this.createRespEntityError(AppExceptionCodeEnum.STATUS_50000, ex);
@@ -69,6 +73,8 @@ public class HandlerExceptionController {
   private ResponseEntity<RespEntityErrorDTO> createRespEntityError(AppExceptionCodeEnum appExCode, Exception ex) {
     CustomException customEx = new CustomException(appExCode, ex);
     RespEntityErrorDTO error = this.respEntityErrorMapper.toDTO(customEx);
+    LOGGER.error(UConstants.MSG_BASE_ERROR + error.getErrorCode() + " : " + error.getExMessage());
+
     return new ResponseEntity<>(error, customEx.getAppExCode().getHttpStatusCode());
   }
 }

@@ -21,6 +21,7 @@ public class UConstants {
     public static final String MSG_BASE_OK = "[OK] » ";
     public static final String MSG_BASE_INFO = "[INFO] » ";
     public static final String MSG_BASE_ERROR = "[ERROR] » ";
+    public static final String MSG_BASE_REQUEST = "[REQ] » ";
 
     // --- FORMAT DATE ---
     public static final String S_FORMAT_DATE_FRONT = "dd/MM/yyyy";

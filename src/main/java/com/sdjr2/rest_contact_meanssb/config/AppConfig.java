@@ -32,7 +32,7 @@ public class AppConfig {
   private Resource resourceAddressJson;
 
   @Bean
-  AddressRepository<AddressEntity, Integer> addressRepository(){
+  AddressRepository<AddressEntity, Integer> addressRepository() {
     return new AddressRepositoryImpl(resourceAddressJson);
   }
 }
