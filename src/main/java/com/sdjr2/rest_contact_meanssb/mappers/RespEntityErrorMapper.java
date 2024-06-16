@@ -18,7 +18,7 @@ import java.util.Arrays;
  * @author Jacinto R^2
  * @version 1.0
  * @category Mapper
- * @upgrade 24/06/14
+ * @upgrade 24/06/16
  * @since 23/06/14
  */
 @Mapper(componentModel = "spring", imports = {Arrays.class})
@@ -31,7 +31,7 @@ public abstract class RespEntityErrorMapper {
    * @return RespEntityErrorDTO {@link RespEntityErrorDTO}
    */
   @Mapping(source = "ex.id", target = "id")
-  @Mapping(source = "ex.date", target = "date")
+  @Mapping(source = "ex.timestamp", target = "timestamp")
   @Mapping(expression = "java( ex.getAppExCode().getHttpStatusCode().value() )", target = "httpStatusCode")
   @Mapping(expression = "java( ex.getAppExCode().getAppStatusCode() )", target = "errorCode")
   @Mapping(expression = "java( ex.getAppExCode().getMessage() )", target = "errorMessage")

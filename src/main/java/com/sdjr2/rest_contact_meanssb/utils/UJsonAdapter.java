@@ -1,11 +1,23 @@
 package com.sdjr2.rest_contact_meanssb.utils;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
+import com.sdjr2.rest_contact_meanssb.models.errors.RespEntityErrorDTO;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 import java.io.IOException;
 
+/**
+ * {@link UJsonAdapter} class.
+ * <p>
+ * <strong>Utilities</strong> - Represents a class to manage object mapping.
+ *
+ * @author Jacinto R^2
+ * @version 1.0
+ * @category Utilities
+ * @upgrade 24/06/16
+ * @since 24/06/16
+ */
 public class UJsonAdapter {
 
     /**
@@ -60,5 +72,4 @@ public class UJsonAdapter {
             return null;
         }
     }
-
 }

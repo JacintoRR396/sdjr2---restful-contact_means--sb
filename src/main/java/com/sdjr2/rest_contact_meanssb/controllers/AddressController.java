@@ -54,6 +54,7 @@ public class AddressController {
   /*********** GET ALL ***********/
   @GetMapping
   public ResponseEntity<List<AddressEntity>> getAddresses() {
+    // int res = 10 / 0;
     return new ResponseEntity<>(this.addressService.getAddresses(), HttpStatus.OK);
   }
 

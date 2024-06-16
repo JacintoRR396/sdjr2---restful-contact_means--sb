@@ -10,14 +10,14 @@ import lombok.Data;
  * @author Jacinto R^2
  * @version 1.0
  * @category Exception
- * @upgrade 24/06/14
+ * @upgrade 24/06/16
  * @since 24/06/14
  */
 @Data
 public class RespEntityErrorDTO {
 
   private String id;
-  private String date;
+  private String timestamp;
   private int httpStatusCode;			// HttpStatus
   private int errorCode;			    // AppExceptionCode.code
   private String errorMessage;		// AppExceptionCode.msg
