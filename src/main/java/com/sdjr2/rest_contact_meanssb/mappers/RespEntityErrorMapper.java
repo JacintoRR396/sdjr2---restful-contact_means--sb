@@ -31,11 +31,11 @@ public abstract class RespEntityErrorMapper {
    * @return RespEntityErrorDTO {@link RespEntityErrorDTO}
    */
   @Mapping(source = "ex.id", target = "id")
-  @Mapping(source = "ex.timestamp", target = "timestamp")
+  @Mapping(source = "timestamp", target = "timestamp")
   @Mapping(expression = "java( ex.getAppExCode().getHttpStatusCode().value() )", target = "httpStatusCode")
   @Mapping(expression = "java( ex.getAppExCode().getAppStatusCode() )", target = "errorCode")
   @Mapping(expression = "java( ex.getAppExCode().getMessage() )", target = "errorMessage")
   @Mapping(expression = "java( ex.getOriginalException().getMessage() )", target = "exMessage")
   @Mapping(expression = "java( Arrays.toString(ex.getOriginalException().getStackTrace()) )", target = "exTrackTrace")
-  public abstract RespEntityErrorDTO toDTO(CustomException ex);
+  public abstract RespEntityErrorDTO toDTO(CustomException ex, String timestamp);
 }

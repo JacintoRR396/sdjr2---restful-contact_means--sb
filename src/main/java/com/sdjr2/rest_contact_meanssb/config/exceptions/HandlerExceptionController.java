@@ -5,6 +5,7 @@ import com.sdjr2.rest_contact_meanssb.exceptions.CustomException;
 import com.sdjr2.rest_contact_meanssb.mappers.RespEntityErrorMapper;
 import com.sdjr2.rest_contact_meanssb.models.errors.RespEntityErrorDTO;
 import com.sdjr2.rest_contact_meanssb.utils.UConstants;
+import com.sdjr2.rest_contact_meanssb.utils.UDateTimeService;
 import lombok.AllArgsConstructor;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -31,50 +32,51 @@ import org.springframework.web.servlet.NoHandlerFoundException;
  * @author Jacinto R^2
  * @version 1.0
  * @category Config
- * @upgrade 24/06/13
+ * @upgrade 24/06/16
  * @since 24/06/14
  */
 @RestControllerAdvice
 @AllArgsConstructor
 public class HandlerExceptionController {
 
-  private static final Logger LOGGER = LoggerFactory.getLogger( HandlerExceptionController.class);
+	private static final Logger LOGGER = LoggerFactory.getLogger( HandlerExceptionController.class );
 
-  private final RespEntityErrorMapper respEntityErrorMapper;
+	private final UDateTimeService uDateTimeService;
+	private final RespEntityErrorMapper respEntityErrorMapper;
 
-  @ExceptionHandler({
-    MissingServletRequestParameterException.class,
-    MissingServletRequestPartException.class,
-    ServletRequestBindingException.class,
-    TypeMismatchException.class,
-    HttpMessageNotReadableException.class,
-    MethodArgumentNotValidException.class,
-    BindException.class
-  })
-  public ResponseEntity<RespEntityErrorDTO> handleEx400(NoHandlerFoundException ex) {
-    return this.createRespEntityError(AppExceptionCodeEnum.STATUS_40000, ex);
-  }
+	@ExceptionHandler({
+			MissingServletRequestParameterException.class,
+			MissingServletRequestPartException.class,
+			ServletRequestBindingException.class,
+			TypeMismatchException.class,
+			HttpMessageNotReadableException.class,
+			MethodArgumentNotValidException.class,
+			BindException.class
+	})
+	public ResponseEntity<RespEntityErrorDTO> handleEx400 ( NoHandlerFoundException ex ) {
+		return this.createRespEntityError( AppExceptionCodeEnum.STATUS_40000, ex );
+	}
 
-  @ExceptionHandler({NoHandlerFoundException.class})
-  public ResponseEntity<RespEntityErrorDTO> handleEx404(NoHandlerFoundException ex) {
-    return this.createRespEntityError(AppExceptionCodeEnum.STATUS_40400, ex);
-  }
+	@ExceptionHandler({ NoHandlerFoundException.class })
+	public ResponseEntity<RespEntityErrorDTO> handleEx404 ( NoHandlerFoundException ex ) {
+		return this.createRespEntityError( AppExceptionCodeEnum.STATUS_40400, ex );
+	}
 
-  @ExceptionHandler({
-    ArithmeticException.class,
-    MissingPathVariableException.class,
-    ConversionNotSupportedException.class,
-    HttpMessageNotWritableException.class
-  })
-  public ResponseEntity<RespEntityErrorDTO> handleEx500(Exception ex) {
-    return this.createRespEntityError(AppExceptionCodeEnum.STATUS_50000, ex);
-  }
+	@ExceptionHandler({
+			ArithmeticException.class,
+			MissingPathVariableException.class,
+			ConversionNotSupportedException.class,
+			HttpMessageNotWritableException.class
+	})
+	public ResponseEntity<RespEntityErrorDTO> handleEx500 ( Exception ex ) {
+		return this.createRespEntityError( AppExceptionCodeEnum.STATUS_50000, ex );
+	}
 
-  private ResponseEntity<RespEntityErrorDTO> createRespEntityError(AppExceptionCodeEnum appExCode, Exception ex) {
-    CustomException customEx = new CustomException(appExCode, ex);
-    RespEntityErrorDTO error = this.respEntityErrorMapper.toDTO(customEx);
-    LOGGER.error(UConstants.MSG_BASE_ERROR + error.getErrorCode() + " : " + error.getExMessage());
+	private ResponseEntity<RespEntityErrorDTO> createRespEntityError ( AppExceptionCodeEnum appExCode, Exception ex ) {
+		CustomException customEx = new CustomException( appExCode, ex );
+		RespEntityErrorDTO error = this.respEntityErrorMapper.toDTO( customEx, this.uDateTimeService.getTimestamp() );
+		LOGGER.error( UConstants.MSG_BASE_ERROR + error.getErrorCode() + " : " + error.getExMessage() );
 
-    return new ResponseEntity<>(error, customEx.getAppExCode().getHttpStatusCode());
-  }
+		return new ResponseEntity<>( error, customEx.getAppExCode().getHttpStatusCode() );
+	}
 }
