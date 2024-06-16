@@ -1,9 +1,8 @@
 package com.sdjr2.rest_contact_meanssb.config.properties;
 
-import lombok.Getter;
+import lombok.Data;
 import org.springframework.boot.context.properties.ConfigurationProperties;
-import org.springframework.context.annotation.PropertySource;
-import org.springframework.stereotype.Component;
+import org.springframework.context.annotation.Configuration;
 
 /**
  * {@link GlobalProperties} class.
@@ -16,35 +15,34 @@ import org.springframework.stereotype.Component;
  * @upgrade 24/06/16
  * @since 24/06/16
  */
-@Component
-@PropertySource("classpath:/properties/global.properties")
-@ConfigurationProperties
-@Getter
+@Configuration
+@ConfigurationProperties(prefix = "config")
+@Data
 public class GlobalProperties {
 
-  // Logs
-  private String configLogMsgBaseOk;
-  private String configLogMsgBaseInfo;
-  private String configLogMsgBaseError;
+	// Logs
+	private String logMsgBaseOk;
+	private String logMsgBaseInfo;
+	private String logMsgBaseError;
 
-  // Constants
-  private String configFormatDateFrontend;
-  private String configFormatDateBackend;
-  private String configFormatTimeBackend;
-  private String configFormatDateTimeBackend;
-  private String configFormatTimestampBackend;
+	// Constants
+	private String formatDateFrontend;
+	private String formatDateBackend;
+	private String formatTimeBackend;
+	private String formatDateTimeBackend;
+	private String formatTimestampBackend;
 
-  // RegExp - Generic
-  private String configRegexId;
-  private String configRegexNameGeneric;
-  private String configRegexAdditionalInfo;
-  // RegExp - Address
-  private String configRegexAddressStreet;
-  private String configRegexAddressNumber;
-  private String configRegexAddressLetter;
-  private String configRegexAddressTown;
-  private String configRegexAddressCity;
-  private String configRegexAddressCountry;
-  private String configRegexAddressPostalCode;
-  private String configRegexAddressCoordinates;
+	// RegExp - Generic
+	private String regexId;
+	private String regexNameGeneric;
+	private String regexAdditionalInfo;
+	// RegExp - Address
+	private String regexAddressStreet;
+	private String regexAddressNumber;
+	private String regexAddressLetter;
+	private String regexAddressTown;
+	private String regexAddressCity;
+	private String regexAddressCountry;
+	private String regexAddressPostalCode;
+	private String regexAddressCoordinates;
 }

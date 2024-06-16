@@ -23,15 +23,16 @@ import org.springframework.core.io.Resource;
  */
 @Configuration
 @PropertySources({
-  @PropertySource("classpath:/properties/messages.properties")
+		@PropertySource("classpath:/properties/global.properties"),
+		@PropertySource("classpath:/properties/messages.properties")
 })
 public class AppConfig {
 
-  @Value("classpath:/database/json/address.json")
-  private Resource resourceAddressJson;
+	@Value("classpath:/database/json/address.json")
+	private Resource resourceAddressJson;
 
-  @Bean
-  AddressRepository<AddressEntity, Integer> addressRepository() {
-    return new AddressRepositoryImpl(resourceAddressJson);
-  }
+	@Bean
+	AddressRepository<AddressEntity, Integer> addressRepository () {
+		return new AddressRepositoryImpl( resourceAddressJson );
+	}
 }
