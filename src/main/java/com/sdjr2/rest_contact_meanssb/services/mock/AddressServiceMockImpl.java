@@ -1,25 +1,23 @@
-package com.sdjr2.rest_contact_meanssb.services.impl;
+package com.sdjr2.rest_contact_meanssb.services.mock;
 
 import com.sdjr2.rest_contact_meanssb.mappers.AddressMapper;
 import com.sdjr2.rest_contact_meanssb.models.dto.AddressDTO;
-import com.sdjr2.rest_contact_meanssb.repositories.AddressJpaRepository;
+import com.sdjr2.rest_contact_meanssb.repositories.AddressRepository;
 import com.sdjr2.rest_contact_meanssb.repositories.entities.AddressEntity;
 import com.sdjr2.rest_contact_meanssb.services.AddressService;
 import lombok.RequiredArgsConstructor;
-import org.springframework.context.annotation.Primary;
 import org.springframework.data.domain.Page;
-import org.springframework.data.domain.PageRequest;
-import org.springframework.data.domain.Sort;
 import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
 import org.springframework.web.server.ResponseStatusException;
 
+import java.util.ArrayList;
 import java.util.List;
 
 /**
- * {@link AddressServiceImpl} class.
+ * {@link AddressServiceMockImpl} class.
  * <p>
- * <strong>Service</strong> - Represents a class service that implements to {@link AddressService}.
+ * <strong>Service</strong> - Represents a class service mock that implements to {@link AddressService}.
  *
  * @author Jacinto R^2
  * @version 1.0
@@ -29,18 +27,17 @@ import java.util.List;
  */
 @Service
 @RequiredArgsConstructor
-@Primary
-public class AddressServiceImpl implements AddressService {
+public class AddressServiceMockImpl implements AddressService {
 
   /**
-   * Address mapper object
+   * Address dto request mapper object
    */
   private final AddressMapper addressMapper;
 
   /**
    * Address repository object
    */
-  private final AddressJpaRepository addressRepo;
+  private final AddressRepository<AddressEntity, Integer> addressRepo;
 
   @Override
   public List<AddressEntity> getAddresses() {
@@ -49,24 +46,27 @@ public class AddressServiceImpl implements AddressService {
 
   @Override
   public Page<AddressEntity> getAddressesWithPagination(Integer pageNum, Integer pageSize) {
-    return this.addressRepo.findAll(PageRequest.of(pageNum, pageSize));
+    return Page.empty();
   }
 
   @Override
   public List<AddressEntity> getAddressesWithOrder(String attribute, boolean isAsc) {
-    final Sort.Direction typeOrder = (isAsc) ? Sort.Direction.ASC : Sort.Direction.DESC;
-    return this.addressRepo.findAll(Sort.by(typeOrder, attribute));
+    return new ArrayList<>();
   }
 
   @Override
   public Page<AddressEntity> getAddressesWithPaginationAndOrder(Integer pageNum, Integer pageSize,
                                                                 String attribute, boolean isAsc) {
-    final Sort.Direction typeOrder = (isAsc) ? Sort.Direction.ASC : Sort.Direction.DESC;
-    return this.addressRepo.findAll(PageRequest.of(pageNum, pageSize, typeOrder, attribute));
+    return Page.empty();
   }
 
+  /**
+   * Gets a list of towns about addresses
+   *
+   * @return a list of {@link String} object.
+   */
   public List<String> getTowns() {
-    return this.addressRepo.findAllTowns();
+    return new ArrayList<>();
   }
 
   @Override
@@ -76,27 +76,17 @@ public class AddressServiceImpl implements AddressService {
 
   @Override
   public AddressEntity createAddress(AddressDTO addressDTO) {
-    AddressEntity entity = this.addressMapper.toEntity(addressDTO, true);
-    try {
-      this.checkExistsAddress(entity.getId());
-      throw new ResponseStatusException(HttpStatus.BAD_REQUEST,
-        String.format("Address with ID '%d' already exists", entity.getId()));
-    } catch (ResponseStatusException rse) {
-      return this.addressRepo.save(entity);
-    }
+    return null;
   }
 
   @Override
   public AddressEntity updateAddress(Integer id, AddressDTO addressDTO) {
-    AddressEntity entity = this.addressMapper.toEntity(addressDTO, false);
-    this.checkExistsAddress(entity.getId());
-    return this.addressRepo.save(entity);
+    return null;
   }
 
   @Override
   public void deleteAddress(Integer id) {
-    AddressEntity entityDB = this.checkExistsAddress(id);
-    this.addressRepo.delete(entityDB);
+
   }
 
   private AddressEntity checkExistsAddress(final Integer id) {
