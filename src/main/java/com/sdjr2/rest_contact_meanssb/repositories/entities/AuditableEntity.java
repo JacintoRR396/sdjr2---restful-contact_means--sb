@@ -1,10 +1,12 @@
 package com.sdjr2.rest_contact_meanssb.repositories.entities;
 
 import jakarta.persistence.Column;
-import lombok.*;
+import jakarta.persistence.Embeddable;
+import jakarta.persistence.PrePersist;
+import jakarta.persistence.PreUpdate;
+import lombok.Getter;
+import lombok.Setter;
 
-import java.io.Serial;
-import java.io.Serializable;
 import java.time.LocalDateTime;
 
 /**
@@ -15,40 +17,51 @@ import java.time.LocalDateTime;
  * @author Jacinto R^2
  * @version 1.0
  * @category Entity (ORM)
- * @upgrade 24/03/28
+ * @upgrade 24/06/17
  * @since 23/06/10
  */
-@NoArgsConstructor
-@AllArgsConstructor
+@Embeddable
 @Getter
 @Setter
-@Builder
-public class AuditableEntity implements Serializable {
+public class AuditableEntity {
 
-	@Serial
-	private static final long serialVersionUID = 2339186471035380213L;
+  /**
+   * created at attribute
+   */
+  @Column(name = "created_at_dat", nullable = false)
+  private LocalDateTime createdAt;
 
-	/**
-	 * created at attribute
-	 */
-	@Column(name = "created_at", nullable = false)
-	private LocalDateTime createdAt;
+  /**
+   * created by attribute
+   */
+  @Column(name = "created_by_str", nullable = false)
+  private String createdBy;
 
-	/**
-	 * created by attribute
-	 */
-	@Column(name = "created_by", nullable = false)
-	private String createdBy;
+  /**
+   * updated at attribute
+   */
+  @Column(name = "updated_at_dat", nullable = false)
+  private LocalDateTime updatedAt;
 
-	/**
-	 * updated at attribute
-	 */
-	@Column(name = "updated_at", nullable = false)
-	private LocalDateTime updatedAt;
+  /**
+   * updated by attribute
+   */
+  @Column(name = "updated_by_str", nullable = false)
+  private String updatedBy;
 
-	/**
-	 * updated by attribute
-	 */
-	@Column(name = "updated_by", nullable = false)
-	private String updatedBy;
+  /**
+   * method to provide certain functionality before creation
+   */
+  @PrePersist
+  public void prePersist() {
+    this.createdAt = LocalDateTime.now();
+  }
+
+  /**
+   * method to update certain functionality before creation
+   */
+  @PreUpdate
+  public void preUpdate() {
+    this.updatedAt = LocalDateTime.now();
+  }
 }

@@ -22,8 +22,8 @@ import java.util.Comparator;
  * @upgrade 24/06/13
  * @since 23/06/11
  */
-@AllArgsConstructor
 @NoArgsConstructor
+@AllArgsConstructor
 @Getter
 @Setter
 @Builder

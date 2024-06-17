@@ -12,6 +12,7 @@ import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Sort;
 import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.server.ResponseStatusException;
 
 import java.util.List;
@@ -43,8 +44,9 @@ public class AddressServiceImpl implements AddressService {
   private final AddressJpaRepository addressRepo;
 
   @Override
-  public List<AddressEntity> getAddresses() {
-    return this.addressRepo.findAll();
+  @Transactional(readOnly = true)
+  public List<AddressDTO> getAddresses() {
+    return this.addressRepo.findAll().stream().map(this.addressMapper::toDTO).toList();
   }
 
   @Override
@@ -70,8 +72,10 @@ public class AddressServiceImpl implements AddressService {
   }
 
   @Override
-  public AddressEntity getAddressById(Integer id) {
-    return this.checkExistsAddress(id);
+  @Transactional(readOnly = true)
+  public AddressDTO getAddressById(Integer id) {
+    AddressEntity entity = this.checkExistsAddress(id);
+    return this.addressMapper.toDTO(entity);
   }
 
   @Override

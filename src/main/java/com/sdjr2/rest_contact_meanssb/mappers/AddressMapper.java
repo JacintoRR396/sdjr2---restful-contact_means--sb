@@ -18,7 +18,7 @@ import org.mapstruct.MappingTarget;
  * @author Jacinto R^2
  * @version 1.0
  * @category Mapper
- * @upgrade 24/06/14
+ * @upgrade 24/06/17
  * @since 23/06/11
  */
 @Mapper(componentModel = "spring")
@@ -59,4 +59,23 @@ public abstract class AddressMapper {
 		}
 		return addressEntity;
 	}
+
+	/**
+	 * Map address entity to address request object.
+	 *
+	 * @param entity    address entity
+	 * @return AddressDTO {@link AddressDTO}
+	 */
+	@Mapping(source = "entity.id", target = "id")
+	@Mapping(source = "entity.street", target = "street")
+	@Mapping(source = "entity.number", target = "number")
+	@Mapping(source = "entity.letter", target = "letter")
+	@Mapping(source = "entity.town", target = "town")
+	@Mapping(source = "entity.city", target = "city")
+	@Mapping(source = "entity.country", target = "country")
+	@Mapping(source = "entity.postalCode", target = "postalCode")
+	@Mapping(source = "entity.longitude", target = "longitude")
+	@Mapping(source = "entity.latitude", target = "latitude")
+	@Mapping(source = "entity.additionalInfo", target = "additionalInfo")
+	public abstract AddressDTO toDTO ( AddressEntity entity );
 }

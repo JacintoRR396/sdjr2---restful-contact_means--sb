@@ -40,8 +40,8 @@ public class AddressServiceMockImpl implements AddressService {
   private final AddressRepository<AddressEntity, Integer> addressRepo;
 
   @Override
-  public List<AddressEntity> getAddresses() {
-    return this.addressRepo.findAll();
+  public List<AddressDTO> getAddresses() {
+    return this.addressRepo.findAll().stream().map(this.addressMapper::toDTO).toList();
   }
 
   @Override
@@ -70,8 +70,9 @@ public class AddressServiceMockImpl implements AddressService {
   }
 
   @Override
-  public AddressEntity getAddressById(Integer id) {
-    return this.checkExistsAddress(id);
+  public AddressDTO getAddressById(Integer id) {
+    AddressEntity entity = this.checkExistsAddress(id);
+    return this.addressMapper.toDTO(entity);
   }
 
   @Override

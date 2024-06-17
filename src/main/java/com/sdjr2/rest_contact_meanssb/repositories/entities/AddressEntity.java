@@ -6,6 +6,9 @@ import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 
+import java.io.Serial;
+import java.io.Serializable;
+
 /**
  * {@link AddressEntity} class.
  * <p>
@@ -16,7 +19,7 @@ import lombok.Setter;
  * @author Jacinto R^2
  * @version 1.0
  * @category Entity (ORM)
- * @upgrade 24/06/13
+ * @upgrade 24/06/17
  * @since 23/06/10
  */
 @Entity
@@ -25,8 +28,10 @@ import lombok.Setter;
 @NoArgsConstructor
 @Getter
 @Setter
-public class AddressEntity {
+public class AddressEntity implements Serializable {
 
+  @Serial
+  private static final long serialVersionUID = -8456791947043775284L;
   /**
    * address id identifier
    */
@@ -94,4 +99,10 @@ public class AddressEntity {
    */
   @Column(name = "additional_info_str", length = 2500)
   private String additionalInfo;
+
+  /**
+   * entity with attributes about audit
+   */
+  @Embedded
+  private AuditableEntity auditableEntity = new AuditableEntity();
 }

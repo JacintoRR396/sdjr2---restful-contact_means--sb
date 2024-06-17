@@ -36,91 +36,91 @@ import java.util.Set;
 @RequiredArgsConstructor
 public class AddressController {
 
-	/**
-	 * Validator object
-	 */
-	private final Validator validator;
+  /**
+   * Validator object
+   */
+  private final Validator validator;
 
-	/**
-	 * httpRequest object
-	 */
-	private final HttpServletRequest httpRequest;
+  /**
+   * httpRequest object
+   */
+  private final HttpServletRequest httpRequest;
 
-	/**
-	 * Address service object
-	 */
-	private final AddressService addressService;
+  /**
+   * Address service object
+   */
+  private final AddressService addressService;
 
-	/*********** GET ALL ***********/
-	@GetMapping
-	public ResponseEntity<List<AddressEntity>> getAddresses () {
-		// int res = 10 / 0;
-		return new ResponseEntity<>( this.addressService.getAddresses(), HttpStatus.OK );
-	}
+  /*********** GET ALL ***********/
+  @GetMapping
+  public ResponseEntity<List<AddressDTO>> getAddresses() {
+    // int res = 10 / 0;
+    return new ResponseEntity<>(this.addressService.getAddresses(), HttpStatus.OK);
+  }
 
-	@GetMapping(value = "/pagination")
-	public ResponseEntity<Page<AddressEntity>> getAddressesWithPagination (
-			@RequestParam(value = "page", defaultValue = "0", required = false) Integer pageNum,
-			@RequestParam(value = "size", defaultValue = "15", required = false) Integer pageSize ) {
-		return new ResponseEntity<>( this.addressService.getAddressesWithPagination( pageNum, pageSize ), HttpStatus.OK );
-	}
+  @GetMapping(value = "/pagination")
+  public ResponseEntity<Page<AddressEntity>> getAddressesWithPagination(
+    @RequestParam(value = "page", defaultValue = "0", required = false) Integer pageNum,
+    @RequestParam(value = "size", defaultValue = "15", required = false) Integer pageSize) {
+    return new ResponseEntity<>(this.addressService.getAddressesWithPagination(pageNum, pageSize), HttpStatus.OK);
+  }
 
-	@GetMapping(value = "/order")
-	public ResponseEntity<List<AddressEntity>> getAddressesWithOrder (
-			@RequestParam(value = "attribute", defaultValue = "postalCode", required = false) String attribute,
-			@RequestParam(value = "asc", defaultValue = "true", required = false) boolean isAsc ) {
-		return new ResponseEntity<>( this.addressService.getAddressesWithOrder( attribute, isAsc ), HttpStatus.OK );
-	}
+  @GetMapping(value = "/order")
+  public ResponseEntity<List<AddressEntity>> getAddressesWithOrder(
+    @RequestParam(value = "attribute", defaultValue = "postalCode", required = false) String attribute,
+    @RequestParam(value = "asc", defaultValue = "true", required = false) boolean isAsc) {
+    return new ResponseEntity<>(this.addressService.getAddressesWithOrder(attribute, isAsc), HttpStatus.OK);
+  }
 
-	@GetMapping(value = "/paginationAndOrder")
-	public ResponseEntity<Page<AddressEntity>> getAddressesWithPaginationAndOrder (
-			@RequestParam(value = "page", defaultValue = "0", required = false) Integer pageNum,
-			@RequestParam(value = "size", defaultValue = "15", required = false) Integer pageSize,
-			@RequestParam(value = "attribute", defaultValue = "postalCode", required = false) String attribute,
-			@RequestParam(value = "asc", defaultValue = "true", required = false) boolean isAsc ) {
-		return new ResponseEntity<>(
-				this.addressService.getAddressesWithPaginationAndOrder( pageNum, pageSize, attribute, isAsc ), HttpStatus.OK );
-	}
+  @GetMapping(value = "/paginationAndOrder")
+  public ResponseEntity<Page<AddressEntity>> getAddressesWithPaginationAndOrder(
+    @RequestParam(value = "page", defaultValue = "0", required = false) Integer pageNum,
+    @RequestParam(value = "size", defaultValue = "15", required = false) Integer pageSize,
+    @RequestParam(value = "attribute", defaultValue = "postalCode", required = false) String attribute,
+    @RequestParam(value = "asc", defaultValue = "true", required = false) boolean isAsc) {
+    return new ResponseEntity<>(
+      this.addressService.getAddressesWithPaginationAndOrder(pageNum, pageSize, attribute, isAsc), HttpStatus.OK);
+  }
 
-	/*********** GET ***********/
-	@GetMapping(value = "/{addressId}")
-	public ResponseEntity<AddressEntity> getAddressById ( @PathVariable("addressId") Integer id ) {
-		return new ResponseEntity<>( this.addressService.getAddressById( id ), HttpStatus.OK );
-	}
+  /*********** GET ***********/
+  @GetMapping(value = "/{addressId}")
+  public ResponseEntity<AddressDTO> getAddressById(@PathVariable("addressId") Integer id) {
+    return new ResponseEntity<>(this.addressService.getAddressById(id), HttpStatus.OK);
+  }
 
-	/*********** POST ***********/
-	@PostMapping
-	public ResponseEntity<AddressEntity> addAddress ( @RequestBody @Valid AddressDTO addressDTO ) {
-		if ( this.validateRequest( this.validator.validate( addressDTO ) ) ) {
-			return new ResponseEntity<>( this.addressService.createAddress( addressDTO ), HttpStatus.CREATED );
-		}
-		return new ResponseEntity<>( HttpStatus.BAD_REQUEST );
-	}
+  /*********** POST ***********/
+  @PostMapping
+  public ResponseEntity<AddressEntity> addAddress(@RequestBody @Valid AddressDTO addressDTO) {
+    if (this.validateRequest(this.validator.validate(addressDTO))) {
+      return new ResponseEntity<>(this.addressService.createAddress(addressDTO), HttpStatus.CREATED);
+    }
+    return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
+  }
 
-	/*********** PUT ***********/
-	@PutMapping(value = "/{addressId}")
-	public ResponseEntity<AddressEntity> updateAddress ( @PathVariable("addressId") Integer id,
-																											 @RequestBody @Valid AddressDTO addressDTO ) {
-		if ( this.validateRequest( this.validator.validate( addressDTO ) ) ) {
-			return new ResponseEntity<>( this.addressService.updateAddress( id, addressDTO ), HttpStatus.OK );
-		}
-		return new ResponseEntity<>( HttpStatus.BAD_REQUEST );
-	}
+  /*********** PUT ***********/
+  @PutMapping(value = "/{addressId}")
+  public ResponseEntity<AddressEntity> updateAddress(@PathVariable("addressId") Integer id,
+                                                     @RequestBody @Valid AddressDTO addressDTO) {
+    if (this.validateRequest(this.validator.validate(addressDTO))) {
+      return new ResponseEntity<>(this.addressService.updateAddress(id, addressDTO), HttpStatus.OK);
+    }
+    return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
+  }
 
-	/*********** DELETE ***********/
-	@DeleteMapping(value = "/{addressId}")
-	public ResponseEntity<Void> deleteAddress ( @PathVariable("addressId") Integer id ) {
-		this.addressService.deleteAddress( id );
-		return new ResponseEntity<>( HttpStatus.NO_CONTENT );
-	}
+  /*********** DELETE ***********/
+  @DeleteMapping(value = "/{addressId}")
+  public ResponseEntity<Void> deleteAddress(@PathVariable("addressId") Integer id) {
+    this.addressService.deleteAddress(id);
+    return new ResponseEntity<>(HttpStatus.NO_CONTENT);
+  }
 
-	/**
-	 * Check if validation is empty
-	 *
-	 * @param validation set of ConstraintViolation object
-	 * @return a {@link boolean} object.
-	 */
-	private boolean validateRequest ( Set<?> validation ) {
-		return validation.isEmpty();
-	}
+  /**
+   * Check if validation is empty
+   *
+   * @param validation set of ConstraintViolation object
+   * @return a {@link boolean} object.
+   */
+  private boolean validateRequest(Set<?> validation) {
+    return validation.isEmpty();
+  }
 }
