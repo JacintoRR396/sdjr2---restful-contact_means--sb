@@ -24,41 +24,45 @@ import java.util.Objects;
  * @upgrade 24/06/18
  * @since 23/06/14
  */
-@Mapper(componentModel = "spring", imports = {Arrays.class})
+@Mapper(componentModel = "spring", imports = { Arrays.class })
 public abstract class RespEntityErrorMapper {
 
-  /**
-   * Map custom exception to response entity error dto.
-   *
-   * @param ex        custom exception
-   * @param timestamp creation date
-   * @return RespEntityErrorDTO {@link RespEntityErrorDTO}
-   */
-  @Mapping(source = "ex.id", target = "id")
-  @Mapping(source = "timestamp", target = "timestamp")
-  @Mapping(expression = "java( ex.getAppExCode().getHttpStatusCode().value() )", target = "httpStatusCode")
-  @Mapping(expression = "java( ex.getAppExCode().getAppStatusCode() )", target = "errorCode")
-  @Mapping(expression = "java( ex.getAppExCode().getMessage() )", target = "errorMessage")
-  @Mapping(target = "exMessage", ignore = true)
-  @Mapping(target = "exTrackTrace", ignore = true)
-  public abstract RespEntityErrorDTO toDTO(CustomException ex, String timestamp);
+	/**
+	 * Map custom exception to response entity error dto.
+	 *
+	 * @param ex        custom exception
+	 * @param timestamp creation date
+	 * @return RespEntityErrorDTO {@link RespEntityErrorDTO}
+	 */
+	@Mapping(source = "ex.id", target = "id")
+	@Mapping(source = "timestamp", target = "timestamp")
+	@Mapping(expression = "java( ex.getAppExCode().getHttpStatusCode().value() )", target = "httpStatusCode")
+	@Mapping(expression = "java( ex.getAppExCode().getAppStatusCode() )", target = "errorCode")
+	@Mapping(expression = "java( ex.getAppExCode().getMessage() )", target = "errorMessage")
+	@Mapping(target = "validationErrors", ignore = true)
+	@Mapping(target = "exMessage", ignore = true)
+	@Mapping(target = "exTrackTrace", ignore = true)
+	public abstract RespEntityErrorDTO toDTO ( CustomException ex, String timestamp );
 
-  /**
-   * Map custom exception to response entity error dto with additional logic.
-   *
-   * @param ex        custom exception
-   * @param timestamp creation date
-   * @param errorDTO  resp entity error DTO
-   * @return RespEntityErrorDTO {@link RespEntityErrorDTO}
-   */
-  @AfterMapping
-  protected RespEntityErrorDTO afterMappingTDTO(CustomException ex, String timestamp,
-                                                @MappingTarget RespEntityErrorDTO errorDTO) {
-    if (Objects.nonNull(ex.getOriginalException())) {
-      errorDTO.setExMessage(ex.getOriginalException().getMessage());
-      errorDTO.setExTrackTrace(Arrays.toString(ex.getOriginalException().getStackTrace()));
-    }
+	/**
+	 * Map custom exception to response entity error dto with additional logic.
+	 *
+	 * @param ex        custom exception
+	 * @param timestamp creation date
+	 * @param errorDTO  resp entity error DTO
+	 * @return RespEntityErrorDTO {@link RespEntityErrorDTO}
+	 */
+	@AfterMapping
+	protected RespEntityErrorDTO afterMappingTDTO ( CustomException ex, String timestamp,
+																									@MappingTarget RespEntityErrorDTO errorDTO ) {
+		if ( Objects.nonNull( ex.getValidationErrors() ) ) {
+			errorDTO.setValidationErrors( ex.getValidationErrors() );
+		}
+		if ( Objects.nonNull( ex.getOriginalException() ) ) {
+			errorDTO.setExMessage( ex.getOriginalException().getMessage() );
+			errorDTO.setExTrackTrace( Arrays.toString( ex.getOriginalException().getStackTrace() ) );
+		}
 
-    return errorDTO;
-  }
+		return errorDTO;
+	}
 }

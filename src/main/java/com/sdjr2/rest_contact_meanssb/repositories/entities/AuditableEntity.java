@@ -4,8 +4,7 @@ import jakarta.persistence.Column;
 import jakarta.persistence.Embeddable;
 import jakarta.persistence.PrePersist;
 import jakarta.persistence.PreUpdate;
-import lombok.Getter;
-import lombok.Setter;
+import lombok.*;
 
 import java.time.LocalDateTime;
 
@@ -17,12 +16,15 @@ import java.time.LocalDateTime;
  * @author Jacinto R^2
  * @version 1.0
  * @category Entity (ORM)
- * @upgrade 24/06/17
+ * @upgrade 24/06/18
  * @since 23/06/10
  */
 @Embeddable
+@NoArgsConstructor
+@AllArgsConstructor
 @Getter
 @Setter
+@Builder
 public class AuditableEntity {
 
   /**

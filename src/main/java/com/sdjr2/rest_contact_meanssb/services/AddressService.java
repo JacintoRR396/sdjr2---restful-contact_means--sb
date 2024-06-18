@@ -75,9 +75,9 @@ public interface AddressService {
    * Save an address entity
    *
    * @param addressDTO address request object
-   * @return an {@link AddressEntity} object.
+   * @return an {@link AddressDTO} object create in db and mapped.
    */
-  AddressEntity createAddress(AddressDTO addressDTO);
+  AddressDTO createAddress(AddressDTO addressDTO);
 
   /**
    * Update an address entity

@@ -19,7 +19,7 @@ import java.util.Optional;
  * @author Jacinto R^2
  * @version 1.0
  * @category Repository (DAO)
- * @upgrade 24/06/14
+ * @upgrade 24/06/18
  * @since 24/06/13
  */
 public class AddressRepositoryImpl implements AddressRepository<AddressEntity, Integer> {
@@ -44,5 +44,12 @@ public class AddressRepositoryImpl implements AddressRepository<AddressEntity, I
   @Override
   public Optional<AddressEntity> findById(Integer id) {
     return this.addresses.stream().filter(addressEntity -> addressEntity.getId().equals(id)).findFirst();
+  }
+
+  @Override
+  public AddressEntity save ( AddressEntity entity ) {
+    this.addresses.add( entity );
+
+    return entity;
   }
 }

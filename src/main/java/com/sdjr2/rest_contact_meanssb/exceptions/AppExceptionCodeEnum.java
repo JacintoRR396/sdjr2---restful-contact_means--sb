@@ -16,7 +16,7 @@ import org.springframework.http.HttpStatus;
 public enum AppExceptionCodeEnum {
 
   STATUS_40000(HttpStatus.BAD_REQUEST,40000,  "Bad Request"),
-  STATUS_40001(HttpStatus.BAD_REQUEST,40001,  "Bad Request: Validation Error"),
+  STATUS_40001(HttpStatus.BAD_REQUEST,40001,  "Bad Request: Validation Errors"),
   STATUS_40100(HttpStatus.UNAUTHORIZED,40100,  "Unauthorized"),
   STATUS_40101(HttpStatus.UNAUTHORIZED,40101,  "Unauthorized: Received request without AccessToken cookie"),
   STATUS_40102(HttpStatus.UNAUTHORIZED,40102,  "Unauthorized: Invalid Access Token"),

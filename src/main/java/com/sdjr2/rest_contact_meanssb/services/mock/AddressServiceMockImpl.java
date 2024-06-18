@@ -76,8 +76,11 @@ public class AddressServiceMockImpl implements AddressService {
   }
 
   @Override
-  public AddressEntity createAddress(AddressDTO addressDTO) {
-    return null;
+  public AddressDTO createAddress(AddressDTO addressDTO) {
+    AddressEntity entityReq = this.addressMapper.toEntity(addressDTO, true);
+    AddressEntity entityDB = this.addressRepo.save(entityReq);
+
+    return this.addressMapper.toDTO( entityDB );
   }
 
   @Override

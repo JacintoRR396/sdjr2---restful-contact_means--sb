@@ -1,6 +1,10 @@
 package com.sdjr2.rest_contact_meanssb.models.errors;
 
+import com.fasterxml.jackson.annotation.JsonInclude;
+import com.fasterxml.jackson.annotation.JsonProperty;
 import lombok.Data;
+
+import java.util.Map;
 
 /**
  * {@link RespEntityErrorDTO} class.
@@ -10,17 +14,32 @@ import lombok.Data;
  * @author Jacinto R^2
  * @version 1.0
  * @category Exception
- * @upgrade 24/06/16
+ * @upgrade 24/06/18
  * @since 24/06/14
  */
 @Data
+@JsonInclude(JsonInclude.Include.NON_NULL)
 public class RespEntityErrorDTO {
 
   private String id;
+
   private String timestamp;
+
+  @JsonProperty("http_status_code")
   private int httpStatusCode;			// HttpStatus
+
+  @JsonProperty("error_code")
   private int errorCode;			    // AppExceptionCode.code
+
+  @JsonProperty("error_message")
   private String errorMessage;		// AppExceptionCode.msg
+
+  @JsonProperty("validation_errors")
+  private Map<String, String> validationErrors;
+
+  @JsonProperty("ex_message")
   private String exMessage;
+
+  @JsonProperty("ex_track_trace")
   private String exTrackTrace;
 }

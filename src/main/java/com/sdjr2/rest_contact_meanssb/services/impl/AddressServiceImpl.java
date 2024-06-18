@@ -82,15 +82,11 @@ public class AddressServiceImpl implements AddressService {
   }
 
   @Override
-  public AddressEntity createAddress(AddressDTO addressDTO) {
-    AddressEntity entity = this.addressMapper.toEntity(addressDTO, true);
-    try {
-      this.checkExistsAddress(entity.getId());
-      throw new ResponseStatusException(HttpStatus.BAD_REQUEST,
-        String.format("Address with ID '%d' already exists", entity.getId()));
-    } catch (ResponseStatusException rse) {
-      return this.addressRepo.save(entity);
-    }
+  public AddressDTO createAddress(AddressDTO addressDTO) {
+    AddressEntity entityReq = this.addressMapper.toEntity(addressDTO, true);
+    AddressEntity entityDB = this.addressRepo.save(entityReq);
+
+    return this.addressMapper.toDTO( entityDB );
   }
 
   @Override
