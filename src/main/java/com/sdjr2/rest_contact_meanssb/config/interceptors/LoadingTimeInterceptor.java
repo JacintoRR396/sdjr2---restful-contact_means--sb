@@ -17,7 +17,7 @@ import org.springframework.web.servlet.ModelAndView;
  * @author Jacinto R^2
  * @version 1.0
  * @category Config
- * @upgrade 24/06/13
+ * @upgrade 24/06/18
  * @since 24/06/13
  */
 @Component
@@ -29,7 +29,7 @@ public class LoadingTimeInterceptor implements HandlerInterceptor {
   public boolean preHandle(HttpServletRequest request, HttpServletResponse response, Object handler) {
     HandlerMethod controller = ((HandlerMethod) handler);
     LOGGER.info(controller.getBean().getClass().getSimpleName() + " : " + controller.getMethod().getName() +
-      " » coming into ... ");
+       " » coming into ... ");
 
     long startTime = System.currentTimeMillis();
     request.setAttribute("startTime", startTime);
@@ -43,10 +43,10 @@ public class LoadingTimeInterceptor implements HandlerInterceptor {
     long startTime = (Long) request.getAttribute("startTime");
     long endTime = System.currentTimeMillis();
     long timeElapsed = endTime - startTime;
-    LOGGER.info("Time elapsed: " + timeElapsed + " miliseconds !!!");
 
     HandlerMethod controller = ((HandlerMethod) handler);
     LOGGER.info(
-      controller.getBean().getClass().getSimpleName() + " : " + controller.getMethod().getName() + " » going out ... ");
+       controller.getBean().getClass().getSimpleName() + " : " + controller.getMethod().getName() + " » going out in " +
+          timeElapsed + "ms ... ");
   }
 }

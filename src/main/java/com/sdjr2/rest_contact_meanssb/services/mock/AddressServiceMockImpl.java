@@ -22,7 +22,7 @@ import java.util.List;
  * @author Jacinto R^2
  * @version 1.0
  * @category Service
- * @upgrade 24/06/17
+ * @upgrade 24/06/18
  * @since 23/06/10
  */
 @Service
@@ -81,7 +81,7 @@ public class AddressServiceMockImpl implements AddressService {
   }
 
   @Override
-  public AddressEntity updateAddress(Integer id, AddressDTO addressDTO) {
+  public AddressEntity updateAddress(AddressDTO addressDTO, Integer id) {
     return null;
   }
 

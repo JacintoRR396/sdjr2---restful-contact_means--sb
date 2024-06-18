@@ -21,7 +21,7 @@ import java.util.List;
  * @author Jacinto R^2
  * @version 1.0
  * @category Service
- * @upgrade 24/06/17
+ * @upgrade 24/06/18
  * @since 23/06/10
  */
 public interface AddressService {
@@ -86,7 +86,7 @@ public interface AddressService {
    * @param addressDTO address request object
    * @return an {@link AddressEntity} object.
    */
-  AddressEntity updateAddress(Integer id, AddressDTO addressDTO);
+  AddressEntity updateAddress(AddressDTO addressDTO, Integer id);
 
   /**
    * Delete an address entity for its pk

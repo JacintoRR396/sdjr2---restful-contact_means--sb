@@ -15,14 +15,21 @@ import org.springframework.boot.context.properties.bind.BindException;
 import org.springframework.http.ResponseEntity;
 import org.springframework.http.converter.HttpMessageNotReadableException;
 import org.springframework.http.converter.HttpMessageNotWritableException;
+import org.springframework.web.HttpMediaTypeNotAcceptableException;
+import org.springframework.web.HttpMediaTypeNotSupportedException;
+import org.springframework.web.HttpRequestMethodNotSupportedException;
 import org.springframework.web.bind.MethodArgumentNotValidException;
 import org.springframework.web.bind.MissingPathVariableException;
 import org.springframework.web.bind.MissingServletRequestParameterException;
 import org.springframework.web.bind.ServletRequestBindingException;
 import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.bind.annotation.RestControllerAdvice;
+import org.springframework.web.context.request.async.AsyncRequestTimeoutException;
 import org.springframework.web.multipart.support.MissingServletRequestPartException;
 import org.springframework.web.servlet.NoHandlerFoundException;
+import org.springframework.web.servlet.resource.NoResourceFoundException;
+
+import java.util.Objects;
 
 /**
  * {@link HandlerExceptionController} class.
@@ -32,51 +39,90 @@ import org.springframework.web.servlet.NoHandlerFoundException;
  * @author Jacinto R^2
  * @version 1.0
  * @category Config
- * @upgrade 24/06/16
+ * @upgrade 24/06/18
  * @since 24/06/14
  */
 @RestControllerAdvice
 @AllArgsConstructor
 public class HandlerExceptionController {
 
-	private static final Logger LOGGER = LoggerFactory.getLogger( HandlerExceptionController.class );
+	private static final Logger LOGGER = LoggerFactory.getLogger(HandlerExceptionController.class);
 
 	private final UDateTimeService uDateTimeService;
 	private final RespEntityErrorMapper respEntityErrorMapper;
 
 	@ExceptionHandler({
-			MissingServletRequestParameterException.class,
-			MissingServletRequestPartException.class,
-			ServletRequestBindingException.class,
-			TypeMismatchException.class,
-			HttpMessageNotReadableException.class,
-			MethodArgumentNotValidException.class,
-			BindException.class
+		 CustomException.class
 	})
-	public ResponseEntity<RespEntityErrorDTO> handleEx400 ( NoHandlerFoundException ex ) {
-		return this.createRespEntityError( AppExceptionCodeEnum.STATUS_40000, ex );
-	}
-
-	@ExceptionHandler({ NoHandlerFoundException.class })
-	public ResponseEntity<RespEntityErrorDTO> handleEx404 ( NoHandlerFoundException ex ) {
-		return this.createRespEntityError( AppExceptionCodeEnum.STATUS_40400, ex );
+	public ResponseEntity<RespEntityErrorDTO> handleExCustom (CustomException ex) {
+		return this.createRespEntityError(ex, null);
 	}
 
 	@ExceptionHandler({
-			ArithmeticException.class,
-			MissingPathVariableException.class,
-			ConversionNotSupportedException.class,
-			HttpMessageNotWritableException.class
+		 MissingServletRequestParameterException.class,
+		 MissingServletRequestPartException.class,
+		 ServletRequestBindingException.class,
+		 TypeMismatchException.class,
+		 HttpMessageNotReadableException.class,
+		 MethodArgumentNotValidException.class,
+		 // HandlerMethodValidationException
+		 BindException.class
 	})
-	public ResponseEntity<RespEntityErrorDTO> handleEx500 ( Exception ex ) {
-		return this.createRespEntityError( AppExceptionCodeEnum.STATUS_50000, ex );
+	public ResponseEntity<RespEntityErrorDTO> handleEx400 (Exception ex) {
+		return this.createRespEntityError(ex, AppExceptionCodeEnum.STATUS_40000);
 	}
 
-	private ResponseEntity<RespEntityErrorDTO> createRespEntityError ( AppExceptionCodeEnum appExCode, Exception ex ) {
-		CustomException customEx = new CustomException( appExCode, ex );
-		RespEntityErrorDTO error = this.respEntityErrorMapper.toDTO( customEx, this.uDateTimeService.getTimestamp() );
-		LOGGER.error( UConstants.MSG_BASE_ERROR + error.getErrorCode() + " : " + error.getExMessage() );
+	@ExceptionHandler({
+		 NoHandlerFoundException.class,
+		 NoResourceFoundException.class
+	})
+	public ResponseEntity<RespEntityErrorDTO> handleEx404 (Exception ex) {
+		return this.createRespEntityError(ex, AppExceptionCodeEnum.STATUS_40400);
+	}
 
-		return new ResponseEntity<>( error, customEx.getAppExCode().getHttpStatusCode() );
+	@ExceptionHandler({
+		 HttpRequestMethodNotSupportedException.class
+	})
+	public ResponseEntity<RespEntityErrorDTO> handleEx405 (Exception ex) {
+		return this.createRespEntityError(ex, AppExceptionCodeEnum.STATUS_40500);
+	}
+
+	@ExceptionHandler({
+		 HttpMediaTypeNotAcceptableException.class
+	})
+	public ResponseEntity<RespEntityErrorDTO> handleEx406 (Exception ex) {
+		return this.createRespEntityError(ex, AppExceptionCodeEnum.STATUS_40600);
+	}
+
+	@ExceptionHandler({
+		 HttpMediaTypeNotSupportedException.class
+	})
+	public ResponseEntity<RespEntityErrorDTO> handleEx415 (Exception ex) {
+		return this.createRespEntityError(ex, AppExceptionCodeEnum.STATUS_41500);
+	}
+
+	@ExceptionHandler({
+		 ArithmeticException.class,
+		 MissingPathVariableException.class,
+		 ConversionNotSupportedException.class,
+		 HttpMessageNotWritableException.class
+	})
+	public ResponseEntity<RespEntityErrorDTO> handleEx500 (Exception ex) {
+		return this.createRespEntityError(ex, AppExceptionCodeEnum.STATUS_50000);
+	}
+
+	@ExceptionHandler({
+		 AsyncRequestTimeoutException.class
+	})
+	public ResponseEntity<RespEntityErrorDTO> handleEx503 (Exception ex) {
+		return this.createRespEntityError(ex, AppExceptionCodeEnum.STATUS_50300);
+	}
+
+	private ResponseEntity<RespEntityErrorDTO> createRespEntityError (Exception ex, AppExceptionCodeEnum appExCode) {
+		CustomException customEx = Objects.nonNull(appExCode) ? new CustomException(ex, appExCode) : ( CustomException ) ex;
+		RespEntityErrorDTO error = this.respEntityErrorMapper.toDTO(customEx, this.uDateTimeService.getTimestamp());
+		LOGGER.error(UConstants.MSG_BASE_ERROR + error.getErrorCode() + " : " + error.getExMessage());
+
+		return new ResponseEntity<>(error, customEx.getAppExCode().getHttpStatusCode());
 	}
 }

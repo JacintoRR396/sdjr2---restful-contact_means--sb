@@ -1,5 +1,7 @@
 package com.sdjr2.rest_contact_meanssb.services.impl;
 
+import com.sdjr2.rest_contact_meanssb.exceptions.AppExceptionCodeEnum;
+import com.sdjr2.rest_contact_meanssb.exceptions.CustomException;
 import com.sdjr2.rest_contact_meanssb.mappers.AddressMapper;
 import com.sdjr2.rest_contact_meanssb.models.dto.AddressDTO;
 import com.sdjr2.rest_contact_meanssb.repositories.AddressJpaRepository;
@@ -16,6 +18,7 @@ import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.server.ResponseStatusException;
 
 import java.util.List;
+import java.util.NoSuchElementException;
 
 /**
  * {@link AddressServiceImpl} class.
@@ -25,7 +28,7 @@ import java.util.List;
  * @author Jacinto R^2
  * @version 1.0
  * @category Service
- * @upgrade 24/06/17
+ * @upgrade 24/06/18
  * @since 23/06/10
  */
 @Service
@@ -91,7 +94,7 @@ public class AddressServiceImpl implements AddressService {
   }
 
   @Override
-  public AddressEntity updateAddress(Integer id, AddressDTO addressDTO) {
+  public AddressEntity updateAddress(AddressDTO addressDTO, Integer id) {
     AddressEntity entity = this.addressMapper.toEntity(addressDTO, false);
     this.checkExistsAddress(entity.getId());
     return this.addressRepo.save(entity);
@@ -104,7 +107,10 @@ public class AddressServiceImpl implements AddressService {
   }
 
   private AddressEntity checkExistsAddress(final Integer id) {
-    return this.addressRepo.findById(id).orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND,
-      String.format("Address with ID '%d' not found", id)));
+    try {
+      return this.addressRepo.findById(id).orElseThrow();
+    } catch (NoSuchElementException ex) {
+     throw new CustomException(ex, AppExceptionCodeEnum.STATUS_40400);
+    }
   }
 }

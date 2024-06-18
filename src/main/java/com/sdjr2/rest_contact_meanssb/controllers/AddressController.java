@@ -10,6 +10,7 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.Page;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -26,7 +27,7 @@ import java.util.Set;
  * @author Jacinto R^2
  * @version 1.0
  * @category Controller
- * @upgrade 24/06/17
+ * @upgrade 24/06/18
  * @see Validator Validator validates all constraints.
  * @see HttpServletRequest HttpServletRequest provides request information for HTTP servlets.
  * @since 23/06/10
@@ -54,7 +55,6 @@ public class AddressController {
   /*********** GET ALL ***********/
   @GetMapping
   public ResponseEntity<List<AddressDTO>> getAddresses() {
-    // int res = 10 / 0;
     return new ResponseEntity<>(this.addressService.getAddresses(), HttpStatus.OK);
   }
 
@@ -90,7 +90,8 @@ public class AddressController {
 
   /*********** POST ***********/
   @PostMapping
-  public ResponseEntity<AddressEntity> addAddress(@RequestBody @Valid AddressDTO addressDTO) {
+  public ResponseEntity<AddressEntity> addAddress(@Valid @RequestBody AddressDTO addressDTO,
+                                                  BindingResult resValidation) {
     if (this.validateRequest(this.validator.validate(addressDTO))) {
       return new ResponseEntity<>(this.addressService.createAddress(addressDTO), HttpStatus.CREATED);
     }
@@ -99,10 +100,11 @@ public class AddressController {
 
   /*********** PUT ***********/
   @PutMapping(value = "/{addressId}")
-  public ResponseEntity<AddressEntity> updateAddress(@PathVariable("addressId") Integer id,
-                                                     @RequestBody @Valid AddressDTO addressDTO) {
+  public ResponseEntity<AddressEntity> updateAddress(@Valid @RequestBody AddressDTO addressDTO,
+                                                     BindingResult resValidation,
+                                                     @PathVariable("addressId") Integer id) {
     if (this.validateRequest(this.validator.validate(addressDTO))) {
-      return new ResponseEntity<>(this.addressService.updateAddress(id, addressDTO), HttpStatus.OK);
+      return new ResponseEntity<>(this.addressService.updateAddress(addressDTO, id), HttpStatus.OK);
     }
     return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
   }
