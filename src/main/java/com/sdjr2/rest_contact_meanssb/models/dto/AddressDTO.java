@@ -3,10 +3,7 @@ package com.sdjr2.rest_contact_meanssb.models.dto;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import com.sdjr2.rest_contact_meanssb.utils.UConstants;
 import com.sdjr2.rest_contact_meanssb.utils.UJsonAdapter;
-import jakarta.validation.constraints.Digits;
-import jakarta.validation.constraints.NotNull;
-import jakarta.validation.constraints.Pattern;
-import jakarta.validation.constraints.Positive;
+import jakarta.validation.constraints.*;
 import lombok.*;
 
 import java.util.Comparator;
@@ -19,7 +16,7 @@ import java.util.Comparator;
  * @author Jacinto R^2
  * @version 1.0
  * @category DTO
- * @upgrade 24/06/13
+ * @upgrade 24/06/18
  * @since 23/06/11
  */
 @NoArgsConstructor
@@ -30,8 +27,7 @@ import java.util.Comparator;
 public class AddressDTO implements Comparable<AddressDTO> {
 
   /* VARIABLES */
-  @Positive
-  @Pattern(regexp = UConstants.INDEX_REGEX)
+  @PositiveOrZero
   private Integer id;
 
   @NotNull
@@ -62,10 +58,10 @@ public class AddressDTO implements Comparable<AddressDTO> {
   private Integer postalCode;
 
   @Pattern(regexp = UConstants.LATITUDE_LONGITUDE_REGEX)
-  private Double longitude;
+  private String longitude;
 
   @Pattern(regexp = UConstants.LATITUDE_LONGITUDE_REGEX)
-  private Double latitude;
+  private String latitude;
 
   @Pattern(regexp = UConstants.ADDITIONAL_INFO_REGEX)
   @JsonProperty("additional_info")

@@ -18,64 +18,66 @@ import org.mapstruct.MappingTarget;
  * @author Jacinto R^2
  * @version 1.0
  * @category Mapper
- * @upgrade 24/06/17
+ * @upgrade 24/06/18
  * @since 23/06/11
  */
 @Mapper(componentModel = "spring")
 public abstract class AddressMapper {
 
-	/**
-	 * Map address request object to address entity.
-	 *
-	 * @param dto    address request object
-	 * @param isCreated indicate if is created or updated
-	 * @return AddressEntity {@link AddressEntity}
-	 */
-	@Mapping(source = "dto.street", target = "street")
-	@Mapping(source = "dto.number", target = "number")
-	@Mapping(source = "dto.letter", target = "letter")
-	@Mapping(source = "dto.town", target = "town")
-	@Mapping(source = "dto.city", target = "city")
-	@Mapping(source = "dto.country", target = "country")
-	@Mapping(source = "dto.postalCode", target = "postalCode")
-	@Mapping(source = "dto.longitude", target = "longitude")
-	@Mapping(source = "dto.latitude", target = "latitude")
-	@Mapping(source = "dto.additionalInfo", target = "additionalInfo")
-	public abstract AddressEntity toEntity ( AddressDTO dto, boolean isCreated );
+  /**
+   * Map address entity to address request object.
+   *
+   * @param entity address entity
+   * @return AddressDTO {@link AddressDTO}
+   */
+  @Mapping(source = "entity.id", target = "id")
+  @Mapping(source = "entity.street", target = "street")
+  @Mapping(source = "entity.number", target = "number")
+  @Mapping(source = "entity.letter", target = "letter")
+  @Mapping(source = "entity.town", target = "town")
+  @Mapping(source = "entity.city", target = "city")
+  @Mapping(source = "entity.country", target = "country")
+  @Mapping(source = "entity.postalCode", target = "postalCode")
+  @Mapping(source = "entity.longitude", target = "longitude")
+  @Mapping(source = "entity.latitude", target = "latitude")
+  @Mapping(source = "entity.additionalInfo", target = "additionalInfo")
+  public abstract AddressDTO toDTO(AddressEntity entity);
 
-	/**
-	 * Map address request object to address entity with additional logic
-	 *
-	 * @param dto    address request object
-	 * @param isCreated     indicate if is created or updated
-	 * @param addressEntity address entity
-	 * @return AddressEntity {@link AddressEntity}
-	 */
-	@AfterMapping
-	protected AddressEntity afterMappingEntity ( AddressDTO dto, boolean isCreated,
-																							 @MappingTarget AddressEntity addressEntity ) {
-		if ( isCreated ) {
-			addressEntity.setId( dto.getId() );
-		}
-		return addressEntity;
-	}
+  /**
+   * Map address request object to address entity.
+   *
+   * @param dto       address request object
+   * @param isCreated indicate if is created or updated
+   * @return AddressEntity {@link AddressEntity}
+   */
+  @Mapping(source = "dto.street", target = "street")
+  @Mapping(source = "dto.number", target = "number")
+  @Mapping(source = "dto.letter", target = "letter")
+  @Mapping(source = "dto.town", target = "town")
+  @Mapping(source = "dto.city", target = "city")
+  @Mapping(source = "dto.country", target = "country")
+  @Mapping(source = "dto.postalCode", target = "postalCode")
+  @Mapping(source = "dto.longitude", target = "longitude")
+  @Mapping(source = "dto.latitude", target = "latitude")
+  @Mapping(source = "dto.additionalInfo", target = "additionalInfo")
+  @Mapping(target = "auditableEntity", ignore = true)
+  public abstract AddressEntity toEntity(AddressDTO dto, boolean isCreated);
 
-	/**
-	 * Map address entity to address request object.
-	 *
-	 * @param entity    address entity
-	 * @return AddressDTO {@link AddressDTO}
-	 */
-	@Mapping(source = "entity.id", target = "id")
-	@Mapping(source = "entity.street", target = "street")
-	@Mapping(source = "entity.number", target = "number")
-	@Mapping(source = "entity.letter", target = "letter")
-	@Mapping(source = "entity.town", target = "town")
-	@Mapping(source = "entity.city", target = "city")
-	@Mapping(source = "entity.country", target = "country")
-	@Mapping(source = "entity.postalCode", target = "postalCode")
-	@Mapping(source = "entity.longitude", target = "longitude")
-	@Mapping(source = "entity.latitude", target = "latitude")
-	@Mapping(source = "entity.additionalInfo", target = "additionalInfo")
-	public abstract AddressDTO toDTO ( AddressEntity entity );
+  /**
+   * Map address request object to address entity with additional logic
+   *
+   * @param dto           address request object
+   * @param isCreated     indicate if is created or updated
+   * @param addressEntity address entity
+   * @return AddressEntity {@link AddressEntity}
+   */
+  @AfterMapping
+  protected AddressEntity afterMappingToEntity(AddressDTO dto, boolean isCreated,
+                                               @MappingTarget AddressEntity addressEntity) {
+    if (isCreated) {
+      addressEntity.setId(dto.getId());
+    }
+
+    return addressEntity;
+  }
 }

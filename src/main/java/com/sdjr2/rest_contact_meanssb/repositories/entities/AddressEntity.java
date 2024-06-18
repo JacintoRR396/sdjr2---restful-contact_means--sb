@@ -19,7 +19,7 @@ import java.io.Serializable;
  * @author Jacinto R^2
  * @version 1.0
  * @category Entity (ORM)
- * @upgrade 24/06/17
+ * @upgrade 24/06/18
  * @since 23/06/10
  */
 @Entity
@@ -85,14 +85,14 @@ public class AddressEntity implements Serializable {
   /**
    * longitude attribute
    */
-  @Column(name = "longitude_dec")
-  private Double longitude;
+  @Column(name = "longitude_str")
+  private String longitude;
 
   /**
    * latitude attribute
    */
-  @Column(name = "latitude_dec")
-  private Double latitude;
+  @Column(name = "latitude_str")
+  private String latitude;
 
   /**
    * additional info attribute

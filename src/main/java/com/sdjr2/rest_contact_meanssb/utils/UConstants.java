@@ -30,5 +30,5 @@ public class UConstants {
     public static final String CITY_REGEX = UConstants.NAME_GENERIC_REGEX + "{2,60}";
     public static final String COUNTRY_REGEX = UConstants.NAME_GENERIC_REGEX + "{2,40}";
     public static final String POSTAL_CODE_REGEX = "/^(?:0?[1-9]|[1-4]\\d|5[0-2])\\d{3}$/";
-    public static final String LATITUDE_LONGITUDE_REGEX = "/^(\\d{1,2}(?:[\\.\\,]\\d{5,8})?)$/";
+    public static final String LATITUDE_LONGITUDE_REGEX = "/^([\\-]?\\d{1,2}(?:[\\.\\,]\\d{5,8})?)$/";
 }
