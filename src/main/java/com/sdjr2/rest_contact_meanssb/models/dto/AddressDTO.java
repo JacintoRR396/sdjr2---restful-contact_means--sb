@@ -1,10 +1,8 @@
 package com.sdjr2.rest_contact_meanssb.models.dto;
 
-import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonInclude;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import com.sdjr2.rest_contact_meanssb.utils.UConstants;
-import com.sdjr2.rest_contact_meanssb.utils.UJsonAdapter;
 import jakarta.validation.constraints.*;
 import lombok.*;
 
@@ -13,12 +11,13 @@ import java.util.Comparator;
 /**
  * {@link AddressDTO} class.
  * <p>
- * <strong>DTO</strong> - Represents an Address in the Request / Response.
+ * <strong>DTO</strong> - Represents an Address in the Request / Response, implements to
+ * * {@link BaseDTO}.
  *
  * @author Jacinto R^2
  * @version 1.0
  * @category DTO
- * @upgrade 24/06/18
+ * @upgrade 24/06/20
  * @since 23/06/11
  */
 @NoArgsConstructor
@@ -27,7 +26,7 @@ import java.util.Comparator;
 @Setter
 @Builder
 @JsonInclude(JsonInclude.Include.NON_NULL)
-public class AddressDTO implements Comparable<AddressDTO> {
+public class AddressDTO implements BaseDTO, Comparable<AddressDTO> {
 
 	/* VARIABLES */
 	@PositiveOrZero
@@ -131,14 +130,6 @@ public class AddressDTO implements Comparable<AddressDTO> {
 	}
 
 	/* METHODS OF CLASSES */
-	public static AddressDTO toJsonObj ( final String jsonData ) {
-		return UJsonAdapter.readValue( jsonData, AddressDTO.class );
-	}
-
-	public static String toJsonStr ( final AddressDTO objWebResp ) {
-		return UJsonAdapter.writeValueAsString( objWebResp );
-	}
-
 	public static AddressDTO valueOf ( final AddressDTO obj ) {
 		return new AddressDTO( obj.getId(), obj.getStreet(), obj.getNumber(), obj.getLetter(), obj.getTown(), obj.getCity(),
 				obj.getCountry(), obj.getPostalCode(), obj.getLongitude(), obj.getLatitude(), obj.getAdditionalInfo() );

@@ -1,4 +1,4 @@
-package com.sdjr2.rest_contact_meanssb.repositories.entities;
+package com.sdjr2.rest_contact_meanssb.models.entities;
 
 import jakarta.persistence.Column;
 import jakarta.persistence.Embeddable;

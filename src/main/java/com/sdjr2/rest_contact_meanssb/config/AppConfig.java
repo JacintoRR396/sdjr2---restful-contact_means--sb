@@ -1,7 +1,7 @@
 package com.sdjr2.rest_contact_meanssb.config;
 
 import com.sdjr2.rest_contact_meanssb.repositories.AddressRepository;
-import com.sdjr2.rest_contact_meanssb.repositories.entities.AddressEntity;
+import com.sdjr2.rest_contact_meanssb.models.entities.AddressEntity;
 import com.sdjr2.rest_contact_meanssb.repositories.mock.AddressRepositoryImpl;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.annotation.Bean;

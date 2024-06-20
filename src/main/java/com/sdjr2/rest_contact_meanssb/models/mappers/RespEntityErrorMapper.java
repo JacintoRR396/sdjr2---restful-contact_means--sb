@@ -1,4 +1,4 @@
-package com.sdjr2.rest_contact_meanssb.mappers;
+package com.sdjr2.rest_contact_meanssb.models.mappers;
 
 import com.sdjr2.rest_contact_meanssb.exceptions.CustomException;
 import com.sdjr2.rest_contact_meanssb.models.errors.RespEntityErrorDTO;

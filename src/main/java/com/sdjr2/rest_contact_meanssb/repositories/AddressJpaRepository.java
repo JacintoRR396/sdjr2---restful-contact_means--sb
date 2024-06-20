@@ -1,6 +1,6 @@
 package com.sdjr2.rest_contact_meanssb.repositories;
 
-import com.sdjr2.rest_contact_meanssb.repositories.entities.AddressEntity;
+import com.sdjr2.rest_contact_meanssb.models.entities.AddressEntity;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.stereotype.Repository;

@@ -2,20 +2,18 @@ package com.sdjr2.rest_contact_meanssb.services.impl;
 
 import com.sdjr2.rest_contact_meanssb.exceptions.AppExceptionCodeEnum;
 import com.sdjr2.rest_contact_meanssb.exceptions.CustomException;
-import com.sdjr2.rest_contact_meanssb.mappers.AddressMapper;
+import com.sdjr2.rest_contact_meanssb.models.mappers.AddressMapper;
 import com.sdjr2.rest_contact_meanssb.models.dto.AddressDTO;
 import com.sdjr2.rest_contact_meanssb.repositories.AddressJpaRepository;
-import com.sdjr2.rest_contact_meanssb.repositories.entities.AddressEntity;
+import com.sdjr2.rest_contact_meanssb.models.entities.AddressEntity;
 import com.sdjr2.rest_contact_meanssb.services.AddressService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.context.annotation.Primary;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Sort;
-import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
-import org.springframework.web.server.ResponseStatusException;
 
 import java.util.List;
 import java.util.NoSuchElementException;
@@ -28,7 +26,7 @@ import java.util.NoSuchElementException;
  * @author Jacinto R^2
  * @version 1.0
  * @category Service
- * @upgrade 24/06/18
+ * @upgrade 24/06/20
  * @since 23/06/10
  */
 @Service
@@ -49,7 +47,7 @@ public class AddressServiceImpl implements AddressService {
   @Override
   @Transactional(readOnly = true)
   public List<AddressDTO> getAddresses() {
-    return this.addressRepo.findAll().stream().map(this.addressMapper::toDTO).toList();
+    return this.addressMapper.toDTOs( this.addressRepo.findAll() );
   }
 
   @Override
