@@ -15,12 +15,12 @@ import java.io.Serializable;
  * <strong>Entity (ORM)</strong> - Represents an Address in the database, implements to
  * {@link BaseEntity}.
  * <p>
- * It uses the classes : 01. Level Data -> the entity {@link AuditableEntity}.
+ * It uses the classes : <br> 01. Level Data -> the entity {@link AuditableEntity}.
  *
  * @author Jacinto R^2
  * @version 1.0
  * @category Entity (ORM)
- * @upgrade 24/06/20
+ * @upgrade 24/06/23
  * @since 23/06/10
  */
 @Entity
@@ -33,6 +33,7 @@ public class AddressEntity implements BaseEntity, Serializable {
 
 	@Serial
 	private static final long serialVersionUID = -8456791947043775284L;
+	
 	/**
 	 * address id identifier
 	 */

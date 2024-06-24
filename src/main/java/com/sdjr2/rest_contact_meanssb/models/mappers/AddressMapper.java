@@ -16,7 +16,7 @@ import java.time.LocalDateTime;
  * <strong>Mapper</strong> - Represents a converter about Address DTO and Address Entity, implements to
  * {@link BaseMapper}.
  * <p>
- * It uses the classes : 01. Level Access -> the dto {@link AddressDTO} 02. Level Data -> the entity
+ * It uses the classes : <br> 01. Level Access -> the dto {@link AddressDTO} <br> 02. Level Data -> the entity
  * {@link AddressEntity}.
  *
  * @author Jacinto R^2
