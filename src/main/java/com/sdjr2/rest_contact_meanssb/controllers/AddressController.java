@@ -30,7 +30,7 @@ import java.util.Map;
  * @author Jacinto R^2
  * @version 1.0
  * @category Controller
- * @upgrade 24/06/23
+ * @upgrade 24/06/25
  * @see Validator Validator validates all constraints.
  * @see HttpServletRequest HttpServletRequest provides request information for HTTP servlets.
  * @since 23/06/10
@@ -39,16 +39,6 @@ import java.util.Map;
 @RequestMapping("/addresses")
 @RequiredArgsConstructor
 public class AddressController {
-
-	/**
-	 * Validator object
-	 */
-	private final Validator validator;
-
-	/**
-	 * httpRequest object
-	 */
-	private final HttpServletRequest httpRequest;
 
 	/**
 	 * Address service object

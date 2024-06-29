@@ -24,53 +24,53 @@ import static org.mockito.Mockito.*;
 @SpringBootTest
 class AddressServiceImplTest {
 
-  @MockBean
-  AddressMapper addressMapper;
+	@MockBean
+	AddressMapper addressMapper;
 
-  @MockBean
-  AddressJpaRepository addressRepo;
+	@MockBean
+	AddressJpaRepository addressRepo;
 
-  @Autowired
-  @Qualifier("addressServiceImpl")
-  AddressService addressService;
+	@Autowired
+	@Qualifier("addressServiceImpl")
+	AddressService addressService;
 
-  @Spy
-  List<AddressEntity> addressEntities;
+	@Spy
+	List<AddressEntity> addressEntities = new ArrayList<>();
 
-  @Spy
-  List<AddressDTO> addressDTOs;
+	@Spy
+	List<AddressDTO> addressDTOs = new ArrayList<>();
 
-  @BeforeEach
-  public void setUp() {
-    this.addressEntities.add(mock(AddressEntity.class));
-    this.addressDTOs.add(mock(AddressDTO.class));
-  }
+	@BeforeEach
+	public void setUp () {
+		this.addressEntities.add( mock( AddressEntity.class ) );
+		this.addressDTOs.add( mock( AddressDTO.class ) );
+	}
 
-  @Tag("Get All")
-  @Test
-  void getAddressesWhenIsEmptyTest() {
-    when(this.addressRepo.findAll()).thenReturn(new ArrayList<>());
-    when(this.addressMapper.toDTOs(anyList())).thenReturn(new ArrayList<>());
+	@Tag("Get All")
+	@Test
+	void getAddressesTest () {
+		when( this.addressRepo.findAll() ).thenReturn( this.addressEntities );
+		when( this.addressMapper.toDTOs( this.addressEntities ) ).thenReturn( this.addressDTOs );
 
-    List<AddressDTO> res = this.addressService.getAddresses();
-    assertNotNull(res);
-    assertTrue(res.isEmpty());
+		List<AddressDTO> res = this.addressService.getAddresses();
+		assertNotNull( res );
+		assertFalse( res.isEmpty() );
 
-    verify(this.addressRepo, only()).findAll();
-    verify(this.addressMapper, only()).toDTOs(anyList());
-  }
+		verify( this.addressRepo, only() ).findAll();
+		verify( this.addressMapper, only() ).toDTOs( this.addressEntities );
+	}
 
-  @Tag("Get All")
-  @Test
-  void getAddressesTest() {
-    when(this.addressRepo.findAll()).thenReturn(this.addressEntities);
-    when(this.addressMapper.toDTOs(this.addressEntities)).thenReturn(this.addressDTOs);
+	@Tag("Get All")
+	@Test
+	void getAddressesWhenIsEmptyTest () {
+		when( this.addressRepo.findAll() ).thenReturn( new ArrayList<>() );
+		when( this.addressMapper.toDTOs( anyList() ) ).thenReturn( new ArrayList<>() );
 
-    List<AddressDTO> res = this.addressService.getAddresses();
-    assertNotNull(res);
-    assertFalse(res.isEmpty());
+		List<AddressDTO> res = this.addressService.getAddresses();
+		assertNotNull( res );
+		assertTrue( res.isEmpty() );
 
-    verify(this.addressRepo, only()).findAll();
-    verify(this.addressMapper, only()).toDTOs(this.addressEntities);
-  }
+		verify( this.addressRepo, only() ).findAll();
+		verify( this.addressMapper, only() ).toDTOs( anyList() );
+	}
 }
