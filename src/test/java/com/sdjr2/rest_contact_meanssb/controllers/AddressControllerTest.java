@@ -8,7 +8,6 @@ import com.sdjr2.rest_contact_meanssb.models.mappers.RespEntityErrorMapper;
 import com.sdjr2.rest_contact_meanssb.services.impl.AddressServiceImpl;
 import com.sdjr2.rest_contact_meanssb.utils.UDateTimeService;
 import org.junit.jupiter.api.BeforeEach;
-import org.junit.jupiter.api.Tag;
 import org.junit.jupiter.api.Test;
 import org.mockito.Spy;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -50,7 +49,6 @@ class AddressControllerTest {
 		this.objMapper = new ObjectMapper();
 	}
 
-	@Tag("Get All")
 	@Test
 	void getAddressesTest () throws
 													 Exception {
@@ -66,7 +64,6 @@ class AddressControllerTest {
 		verify( this.addressService, only() ).getAddresses();
 	}
 
-	@Tag("Get One")
 	@Test
 	void getAddressByIdTest () throws
 														 Exception {
@@ -84,7 +81,6 @@ class AddressControllerTest {
 		verify( this.addressService, only() ).getAddressById( anyInt() );
 	}
 
-	@Tag("Post One")
 	@Test
 	void createAddressTest () throws
 														Exception {

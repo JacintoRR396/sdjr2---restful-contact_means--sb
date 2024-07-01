@@ -6,7 +6,6 @@ import com.sdjr2.rest_contact_meanssb.models.mappers.AddressMapper;
 import com.sdjr2.rest_contact_meanssb.repositories.AddressJpaRepository;
 import com.sdjr2.rest_contact_meanssb.services.AddressService;
 import org.junit.jupiter.api.BeforeEach;
-import org.junit.jupiter.api.Tag;
 import org.junit.jupiter.api.Test;
 import org.mockito.Spy;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -46,7 +45,6 @@ class AddressServiceImplTest {
 		this.addressDTOs.add( mock( AddressDTO.class ) );
 	}
 
-	@Tag("Get All")
 	@Test
 	void getAddressesTest () {
 		when( this.addressRepo.findAll() ).thenReturn( this.addressEntities );
@@ -60,7 +58,6 @@ class AddressServiceImplTest {
 		verify( this.addressMapper, only() ).toDTOs( this.addressEntities );
 	}
 
-	@Tag("Get All")
 	@Test
 	void getAddressesWhenIsEmptyTest () {
 		when( this.addressRepo.findAll() ).thenReturn( new ArrayList<>() );
