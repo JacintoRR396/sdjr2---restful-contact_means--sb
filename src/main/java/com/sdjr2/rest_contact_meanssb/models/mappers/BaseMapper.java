@@ -2,6 +2,7 @@ package com.sdjr2.rest_contact_meanssb.models.mappers;
 
 import com.sdjr2.rest_contact_meanssb.models.dto.BaseDTO;
 import com.sdjr2.rest_contact_meanssb.models.entities.BaseEntity;
+import org.mapstruct.factory.Mappers;
 
 import java.util.List;
 
@@ -17,10 +18,15 @@ import java.util.List;
  * @author Jacinto R^2
  * @version 1.0
  * @category Mapper
- * @upgrade 24/06/20
+ * @upgrade 24/07/15
  * @since 23/06/20
  */
 public interface BaseMapper<D extends BaseDTO, E extends BaseEntity> {
+
+	/**
+	 * Base mapper instance
+	 */
+	BaseMapper INSTANCE = Mappers.getMapper( BaseMapper.class );
 
 	/**
 	 * Map entity to dto

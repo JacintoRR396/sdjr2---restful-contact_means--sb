@@ -23,7 +23,7 @@ import java.util.List;
  * @author Jacinto R^2
  * @version 1.0
  * @category Service
- * @upgrade 24/06/23
+ * @upgrade 24/07/15
  * @since 23/06/10
  */
 public interface AddressService {
@@ -77,7 +77,7 @@ public interface AddressService {
 	 * Save an address entity
 	 *
 	 * @param addressDTO address request object
-	 * @return an {@link AddressDTO} object create in db and mapped.
+	 * @return an {@link AddressDTO} object created in db and mapped to response.
 	 */
 	AddressDTO createAddress ( AddressDTO addressDTO );
 
@@ -86,9 +86,9 @@ public interface AddressService {
 	 *
 	 * @param id         is the primary key.
 	 * @param addressDTO address request object
-	 * @return an {@link AddressEntity} object.
+	 * @return an {@link AddressDTO} object updated in db and mapped to response.
 	 */
-	AddressEntity updateAddress ( AddressDTO addressDTO, Integer id );
+	AddressDTO updateAddress ( AddressDTO addressDTO, Integer id );
 
 	/**
 	 * Delete an address entity for its pk

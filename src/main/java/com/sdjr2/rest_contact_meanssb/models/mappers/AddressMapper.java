@@ -22,14 +22,14 @@ import java.time.LocalDateTime;
  * @author Jacinto R^2
  * @version 1.0
  * @category Mapper
- * @upgrade 24/06/20
+ * @upgrade 24/07/15
  * @since 23/06/11
  */
 @Mapper(componentModel = "spring")
 public abstract class AddressMapper implements BaseMapper<AddressDTO, AddressEntity> {
 
 	/**
-	 * Map address entity to address request object.
+	 * Map address entity to address request object, it does not apply {@link AuditableEntity}.
 	 *
 	 * @param entity address entity
 	 * @return AddressDTO {@link AddressDTO}
@@ -51,10 +51,12 @@ public abstract class AddressMapper implements BaseMapper<AddressDTO, AddressEnt
 	/**
 	 * Map address request object to address entity.
 	 *
-	 * @param dto       address request object
-	 * @param isCreated indicate if is created or updated
+	 * @param dto      address request object
+	 * @param entityDB address entity in db
+	 * @param username username
 	 * @return AddressEntity {@link AddressEntity}
 	 */
+	@Mapping(source = "dto.id", target = "id")
 	@Mapping(source = "dto.street", target = "street")
 	@Mapping(source = "dto.number", target = "number")
 	@Mapping(source = "dto.letter", target = "letter")
@@ -66,28 +68,34 @@ public abstract class AddressMapper implements BaseMapper<AddressDTO, AddressEnt
 	@Mapping(source = "dto.latitude", target = "latitude")
 	@Mapping(source = "dto.additionalInfo", target = "additionalInfo")
 	@Mapping(target = "auditableEntity", ignore = true)
-	public abstract AddressEntity toEntity ( AddressDTO dto, boolean isCreated );
+	public abstract AddressEntity toEntity ( AddressDTO dto, AddressEntity entityDB, String username );
 
 	/**
 	 * Map address request object to address entity with additional logic
 	 *
 	 * @param dto           address request object
-	 * @param isCreated     indicate if is created or updated
-	 * @param addressEntity address entity
+	 * @param entityDB      address entity in db
+	 * @param username      username
+	 * @param addressEntity address entity about req
 	 * @return AddressEntity {@link AddressEntity}
 	 */
 	@AfterMapping
-	protected AddressEntity afterMappingToEntity ( AddressDTO dto, boolean isCreated,
+	protected AddressEntity afterMappingToEntity ( AddressDTO dto, AddressEntity entityDB, String username,
 																								 @MappingTarget AddressEntity addressEntity ) {
-		if ( isCreated ) {
-			addressEntity.setId( dto.getId() );
+		AuditableEntity auditableEntity;
+
+		if ( dto.getId().equals( 0 ) ) {
+			auditableEntity = AuditableEntity.builder()
+					.createdAt( LocalDateTime.now() )
+					.createdBy( "admin" )
+					.updatedAt( LocalDateTime.now() )
+					.updatedBy( "admin" )
+					.build();
+		} else {
+			auditableEntity = entityDB.getAuditableEntity();
+			auditableEntity.setUpdatedAt( LocalDateTime.now() );
+			auditableEntity.setUpdatedBy( username );
 		}
-		AuditableEntity auditableEntity = AuditableEntity.builder()
-				.createdAt( LocalDateTime.now() )
-				.createdBy( "admin" )
-				.updatedAt( LocalDateTime.now() )
-				.updatedBy( "admin" )
-				.build();
 		addressEntity.setAuditableEntity( auditableEntity );
 
 		return addressEntity;

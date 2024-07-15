@@ -15,6 +15,7 @@ import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.time.LocalDateTime;
 import java.util.List;
 import java.util.NoSuchElementException;
 
@@ -26,7 +27,7 @@ import java.util.NoSuchElementException;
  * @author Jacinto R^2
  * @version 1.0
  * @category Service
- * @upgrade 24/06/25
+ * @upgrade 24/07/15
  * @since 23/06/10
  */
 @Service
@@ -82,17 +83,20 @@ public class AddressServiceImpl implements AddressService {
 	@Override
 	@Transactional
 	public AddressDTO createAddress ( AddressDTO addressDTO ) {
-		AddressEntity entityReq = this.addressMapper.toEntity( addressDTO, true );
+		AddressEntity entityReq = this.addressMapper.toEntity( addressDTO, null, null );
 		AddressEntity entityDB = this.addressRepo.save( entityReq );
 
 		return this.addressMapper.toDTO( entityDB );
 	}
 
 	@Override
-	public AddressEntity updateAddress ( AddressDTO addressDTO, Integer id ) {
-		AddressEntity entity = this.addressMapper.toEntity( addressDTO, false );
-		this.checkExistsAddress( entity.getId() );
-		return this.addressRepo.save( entity );
+	public AddressDTO updateAddress ( AddressDTO addressDTO, Integer id ) {
+		AddressEntity entityDB = this.checkExistsAddress( addressDTO.getId() );
+		// TODO :: from user in token
+		AddressEntity entityReq = this.addressMapper.toEntity( addressDTO, entityDB, "SDJR2" );
+		entityDB = this.addressRepo.save( entityReq );
+
+		return this.addressMapper.toDTO( entityDB );
 	}
 
 	@Override

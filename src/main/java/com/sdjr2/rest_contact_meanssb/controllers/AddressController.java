@@ -89,17 +89,18 @@ public class AddressController implements BaseController<AddressDTO> {
 
 	/*********** PUT ***********/
 	@PutMapping(value = "/{addressId}")
-	public ResponseEntity<AddressDTO> update ( @Valid @RequestBody AddressDTO addressDTO,
-																						 BindingResult resValidation,
+	public ResponseEntity<AddressDTO> update ( @Valid @RequestBody AddressDTO addressDTO, BindingResult resValidation,
 																						 @PathVariable("addressId") Integer id ) {
-		return null;
-		//return new ResponseEntity<>( this.addressService.updateAddress( addressDTO, id ), HttpStatus.OK );
+		this.checkValidation( resValidation );
+
+		return new ResponseEntity<>( this.addressService.updateAddress( addressDTO, id ), HttpStatus.OK );
 	}
 
 	/*********** DELETE ***********/
 	@DeleteMapping(value = "/{addressId}")
 	public ResponseEntity<Void> delete ( @PathVariable("addressId") Integer id ) {
 		this.addressService.deleteAddress( id );
+
 		return new ResponseEntity<>( HttpStatus.NO_CONTENT );
 	}
 }
