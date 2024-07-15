@@ -5,12 +5,12 @@ import com.sdjr2.rest_contact_meanssb.utils.UJsonAdapter;
 /**
  * {@link BaseDTO} class.
  * <p>
- * <strong>DTO</strong> - Interface with the common dto contract.
+ * <strong>DTO</strong> - Interface with the common dto.
  *
  * @author Jacinto R^2
  * @version 1.0
  * @category DTO
- * @upgrade 24/06/20
+ * @upgrade 24/07/15
  * @since 23/06/20
  */
 public interface BaseDTO {

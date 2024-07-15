@@ -17,7 +17,7 @@ import java.util.Comparator;
  * @author Jacinto R^2
  * @version 1.0
  * @category DTO
- * @upgrade 24/06/20
+ * @upgrade 24/07/15
  * @since 23/06/11
  */
 @NoArgsConstructor
@@ -55,7 +55,7 @@ public class AddressDTO implements BaseDTO, Comparable<AddressDTO> {
 	private String country;
 
 	@NotNull
-	@Positive
+	@PositiveOrZero
 	@Digits(integer = 5, fraction = 0)
 	@JsonProperty("postal_code")
 	private Integer postalCode;

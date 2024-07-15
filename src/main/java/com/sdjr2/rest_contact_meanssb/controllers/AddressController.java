@@ -1,7 +1,5 @@
 package com.sdjr2.rest_contact_meanssb.controllers;
 
-import com.sdjr2.rest_contact_meanssb.exceptions.AppExceptionCodeEnum;
-import com.sdjr2.rest_contact_meanssb.exceptions.CustomException;
 import com.sdjr2.rest_contact_meanssb.models.dto.AddressDTO;
 import com.sdjr2.rest_contact_meanssb.models.entities.AddressEntity;
 import com.sdjr2.rest_contact_meanssb.services.AddressService;
@@ -15,14 +13,13 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
 
-import java.util.HashMap;
 import java.util.List;
-import java.util.Map;
 
 /**
  * {@link AddressController} class.
  * <p>
- * <strong>Controller</strong> - Represents a handler of request about Addresses.
+ * <strong>Controller</strong> - Represents a handler of request about Addresses that implements to
+ * {@link BaseController}.
  * <p>
  * It uses the classes : <br> 01. Level Access -> the dto {@link AddressDTO} <br> 02. Level Logic -> the service
  * {@link AddressService} <br> 03. Level Data -> the entity {@link AddressEntity}.
@@ -30,7 +27,7 @@ import java.util.Map;
  * @author Jacinto R^2
  * @version 1.0
  * @category Controller
- * @upgrade 24/06/25
+ * @upgrade 24/07/15
  * @see Validator Validator validates all constraints.
  * @see HttpServletRequest HttpServletRequest provides request information for HTTP servlets.
  * @since 23/06/10
@@ -38,7 +35,7 @@ import java.util.Map;
 @RestController
 @RequestMapping("/addresses")
 @RequiredArgsConstructor
-public class AddressController {
+public class AddressController implements BaseController<AddressDTO> {
 
 	/**
 	 * Address service object
@@ -47,15 +44,16 @@ public class AddressController {
 
 	/*********** GET ALL ***********/
 	@GetMapping
-	public ResponseEntity<List<AddressDTO>> getAddresses () {
+	public ResponseEntity<List<AddressDTO>> getAll () {
 		return new ResponseEntity<>( this.addressService.getAddresses(), HttpStatus.OK );
 	}
 
 	@GetMapping(value = "/pagination")
-	public ResponseEntity<Page<AddressEntity>> getAddressesWithPagination (
+	public ResponseEntity<Page<AddressDTO>> getAllWithPagination (
 			@RequestParam(value = "page", defaultValue = "0", required = false) Integer pageNum,
 			@RequestParam(value = "size", defaultValue = "15", required = false) Integer pageSize ) {
-		return new ResponseEntity<>( this.addressService.getAddressesWithPagination( pageNum, pageSize ), HttpStatus.OK );
+		return null;
+		//return new ResponseEntity<>( this.addressService.getAddressesWithPagination( pageNum, pageSize ), HttpStatus.OK );
 	}
 
 	@GetMapping(value = "/order")
@@ -77,14 +75,13 @@ public class AddressController {
 
 	/*********** GET ***********/
 	@GetMapping(value = "/{addressId}")
-	public ResponseEntity<AddressDTO> getAddressById ( @PathVariable("addressId") Integer id ) {
+	public ResponseEntity<AddressDTO> getOneById ( @PathVariable("addressId") Integer id ) {
 		return new ResponseEntity<>( this.addressService.getAddressById( id ), HttpStatus.OK );
 	}
 
 	/*********** POST ***********/
 	@PostMapping
-	public ResponseEntity<AddressDTO> createAddress ( @Valid @RequestBody AddressDTO addressDTO,
-																										BindingResult resValidation ) {
+	public ResponseEntity<AddressDTO> create ( @Valid @RequestBody AddressDTO addressDTO, BindingResult resValidation ) {
 		this.checkValidation( resValidation );
 
 		return new ResponseEntity<>( this.addressService.createAddress( addressDTO ), HttpStatus.CREATED );
@@ -92,31 +89,17 @@ public class AddressController {
 
 	/*********** PUT ***********/
 	@PutMapping(value = "/{addressId}")
-	public ResponseEntity<AddressEntity> updateAddress ( @Valid @RequestBody AddressDTO addressDTO,
-																											 BindingResult resValidation,
-																											 @PathVariable("addressId") Integer id ) {
-		return new ResponseEntity<>( this.addressService.updateAddress( addressDTO, id ), HttpStatus.OK );
+	public ResponseEntity<AddressDTO> update ( @Valid @RequestBody AddressDTO addressDTO,
+																						 BindingResult resValidation,
+																						 @PathVariable("addressId") Integer id ) {
+		return null;
+		//return new ResponseEntity<>( this.addressService.updateAddress( addressDTO, id ), HttpStatus.OK );
 	}
 
 	/*********** DELETE ***********/
 	@DeleteMapping(value = "/{addressId}")
-	public ResponseEntity<Void> deleteAddress ( @PathVariable("addressId") Integer id ) {
+	public ResponseEntity<Void> delete ( @PathVariable("addressId") Integer id ) {
 		this.addressService.deleteAddress( id );
 		return new ResponseEntity<>( HttpStatus.NO_CONTENT );
-	}
-
-	/**
-	 * Check if validation has errors
-	 *
-	 * @param resValidation set of ConstraintViolation object
-	 */
-	private void checkValidation ( BindingResult resValidation ) {
-		if ( resValidation.hasFieldErrors() ) {
-			Map<String, String> validationErrors = new HashMap<>();
-			resValidation.getFieldErrors().forEach(
-					error -> validationErrors.put( error.getField(), "The field " + error.getField() + " " + error.getDefaultMessage() ) );
-
-			throw new CustomException( null, AppExceptionCodeEnum.STATUS_40001, validationErrors );
-		}
 	}
 }
