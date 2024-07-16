@@ -40,12 +40,12 @@ public class AddressServiceMockImpl implements AddressService {
 	private final AddressRepository<AddressEntity, Integer> addressRepo;
 
 	@Override
-	public List<AddressDTO> getAddresses () {
+	public List<AddressDTO> getAll () {
 		return this.addressRepo.findAll().stream().map( this.addressMapper::toDTO ).toList();
 	}
 
 	@Override
-	public Page<AddressEntity> getAddressesWithPagination ( Integer pageNum, Integer pageSize ) {
+	public Page<AddressDTO> getAllWithPagination ( Integer pageNum, Integer pageSize ) {
 		return Page.empty();
 	}
 
@@ -70,13 +70,13 @@ public class AddressServiceMockImpl implements AddressService {
 	}
 
 	@Override
-	public AddressDTO getAddressById ( Integer id ) {
+	public AddressDTO getOneById ( Integer id ) {
 		AddressEntity entity = this.checkExistsAddress( id );
 		return this.addressMapper.toDTO( entity );
 	}
 
 	@Override
-	public AddressDTO createAddress ( AddressDTO addressDTO ) {
+	public AddressDTO create ( AddressDTO addressDTO ) {
 		AddressEntity entityReq = this.addressMapper.toEntity( addressDTO );
 		AddressEntity entityDB = this.addressRepo.save( entityReq );
 
@@ -84,12 +84,12 @@ public class AddressServiceMockImpl implements AddressService {
 	}
 
 	@Override
-	public AddressDTO updateAddress ( AddressDTO addressDTO, Integer id ) {
+	public AddressDTO update ( AddressDTO addressDTO, Integer id ) {
 		return null;
 	}
 
 	@Override
-	public void deleteAddress ( Integer id ) {
+	public void delete ( Integer id ) {
 
 	}
 

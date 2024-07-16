@@ -15,7 +15,6 @@ import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
-import java.time.LocalDateTime;
 import java.util.List;
 import java.util.NoSuchElementException;
 
@@ -27,7 +26,7 @@ import java.util.NoSuchElementException;
  * @author Jacinto R^2
  * @version 1.0
  * @category Service
- * @upgrade 24/07/15
+ * @upgrade 24/07/16
  * @since 23/06/10
  */
 @Service
@@ -47,13 +46,15 @@ public class AddressServiceImpl implements AddressService {
 
 	@Override
 	@Transactional(readOnly = true)
-	public List<AddressDTO> getAddresses () {
+	public List<AddressDTO> getAll () {
 		return this.addressMapper.toDTOs( this.addressRepo.findAll() );
 	}
 
 	@Override
-	public Page<AddressEntity> getAddressesWithPagination ( Integer pageNum, Integer pageSize ) {
-		return this.addressRepo.findAll( PageRequest.of( pageNum, pageSize ) );
+	public Page<AddressDTO> getAllWithPagination ( Integer pageNum, Integer pageSize ) {
+		// TODO : refactor
+		//return this.addressRepo.findAll( PageRequest.of( pageNum, pageSize ) );
+		return null;
 	}
 
 	@Override
@@ -75,14 +76,15 @@ public class AddressServiceImpl implements AddressService {
 
 	@Override
 	@Transactional(readOnly = true)
-	public AddressDTO getAddressById ( Integer id ) {
+	public AddressDTO getOneById ( Integer id ) {
 		AddressEntity entity = this.checkExistsAddress( id );
+
 		return this.addressMapper.toDTO( entity );
 	}
 
 	@Override
 	@Transactional
-	public AddressDTO createAddress ( AddressDTO addressDTO ) {
+	public AddressDTO create ( AddressDTO addressDTO ) {
 		AddressEntity entityReq = this.addressMapper.toEntity( addressDTO, null, null );
 		AddressEntity entityDB = this.addressRepo.save( entityReq );
 
@@ -90,7 +92,8 @@ public class AddressServiceImpl implements AddressService {
 	}
 
 	@Override
-	public AddressDTO updateAddress ( AddressDTO addressDTO, Integer id ) {
+	@Transactional
+	public AddressDTO update ( AddressDTO addressDTO, Integer id ) {
 		AddressEntity entityDB = this.checkExistsAddress( addressDTO.getId() );
 		// TODO :: from user in token
 		AddressEntity entityReq = this.addressMapper.toEntity( addressDTO, entityDB, "SDJR2" );
@@ -100,7 +103,8 @@ public class AddressServiceImpl implements AddressService {
 	}
 
 	@Override
-	public void deleteAddress ( Integer id ) {
+	@Transactional
+	public void delete ( Integer id ) {
 		AddressEntity entityDB = this.checkExistsAddress( id );
 		this.addressRepo.delete( entityDB );
 	}

@@ -11,7 +11,8 @@ import java.util.List;
 /**
  * {@link AddressService} interface.
  * <p>
- * <strong>Service</strong> - Represents an interface service that manages business logic about Addresses.
+ * <strong>Service</strong> - Represents an interface service that manages business logic about Addresses, this
+ * extends from {@link BaseService}.
  * <p>
  * This Service maps the addresses of the request {@link AddressDTO} to database {@link AddressEntity} with
  * {@link AddressMapper}.
@@ -23,26 +24,10 @@ import java.util.List;
  * @author Jacinto R^2
  * @version 1.0
  * @category Service
- * @upgrade 24/07/15
+ * @upgrade 24/07/16
  * @since 23/06/10
  */
-public interface AddressService {
-
-	/**
-	 * Gets a list of addresses
-	 *
-	 * @return a list of {@link AddressDTO} object.
-	 */
-	List<AddressDTO> getAddresses ();
-
-	/**
-	 * Gets a list of addresses with pagination
-	 *
-	 * @param pageNum  number of the page.
-	 * @param pageSize size of the page, as so, number of addresses.
-	 * @return a page of {@link AddressEntity} object.
-	 */
-	Page<AddressEntity> getAddressesWithPagination ( Integer pageNum, Integer pageSize );
+public interface AddressService extends BaseService<AddressDTO> {
 
 	/**
 	 * Gets a list of addresses with order
@@ -64,36 +49,4 @@ public interface AddressService {
 	 */
 	Page<AddressEntity> getAddressesWithPaginationAndOrder ( Integer pageNum, Integer pageSize,
 																													 String attribute, boolean isAsc );
-
-	/**
-	 * Gets an address for its identifier
-	 *
-	 * @param id is the primary key.
-	 * @return an {@link AddressDTO} object.
-	 */
-	AddressDTO getAddressById ( Integer id );
-
-	/**
-	 * Save an address entity
-	 *
-	 * @param addressDTO address request object
-	 * @return an {@link AddressDTO} object created in db and mapped to response.
-	 */
-	AddressDTO createAddress ( AddressDTO addressDTO );
-
-	/**
-	 * Update an address entity
-	 *
-	 * @param id         is the primary key.
-	 * @param addressDTO address request object
-	 * @return an {@link AddressDTO} object updated in db and mapped to response.
-	 */
-	AddressDTO updateAddress ( AddressDTO addressDTO, Integer id );
-
-	/**
-	 * Delete an address entity for its pk
-	 *
-	 * @param id is the primary key.
-	 */
-	void deleteAddress ( Integer id );
 }

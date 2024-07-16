@@ -18,7 +18,7 @@ import java.util.List;
 /**
  * {@link AddressController} class.
  * <p>
- * <strong>Controller</strong> - Represents a handler of request about Addresses that implements to
+ * <strong>Controller</strong> - Represents a handler of request about Addresses, this implements to
  * {@link BaseController}.
  * <p>
  * It uses the classes : <br> 01. Level Access -> the dto {@link AddressDTO} <br> 02. Level Logic -> the service
@@ -27,7 +27,7 @@ import java.util.List;
  * @author Jacinto R^2
  * @version 1.0
  * @category Controller
- * @upgrade 24/07/15
+ * @upgrade 24/07/16
  * @see Validator Validator validates all constraints.
  * @see HttpServletRequest HttpServletRequest provides request information for HTTP servlets.
  * @since 23/06/10
@@ -45,7 +45,7 @@ public class AddressController implements BaseController<AddressDTO> {
 	/*********** GET ALL ***********/
 	@GetMapping
 	public ResponseEntity<List<AddressDTO>> getAll () {
-		return new ResponseEntity<>( this.addressService.getAddresses(), HttpStatus.OK );
+		return new ResponseEntity<>( this.addressService.getAll(), HttpStatus.OK );
 	}
 
 	@GetMapping(value = "/pagination")
@@ -76,7 +76,7 @@ public class AddressController implements BaseController<AddressDTO> {
 	/*********** GET ***********/
 	@GetMapping(value = "/{addressId}")
 	public ResponseEntity<AddressDTO> getOneById ( @PathVariable("addressId") Integer id ) {
-		return new ResponseEntity<>( this.addressService.getAddressById( id ), HttpStatus.OK );
+		return new ResponseEntity<>( this.addressService.getOneById( id ), HttpStatus.OK );
 	}
 
 	/*********** POST ***********/
@@ -84,7 +84,7 @@ public class AddressController implements BaseController<AddressDTO> {
 	public ResponseEntity<AddressDTO> create ( @Valid @RequestBody AddressDTO addressDTO, BindingResult resValidation ) {
 		this.checkValidation( resValidation );
 
-		return new ResponseEntity<>( this.addressService.createAddress( addressDTO ), HttpStatus.CREATED );
+		return new ResponseEntity<>( this.addressService.create( addressDTO ), HttpStatus.CREATED );
 	}
 
 	/*********** PUT ***********/
@@ -93,13 +93,13 @@ public class AddressController implements BaseController<AddressDTO> {
 																						 @PathVariable("addressId") Integer id ) {
 		this.checkValidation( resValidation );
 
-		return new ResponseEntity<>( this.addressService.updateAddress( addressDTO, id ), HttpStatus.OK );
+		return new ResponseEntity<>( this.addressService.update( addressDTO, id ), HttpStatus.OK );
 	}
 
 	/*********** DELETE ***********/
 	@DeleteMapping(value = "/{addressId}")
 	public ResponseEntity<Void> delete ( @PathVariable("addressId") Integer id ) {
-		this.addressService.deleteAddress( id );
+		this.addressService.delete( id );
 
 		return new ResponseEntity<>( HttpStatus.NO_CONTENT );
 	}

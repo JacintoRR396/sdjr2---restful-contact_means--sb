@@ -7,18 +7,19 @@ import org.mapstruct.factory.Mappers;
 import java.util.List;
 
 /**
- * {@link BaseMapper} class.
+ * {@link BaseMapper} interface.
  * <p>
  * <strong>Mapper</strong> - Interface with the common mappers contract.
  * <p>
- * It uses the classes : 01. Level Access -> the dto {@link BaseDTO} 02. Level Data -> the entity {@link BaseEntity}.
+ * It uses the classes : <br> 01. Level Access -> the dto {@link BaseDTO} <br> 02. Level Data -> the entity
+ * {@link BaseEntity}.
  *
- * @param <D> the parameter of the dto class
- * @param <E> the parameter of the entity class
+ * @param <D> the parameter of the dto class, extends from {@link BaseDTO}
+ * @param <E> the parameter of the entity class, extends from {@link BaseEntity}
  * @author Jacinto R^2
  * @version 1.0
  * @category Mapper
- * @upgrade 24/07/15
+ * @upgrade 24/07/16
  * @since 23/06/20
  */
 public interface BaseMapper<D extends BaseDTO, E extends BaseEntity> {

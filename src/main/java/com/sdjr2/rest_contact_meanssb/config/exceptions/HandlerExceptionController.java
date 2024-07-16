@@ -3,7 +3,7 @@ package com.sdjr2.rest_contact_meanssb.config.exceptions;
 import com.sdjr2.rest_contact_meanssb.exceptions.AppExceptionCodeEnum;
 import com.sdjr2.rest_contact_meanssb.exceptions.CustomException;
 import com.sdjr2.rest_contact_meanssb.models.mappers.RespEntityErrorMapper;
-import com.sdjr2.rest_contact_meanssb.models.errors.RespEntityErrorDTO;
+import com.sdjr2.rest_contact_meanssb.models.dto.errors.RespEntityErrorDTO;
 import com.sdjr2.rest_contact_meanssb.utils.UConstants;
 import com.sdjr2.rest_contact_meanssb.utils.UDateTimeService;
 import lombok.AllArgsConstructor;
