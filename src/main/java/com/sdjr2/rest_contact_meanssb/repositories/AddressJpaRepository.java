@@ -6,6 +6,7 @@ import org.springframework.data.jpa.repository.Query;
 import org.springframework.stereotype.Repository;
 
 import java.util.List;
+import java.util.Optional;
 
 /**
  * {@link AddressJpaRepository} class.
@@ -22,6 +23,8 @@ import java.util.List;
 @Repository
 public interface AddressJpaRepository extends JpaRepository<AddressEntity, Integer> {
 
-  @Query("SELECT DISTINCT a.town FROM AddressEntity a")
-  List<String> findAllTowns();
+	@Query("SELECT DISTINCT a.town FROM AddressEntity a")
+	List<String> findAllTowns ();
+
+	Optional<AddressEntity> findByStreetAndNumberAndPostalCode ( String street, String number, String postalCode );
 }

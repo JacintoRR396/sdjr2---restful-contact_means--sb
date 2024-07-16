@@ -85,6 +85,8 @@ public class AddressServiceImpl implements AddressService {
 	@Override
 	@Transactional
 	public AddressDTO create ( AddressDTO addressDTO ) {
+		this.checkExistsAddress( addressDTO.getStreet(), addressDTO.getNumber().toString(), addressDTO.getPostalCode().toString() );
+
 		AddressEntity entityReq = this.addressMapper.toEntity( addressDTO, null, null );
 		AddressEntity entityDB = this.addressRepo.save( entityReq );
 
@@ -95,6 +97,7 @@ public class AddressServiceImpl implements AddressService {
 	@Transactional
 	public AddressDTO update ( AddressDTO addressDTO, Integer id ) {
 		AddressEntity entityDB = this.checkExistsAddress( addressDTO.getId() );
+
 		// TODO :: from user in token
 		AddressEntity entityReq = this.addressMapper.toEntity( addressDTO, entityDB, "SDJR2" );
 		entityDB = this.addressRepo.save( entityReq );
@@ -109,11 +112,17 @@ public class AddressServiceImpl implements AddressService {
 		this.addressRepo.delete( entityDB );
 	}
 
+	private void checkExistsAddress ( String street, String number, String postalCode ) {
+		this.addressRepo.findByStreetAndNumberAndPostalCode( street, number, postalCode ).ifPresent( entityDB -> {
+			throw new CustomException( AppExceptionCodeEnum.STATUS_40002 );
+		} );
+	}
+
 	private AddressEntity checkExistsAddress ( final Integer id ) {
 		try {
 			return this.addressRepo.findById( id ).orElseThrow();
 		} catch ( NoSuchElementException ex ) {
-			throw new CustomException( ex, AppExceptionCodeEnum.STATUS_40400 );
+			throw new CustomException( ex, AppExceptionCodeEnum.STATUS_40401 );
 		}
 	}
 }
