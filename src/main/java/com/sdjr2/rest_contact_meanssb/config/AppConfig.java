@@ -21,11 +21,11 @@ import org.springframework.core.io.Resource;
  * @upgrade 24/06/16
  * @since 24/06/13
  */
-@Configuration
 @PropertySources({
 		@PropertySource("classpath:/properties/global.properties"),
 		@PropertySource("classpath:/properties/messages.properties")
 })
+@Configuration
 public class AppConfig {
 
 	@Value("classpath:/database/json/address.json")

@@ -17,7 +17,7 @@ import java.util.Comparator;
  * @author Jacinto R^2
  * @version 1.0
  * @category DTO
- * @upgrade 24/07/15
+ * @upgrade 24/07/18
  * @since 23/06/11
  */
 @NoArgsConstructor
@@ -27,6 +27,18 @@ import java.util.Comparator;
 @Builder
 @JsonInclude(JsonInclude.Include.NON_NULL)
 public class AddressDTO implements BaseDTO, Comparable<AddressDTO> {
+
+	public static final String ATTR_ID = "id";
+	public static final String ATTR_STREET = "street";
+	public static final String ATTR_NUMBER = "number";
+	public static final String ATTR_LETTER = "letter";
+	public static final String ATTR_TOWN = "town";
+	public static final String ATTR_CITY = "city";
+	public static final String ATTR_COUNTRY = "country";
+	public static final String ATTR_POSTAL_CODE = "postal_code";
+	public static final String ATTR_LONGITUDE = "longitude";
+	public static final String ATTR_LATITUDE = "latitude";
+	public static final String ATTR_ADDITIONAL_INFO = "additional_info";
 
 	/* VARIABLES */
 	@PositiveOrZero
@@ -57,7 +69,7 @@ public class AddressDTO implements BaseDTO, Comparable<AddressDTO> {
 	@NotNull
 	@PositiveOrZero
 	@Digits(integer = 5, fraction = 0)
-	@JsonProperty("postal_code")
+	@JsonProperty(ATTR_POSTAL_CODE)
 	private Integer postalCode;
 
 	@Pattern(regexp = UConstants.LATITUDE_LONGITUDE_REGEX)

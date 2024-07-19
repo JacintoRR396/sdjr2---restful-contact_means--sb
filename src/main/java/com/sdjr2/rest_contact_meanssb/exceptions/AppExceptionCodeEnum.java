@@ -28,7 +28,7 @@ public enum AppExceptionCodeEnum {
 	STATUS_40600( HttpStatus.NOT_ACCEPTABLE, 40600, "Media Type Not Acceptable" ),
 	STATUS_41500( HttpStatus.UNSUPPORTED_MEDIA_TYPE, 41500, "Media Type Not Unsupported" ),
 	STATUS_50000( HttpStatus.INTERNAL_SERVER_ERROR, 50000, "Internal Server Error" ),
-	STATUS_50001( HttpStatus.INTERNAL_SERVER_ERROR, 50001, "Type not valid in enum" ),
+	STATUS_50001( HttpStatus.INTERNAL_SERVER_ERROR, 50001, "Internal Server Error : Value not allowed in the enumeration" ),
 	STATUS_50010( HttpStatus.INTERNAL_SERVER_ERROR, 50010, "Hibernate: validation error" ),
 	STATUS_50201( HttpStatus.BAD_GATEWAY, 50201, "Bad Gateway: Authentication against Salesforce failed" ),
 	STATUS_50300( HttpStatus.SERVICE_UNAVAILABLE, 50300, "Service Unavailable" );

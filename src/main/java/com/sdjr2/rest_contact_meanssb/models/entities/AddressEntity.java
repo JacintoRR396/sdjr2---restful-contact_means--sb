@@ -5,6 +5,7 @@ import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
+import org.hibernate.annotations.Immutable;
 
 import java.io.Serial;
 import java.io.Serializable;
@@ -20,86 +21,100 @@ import java.io.Serializable;
  * @author Jacinto R^2
  * @version 1.0
  * @category Entity (ORM)
- * @upgrade 24/06/23
+ * @upgrade 24/07/18
  * @since 23/06/10
  */
+@Immutable
 @Entity
 @Table(name = "dmd_address")
-@AllArgsConstructor
 @NoArgsConstructor
+@AllArgsConstructor
 @Getter
 @Setter
 public class AddressEntity implements BaseEntity, Serializable {
 
 	@Serial
 	private static final long serialVersionUID = -8456791947043775284L;
-	
+
+	public static final String TABLE_NAME = "dmd_address";
+	public static final String ATTR_ID = "address_id";
+	public static final String ATTR_STREET = "street_str";
+	public static final String ATTR_NUMBER = "number_str";
+	public static final String ATTR_LETTER = "letter_str";
+	public static final String ATTR_TOWN = "town_str";
+	public static final String ATTR_CITY = "city_str";
+	public static final String ATTR_COUNTRY = "country_str";
+	public static final String ATTR_POSTAL_CODE = "postal_code_str";
+	public static final String ATTR_LONGITUDE = "longitude_str";
+	public static final String ATTR_LATITUDE = "latitude_str";
+	public static final String ATTR_ADDITIONAL_INFO = "additional_info_str";
+
 	/**
 	 * address id identifier
 	 */
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
-	@Column(name = "address_id", unique = true, nullable = false)
+	@Column(name = ATTR_ID, unique = true, nullable = false)
 	private Integer id;
 
 	/**
 	 * street attribute
 	 */
-	@Column(name = "street_str", nullable = false, length = 80)
+	@Column(name = ATTR_STREET, nullable = false, length = 80)
 	private String street;
 
 	/**
 	 * number of the street attribute
 	 */
-	@Column(name = "number_str", nullable = false, length = 5)
+	@Column(name = ATTR_NUMBER, nullable = false, length = 5)
 	private String number;
 
 	/**
 	 * letter of the number attribute
 	 */
-	@Column(name = "letter_str", length = 3)
+	@Column(name = ATTR_LETTER, length = 3)
 	private String letter;
 
 	/**
 	 * town attribute
 	 */
-	@Column(name = "town_str", length = 60)
+	@Column(name = ATTR_TOWN, length = 60)
 	private String town;
 
 	/**
 	 * city attribute
 	 */
-	@Column(name = "city_str", length = 30)
+	@Column(name = ATTR_CITY, length = 30)
 	private String city;
 
 	/**
 	 * country attribute
 	 */
-	@Column(name = "country_str", length = 20)
+	@Column(name = ATTR_COUNTRY, length = 20)
 	private String country;
 
 	/**
 	 * postal code attribute
 	 */
-	@Column(name = "postal_code_str", nullable = false, length = 5)
+	@Column(name = ATTR_POSTAL_CODE, nullable = false, length = 5)
 	private String postalCode;
 
 	/**
 	 * longitude attribute
 	 */
-	@Column(name = "longitude_str")
+	@Column(name = ATTR_LONGITUDE)
 	private String longitude;
 
 	/**
 	 * latitude attribute
 	 */
-	@Column(name = "latitude_str")
+	@Column(name = ATTR_LATITUDE)
 	private String latitude;
 
 	/**
 	 * additional info attribute
 	 */
-	@Column(name = "additional_info_str", length = 2500)
+	@Column(name = ATTR_ADDITIONAL_INFO, length = 2500)
 	private String additionalInfo;
 
 	/**

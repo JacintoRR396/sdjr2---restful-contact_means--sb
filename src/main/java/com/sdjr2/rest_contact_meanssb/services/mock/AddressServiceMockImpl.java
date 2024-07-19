@@ -1,6 +1,7 @@
 package com.sdjr2.rest_contact_meanssb.services.mock;
 
 import com.sdjr2.rest_contact_meanssb.models.dto.AddressDTO;
+import com.sdjr2.rest_contact_meanssb.models.dto.search.SearchBodyDTO;
 import com.sdjr2.rest_contact_meanssb.models.entities.AddressEntity;
 import com.sdjr2.rest_contact_meanssb.models.mappers.AddressMapper;
 import com.sdjr2.rest_contact_meanssb.repositories.AddressRepository;
@@ -22,7 +23,7 @@ import java.util.List;
  * @author Jacinto R^2
  * @version 1.0
  * @category Service
- * @upgrade 24/07/15
+ * @upgrade 24/07/17
  * @since 23/06/10
  */
 @Service
@@ -45,7 +46,12 @@ public class AddressServiceMockImpl implements AddressService {
 	}
 
 	@Override
-	public Page<AddressDTO> getAllWithPagination ( Integer pageNum, Integer pageSize ) {
+	public Page<AddressDTO> getAllWithPagination ( Integer offset, Integer limit ) {
+		return Page.empty();
+	}
+
+	@Override
+	public Page<AddressDTO> getAllWithSearch ( SearchBodyDTO searchBodyDTO ) {
 		return Page.empty();
 	}
 

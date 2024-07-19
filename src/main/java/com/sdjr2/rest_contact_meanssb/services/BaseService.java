@@ -1,6 +1,7 @@
 package com.sdjr2.rest_contact_meanssb.services;
 
 import com.sdjr2.rest_contact_meanssb.models.dto.BaseDTO;
+import com.sdjr2.rest_contact_meanssb.models.dto.search.SearchBodyDTO;
 import com.sdjr2.rest_contact_meanssb.models.entities.BaseEntity;
 import com.sdjr2.rest_contact_meanssb.models.mappers.BaseMapper;
 import org.springframework.data.domain.Page;
@@ -22,26 +23,34 @@ import java.util.List;
  * @author Jacinto R^2
  * @version 1.0
  * @category Service
- * @upgrade 24/07/16
+ * @upgrade 24/07/17
  * @since 23/06/10
  */
 public interface BaseService<T extends BaseDTO> {
 
 	/**
-	 * Gets a list of elements
+	 * Gets a collection with elements dto.
 	 *
-	 * @return a list of {@link T} object.
+	 * @return a collection {@link List} of elements {@link T}.
 	 */
 	List<T> getAll ();
 
 	/**
-	 * Gets a list of elements with pagination
+	 * Gets a collection with elements dto through pagination.
 	 *
-	 * @param pageNum  number of the page.
-	 * @param pageSize size of the page, as so, number of addresses.
-	 * @return a page of {@link T} object.
+	 * @param offset index of the page to obtain.
+	 * @param limit  limit of values to obtain.
+	 * @return a page {@link Page} of elements {@link T}.
 	 */
-	Page<T> getAllWithPagination ( Integer pageNum, Integer pageSize );
+	Page<T> getAllWithPagination ( Integer offset, Integer limit );
+
+	/**
+	 * Gets a collection with elements dto through search.
+	 *
+	 * @param searchBodyDTO request body with the config to search.
+	 * @return a page {@link Page} of elements {@link T}.
+	 */
+	Page<T> getAllWithSearch ( SearchBodyDTO searchBodyDTO );
 
 	/**
 	 * Gets an element for its identifier

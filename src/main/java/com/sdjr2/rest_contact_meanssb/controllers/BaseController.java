@@ -3,6 +3,8 @@ package com.sdjr2.rest_contact_meanssb.controllers;
 import com.sdjr2.rest_contact_meanssb.exceptions.AppExceptionCodeEnum;
 import com.sdjr2.rest_contact_meanssb.exceptions.CustomException;
 import com.sdjr2.rest_contact_meanssb.models.dto.BaseDTO;
+import com.sdjr2.rest_contact_meanssb.models.dto.search.SearchBodyDTO;
+import jakarta.servlet.http.HttpServletRequest;
 import org.springframework.data.domain.Page;
 import org.springframework.http.ResponseEntity;
 import org.springframework.validation.BindingResult;
@@ -22,15 +24,42 @@ import java.util.Map;
  * @author Jacinto R^2
  * @version 1.0
  * @category Controller
- * @upgrade 24/07/16
+ * @upgrade 24/07/18
+ * @see HttpServletRequest HttpServletRequest provides request information for HTTP servlets.
  * @see BindingResult Binding result about validations.
  * @since 24/07/15
  */
 public interface BaseController<T extends BaseDTO> {
 
-	ResponseEntity<List<T>> getAll ();
+	/**
+	 * Handler method to perform a GET operation on a collection with elements dto.
+	 *
+	 * @param httpServletRequest http servlet request.
+	 * @return a response {@link ResponseEntity} with a collection {@link List} of elements dto {@link BaseDTO}.
+	 */
+	ResponseEntity<List<T>> getAll ( HttpServletRequest httpServletRequest );
 
-	ResponseEntity<Page<T>> getAllWithPagination ( Integer pageNum, Integer pageSize );
+	/**
+	 * Handler method to perform a GET operation on a collection with elements dto through pagination.
+	 *
+	 * @param httpServletRequest http servlet request.
+	 * @param offset             index of the page to obtain.
+	 * @param limit              limit of values to obtain.
+	 * @return a response {@link ResponseEntity} with a pagination {@link Page} of elements dto {@link BaseDTO}.
+	 */
+	ResponseEntity<Page<T>> getAllWithPagination ( HttpServletRequest httpServletRequest, Integer offset,
+																								 Integer limit );
+
+	/**
+	 * Handler method to perform a GET operation on a collection with elements dto through search.
+	 *
+	 * @param httpServletRequest http servlet request.
+	 * @param searchBodyDTO      dto with search parameters.
+	 * @param resValidation      binding result about validations.
+	 * @return a response {@link ResponseEntity} with a pagination {@link Page} of elements dto {@link BaseDTO}.
+	 */
+	ResponseEntity<Page<T>> getAllWithSearch ( HttpServletRequest httpServletRequest, SearchBodyDTO searchBodyDTO,
+																						 BindingResult resValidation );
 
 	ResponseEntity<T> getOneById ( Integer id );
 
