@@ -17,7 +17,8 @@ public enum AppExceptionCodeEnum {
 
 	STATUS_40000( HttpStatus.BAD_REQUEST, 40000, "Bad Request" ),
 	STATUS_40001( HttpStatus.BAD_REQUEST, 40001, "Bad Request: Validation Errors" ),
-	STATUS_40002( HttpStatus.BAD_REQUEST, 40002, "Bad Request: There is a record with the same unique fields already exists" ),
+	STATUS_40002( HttpStatus.BAD_REQUEST, 40002, "Bad Request: Value enumeration not valid" ),
+	STATUS_40010( HttpStatus.BAD_REQUEST, 40010, "Bad Request: There is a record with the same unique fields already exists" ),
 	STATUS_40100( HttpStatus.UNAUTHORIZED, 40100, "Unauthorized" ),
 	STATUS_40101( HttpStatus.UNAUTHORIZED, 40101, "Unauthorized: Received request without AccessToken cookie" ),
 	STATUS_40102( HttpStatus.UNAUTHORIZED, 40102, "Unauthorized: Invalid Access Token" ),

@@ -25,7 +25,7 @@ import org.springframework.data.domain.Sort;
 @AllArgsConstructor
 @Data
 @Builder
-public class SortDTO implements BaseDTO {
+public class OrderDTO implements BaseDTO {
 
 	/*
 	 * attribute field

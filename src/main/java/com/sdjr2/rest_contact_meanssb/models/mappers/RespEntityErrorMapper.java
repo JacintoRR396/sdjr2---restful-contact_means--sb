@@ -15,7 +15,7 @@ import java.util.Objects;
  * <p>
  * <strong>Mapper</strong> - Represents a converter about ResponseEntity Error DTO and CustomException.
  * <p>
- * It uses the classes : 01. Level Access -> the dto {@link RespEntityErrorDTO} 02. Level Model -> the entity
+ * It uses the classes : <br> 01. Level Access -> the dto {@link RespEntityErrorDTO} <br> 02. Level Model -> the entity
  * {@link CustomException}.
  *
  * @author Jacinto R^2

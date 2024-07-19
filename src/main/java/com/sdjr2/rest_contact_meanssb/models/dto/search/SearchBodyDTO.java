@@ -44,7 +44,7 @@ public class SearchBodyDTO implements BaseDTO {
 	 * attribute sorts
 	 */
 	@Valid
-	private List<SortDTO> sorts;
+	private List<OrderDTO> sorts;
 
 	/*
 	 * attribute filters

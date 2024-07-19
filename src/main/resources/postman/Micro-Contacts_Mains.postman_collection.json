@@ -1,0 +1,266 @@
+{
+	"info": {
+		"_postman_id": "64ab0735-1dea-4889-8abd-4720e950f478",
+		"name": "01. Micro-Contacts_Mains",
+		"description": "RESTful microservice in charge of managing the contacts mains of a certain entity, some of the entities it includes are :\n\n- Address\n    \n- Contact\n    \n- Social Media",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+		"_exporter_id": "14045862"
+	},
+	"item": [
+		{
+			"name": "ADDRESSES",
+			"item": [
+				{
+					"name": "GET Addresses ALL",
+					"protocolProfileBehavior": {
+						"disableBodyPruning": true
+					},
+					"request": {
+						"auth": {
+							"type": "noauth"
+						},
+						"method": "GET",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": ""
+						},
+						"url": {
+							"raw": "{{schema}}://{{server}}{{port}}/{{basePath}}/addresses",
+							"protocol": "{{schema}}",
+							"host": [
+								"{{server}}{{port}}"
+							],
+							"path": [
+								"{{basePath}}",
+								"addresses"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "GET Addresses ALL with Page",
+					"protocolProfileBehavior": {
+						"disableBodyPruning": true
+					},
+					"request": {
+						"auth": {
+							"type": "noauth"
+						},
+						"method": "GET",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": ""
+						},
+						"url": {
+							"raw": "{{schema}}://{{server}}{{port}}/{{basePath}}/addresses/pagination?offset=0&limit=2",
+							"protocol": "{{schema}}",
+							"host": [
+								"{{server}}{{port}}"
+							],
+							"path": [
+								"{{basePath}}",
+								"addresses",
+								"pagination"
+							],
+							"query": [
+								{
+									"key": "offset",
+									"value": "0"
+								},
+								{
+									"key": "limit",
+									"value": "2"
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "GET Addresses ALL with Search",
+					"protocolProfileBehavior": {
+						"disableBodyPruning": true
+					},
+					"request": {
+						"auth": {
+							"type": "noauth"
+						},
+						"method": "GET",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"offset\": 0,\r\n    \"limit\": 3,\r\n    \"sorts\": [],\r\n    \"filters\": [\r\n        {\r\n            \"field\": \"town\",\r\n            \"operator_type\": \"EQ\",\r\n            \"values\": [\r\n                \"El Viso del Alcor\"\r\n            ]\r\n        }\r\n    ]\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{schema}}://{{server}}{{port}}/{{basePath}}/addresses/search",
+							"protocol": "{{schema}}",
+							"host": [
+								"{{server}}{{port}}"
+							],
+							"path": [
+								"{{basePath}}",
+								"addresses",
+								"search"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "GET Addresses ONE",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{schema}}://{{server}}{{port}}/{{basePath}}/addresses/:addressId",
+							"protocol": "{{schema}}",
+							"host": [
+								"{{server}}{{port}}"
+							],
+							"path": [
+								"{{basePath}}",
+								"addresses",
+								":addressId"
+							],
+							"variable": [
+								{
+									"key": "addressId",
+									"value": "1"
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "POST Addresses",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"id\": 0,\r\n    \"street\": \"Rosario\",\r\n    \"number\": 13,\r\n    \"town\": \"Mairena del Alcor\",\r\n    \"city\": \"Sevilla\",\r\n    \"country\": \"España\",\r\n    \"longitude\": \"-5.7199300\",\r\n    \"latitude\": \"37.891060\",\r\n    \"postal_code\": 41510,\r\n    \"additional_info\": \"Casa Palacios\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{schema}}://{{server}}{{port}}/{{basePath}}/addresses",
+							"protocol": "{{schema}}",
+							"host": [
+								"{{server}}{{port}}"
+							],
+							"path": [
+								"{{basePath}}",
+								"addresses"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "PUT Addresses",
+					"request": {
+						"method": "PUT",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"id\": 5,\r\n    \"street\": \"Jesus Nazareno\",\r\n    \"number\": 22,\r\n    \"town\": \"El Visio del Alcohol\",\r\n    \"city\": \"Sevilla\",\r\n    \"country\": \"España\",\r\n    \"longitude\": \"-5.7199300\",\r\n    \"latitude\": \"37.391060\",\r\n    \"postal_code\": 41520,\r\n    \"additional_info\": \"Almacén deportivo Auxiliar\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{schema}}://{{server}}{{port}}/{{basePath}}/addresses/:addressId",
+							"protocol": "{{schema}}",
+							"host": [
+								"{{server}}{{port}}"
+							],
+							"path": [
+								"{{basePath}}",
+								"addresses",
+								":addressId"
+							],
+							"variable": [
+								{
+									"key": "addressId",
+									"value": "5"
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "PATCH Addresses",
+					"request": {
+						"method": "PATCH",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"town\": \"El Viso del Alcor\",\r\n    \"city\": \"Sevilla\",\r\n    \"country\": \"España\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{address}}:{{port}}/{{project}}/{{path}}/addresses/1",
+							"host": [
+								"{{address}}"
+							],
+							"port": "{{port}}",
+							"path": [
+								"{{project}}",
+								"{{path}}",
+								"addresses",
+								"1"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "DELETE Addresses",
+					"request": {
+						"method": "DELETE",
+						"header": [],
+						"url": {
+							"raw": "{{schema}}://{{server}}{{port}}/{{basePath}}/addresses/:addressId",
+							"protocol": "{{schema}}",
+							"host": [
+								"{{server}}{{port}}"
+							],
+							"path": [
+								"{{basePath}}",
+								"addresses",
+								":addressId"
+							],
+							"variable": [
+								{
+									"key": "addressId",
+									"value": "5"
+								}
+							]
+						}
+					},
+					"response": []
+				}
+			],
+			"description": "It is an entity that represents a physical address, some of its attributes are :"
+		}
+	]
+}

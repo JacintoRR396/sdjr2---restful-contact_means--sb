@@ -16,7 +16,7 @@ import java.time.LocalDateTime;
  * @author Jacinto R^2
  * @version 1.0
  * @category Entity (ORM)
- * @upgrade 24/06/18
+ * @upgrade 24/07/19
  * @since 23/06/10
  */
 @Embeddable
@@ -27,43 +27,48 @@ import java.time.LocalDateTime;
 @Builder
 public class AuditableEntity {
 
-  /**
-   * created at attribute
-   */
-  @Column(name = "created_at_dat", nullable = false)
-  private LocalDateTime createdAt;
+	public static final String ATTR_CREATED_AT = "created_at";
+	public static final String ATTR_CREATED_BY = "created_by";
+	public static final String ATTR_UPDATED_AT = "updated_at";
+	public static final String ATTR_UPDATED_BY = "updated_by";
 
-  /**
-   * created by attribute
-   */
-  @Column(name = "created_by_str", nullable = false)
-  private String createdBy;
+	/**
+	 * created at attribute
+	 */
+	@Column(name = ATTR_CREATED_AT, nullable = false)
+	private LocalDateTime createdAt;
 
-  /**
-   * updated at attribute
-   */
-  @Column(name = "updated_at_dat", nullable = false)
-  private LocalDateTime updatedAt;
+	/**
+	 * created by attribute
+	 */
+	@Column(name = ATTR_CREATED_BY, nullable = false)
+	private String createdBy;
 
-  /**
-   * updated by attribute
-   */
-  @Column(name = "updated_by_str", nullable = false)
-  private String updatedBy;
+	/**
+	 * updated at attribute
+	 */
+	@Column(name = ATTR_UPDATED_AT, nullable = false)
+	private LocalDateTime updatedAt;
 
-  /**
-   * method to provide certain functionality before creation
-   */
-  @PrePersist
-  public void prePersist() {
-    this.createdAt = LocalDateTime.now();
-  }
+	/**
+	 * updated by attribute
+	 */
+	@Column(name = ATTR_UPDATED_BY, nullable = false)
+	private String updatedBy;
 
-  /**
-   * method to update certain functionality before creation
-   */
-  @PreUpdate
-  public void preUpdate() {
-    this.updatedAt = LocalDateTime.now();
-  }
+	/**
+	 * method to provide certain functionality before creation
+	 */
+	@PrePersist
+	public void prePersist () {
+		this.createdAt = LocalDateTime.now();
+	}
+
+	/**
+	 * method to update certain functionality before creation
+	 */
+	@PreUpdate
+	public void preUpdate () {
+		this.updatedAt = LocalDateTime.now();
+	}
 }

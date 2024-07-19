@@ -15,16 +15,16 @@ import lombok.Getter;
  * @author Jacinto R^2
  * @version 1.0
  * @category Enum (Model)
- * @upgrade 24/07/18
+ * @upgrade 24/07/19
  * @since 24/07/18
  */
 @Getter
 public enum AddressSortFieldEnum {
-	STREET( "street", AddressDTO.ATTR_STREET, AddressEntity.ATTR_STREET ),
-	TOWN( "town", AddressDTO.ATTR_TOWN, AddressEntity.ATTR_TOWN ),
-	CITY( "city", AddressDTO.ATTR_CITY, AddressEntity.ATTR_CITY ),
-	COUNTRY( "country", AddressDTO.ATTR_COUNTRY, AddressEntity.ATTR_COUNTRY ),
-	POSTAL_CODE( "postal_code", AddressDTO.ATTR_POSTAL_CODE, AddressEntity.ATTR_POSTAL_CODE );
+	STREET( "STREET", AddressDTO.ATTR_STREET, AddressEntity.ATTR_STREET ),
+	TOWN( "TOWN", AddressDTO.ATTR_TOWN, AddressEntity.ATTR_TOWN ),
+	CITY( "CITY", AddressDTO.ATTR_CITY, AddressEntity.ATTR_CITY ),
+	COUNTRY( "COUNTRY", AddressDTO.ATTR_COUNTRY, AddressEntity.ATTR_COUNTRY ),
+	POSTAL_CODE( "POSTAL_CODE", AddressDTO.ATTR_POSTAL_CODE, AddressEntity.ATTR_POSTAL_CODE );
 
 	private final String value;
 	private final String fieldFront;

@@ -24,13 +24,13 @@ import java.io.Serializable;
  * @upgrade 24/07/18
  * @since 23/06/10
  */
-@Immutable
 @Entity
 @Table(name = "dmd_address")
 @NoArgsConstructor
 @AllArgsConstructor
 @Getter
 @Setter
+@Immutable
 public class AddressEntity implements BaseEntity, Serializable {
 
 	@Serial
@@ -38,16 +38,16 @@ public class AddressEntity implements BaseEntity, Serializable {
 
 	public static final String TABLE_NAME = "dmd_address";
 	public static final String ATTR_ID = "address_id";
-	public static final String ATTR_STREET = "street_str";
-	public static final String ATTR_NUMBER = "number_str";
-	public static final String ATTR_LETTER = "letter_str";
-	public static final String ATTR_TOWN = "town_str";
-	public static final String ATTR_CITY = "city_str";
-	public static final String ATTR_COUNTRY = "country_str";
-	public static final String ATTR_POSTAL_CODE = "postal_code_str";
-	public static final String ATTR_LONGITUDE = "longitude_str";
-	public static final String ATTR_LATITUDE = "latitude_str";
-	public static final String ATTR_ADDITIONAL_INFO = "additional_info_str";
+	public static final String ATTR_STREET = "street";
+	public static final String ATTR_NUMBER = "number";
+	public static final String ATTR_LETTER = "letter";
+	public static final String ATTR_TOWN = "town";
+	public static final String ATTR_CITY = "city";
+	public static final String ATTR_COUNTRY = "country";
+	public static final String ATTR_POSTAL_CODE = "postal_code";
+	public static final String ATTR_LONGITUDE = "longitude";
+	public static final String ATTR_LATITUDE = "latitude";
+	public static final String ATTR_ADDITIONAL_INFO = "additional_info";
 
 	/**
 	 * address id identifier

@@ -31,7 +31,8 @@ public class BaseSpecifications {
 	 * @return a jpa specification {@link Specification<T>}.
 	 */
 	public static <T, V> Specification<T> filterHas ( String attr, V value ) {
-		return ( root, cq, cb ) -> ( Objects.nonNull( value ) ) ? cb.equal( root.get( attr ), value ) : cb.and();
+		return ( root, query, builder ) ->
+				( Objects.nonNull( value ) ) ? builder.equal( root.get( attr ), value ) : builder.and();
 	}
 
 	/**
@@ -42,7 +43,8 @@ public class BaseSpecifications {
 	 * @return a jpa specification {@link Specification<T>}.
 	 */
 	public static <T, V> Specification<T> filterIn ( String attr, List<V> list ) {
-		return ( root, cq, cb ) -> ( Objects.nonNull( list ) && !list.isEmpty() ) ? root.get( attr ).in( list ) : cb.and();
+		return ( root, query, builder ) ->
+				( Objects.nonNull( list ) && !list.isEmpty() ) ? root.get( attr ).in( list ) : builder.and();
 	}
 
 	/**
