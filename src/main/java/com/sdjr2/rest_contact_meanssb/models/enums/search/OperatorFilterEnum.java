@@ -13,7 +13,7 @@ import lombok.Getter;
  * @author Jacinto R^2
  * @version 1.0
  * @category Enum (Model)
- * @upgrade 24/07/18
+ * @upgrade 24/07/21
  * @since 24/07/17
  */
 @Getter
@@ -28,8 +28,10 @@ public enum OperatorFilterEnum {
 	EW( "ew", "LIKE", "like" ),
 	CT( "ct", "LIKE", "like" ),
 	NCT( "nct", "NOT LIKE", "" ),
+	IN( "in", "IN", "" ),
+	NIN( "nin", "NOT IN", "" ),
 	IS_NULL( "null", "IS NULL", "" ),
-	NOT_NULL( "not_null", "IS NOT NULL", "" );
+	IS_NOT_NULL( "not_null", "IS NOT NULL", "" );
 
 	private final String value;
 	private final String operatorMySQL;

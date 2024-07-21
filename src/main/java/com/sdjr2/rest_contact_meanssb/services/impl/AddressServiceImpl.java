@@ -70,10 +70,10 @@ public class AddressServiceImpl implements AddressService {
 	@Override
 	@Transactional(readOnly = true)
 	public Page<AddressDTO> getAllWithSearch ( SearchBodyDTO searchBodyDTO ) {
-		// Create a page request according to a search body dto
+		// Create a page request according to a search body dto (offset, limit and orders)
 		PageRequest pageReq = this.createPageRequestWithPaginationAndSort( searchBodyDTO );
 
-		// Check if filters exist and are valid
+		// Create a page with entities according to a search body dto (filters and page request)
 		Page<AddressEntity> pageEntities = this.createPageWithPaginationAndSortAndFilter( searchBodyDTO, pageReq );
 
 		return new PageImpl<>( this.addressMapper.toDTOs( pageEntities.getContent() ), pageEntities.getPageable(),
@@ -116,12 +116,18 @@ public class AddressServiceImpl implements AddressService {
 			AddressFilterFieldEnum.AddressFiltersRequest filtersRequest =
 					AddressFilterFieldEnum.getFiltersReqFromSearchDTO( searchBodyDTO.getFilters() );
 			Specification<AddressEntity> specification = Specification
-					.where( AddressSpecifications.hasValuesInt( AddressFilterFieldEnum.ID.getFieldMySQL(), filtersRequest.getIds() ) )
-					.and( AddressSpecifications.hasValuesStr( AddressFilterFieldEnum.STREET.getFieldMySQL(), filtersRequest.getStreets() ) )
-					.and( AddressSpecifications.hasValuesStr( AddressFilterFieldEnum.TOWN.getFieldMySQL(), filtersRequest.getTowns() ) )
-					.and( AddressSpecifications.hasValuesStr( AddressFilterFieldEnum.CITY.getFieldMySQL(), filtersRequest.getCities() ) )
-					.and( AddressSpecifications.hasValuesStr( AddressFilterFieldEnum.COUNTRY.getFieldMySQL(), filtersRequest.getCountries() ) )
-					.and( AddressSpecifications.hasValuesStr( AddressFilterFieldEnum.POSTAL_CODE.getFieldMySQL(), filtersRequest.getPostalCodes() ) );
+					.where( AddressSpecifications.hasValuesInt(
+							AddressFilterFieldEnum.ID.getFieldMySQL(), filtersRequest.getOpIds(), filtersRequest.getIds() ) )
+					.and( AddressSpecifications.hasValuesStr(
+							AddressFilterFieldEnum.STREET.getFieldMySQL(), filtersRequest.getOpStreets(), filtersRequest.getStreets() ) )
+					.and( AddressSpecifications.hasValuesStr(
+							AddressFilterFieldEnum.TOWN.getFieldMySQL(), filtersRequest.getOpTowns(), filtersRequest.getTowns() ) )
+					.and( AddressSpecifications.hasValuesStr(
+							AddressFilterFieldEnum.CITY.getFieldMySQL(), filtersRequest.getOpCities(), filtersRequest.getCities() ) )
+					.and( AddressSpecifications.hasValuesStr(
+							AddressFilterFieldEnum.COUNTRY.getFieldMySQL(), filtersRequest.getOpCountries(), filtersRequest.getCountries() ) )
+					.and( AddressSpecifications.hasValuesStr(
+							AddressFilterFieldEnum.POSTAL_CODE.getFieldMySQL(), filtersRequest.getOpPostalCodes(), filtersRequest.getPostalCodes() ) );
 			return this.addressRepo.findAll( specification, pageReq );
 		} else {
 			return this.addressRepo.findAll( pageReq );

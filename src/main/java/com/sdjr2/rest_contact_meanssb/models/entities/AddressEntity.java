@@ -20,7 +20,7 @@ import java.io.Serializable;
  * @author Jacinto R^2
  * @version 1.0
  * @category Entity (ORM)
- * @upgrade 24/07/19
+ * @upgrade 24/07/21
  * @since 23/06/10
  */
 @Entity

@@ -81,26 +81,31 @@ public enum AddressFilterFieldEnum {
 		AddressFiltersRequest.AddressFiltersRequestBuilder builder = AddressFiltersRequest.builder();
 		for ( FilterDTO filterDTO : filtersDTO ) {
 			switch ( AddressFilterFieldEnum.fromValue( filterDTO.getField() ) ) {
-				case ID:
+				case ID -> {
 					builder.ids( filterDTO.getValues().stream().map( Integer::valueOf ).toList() );
-					break;
-				case STREET:
+					builder.opIds( filterDTO.getOperatorType() );
+				}
+				case STREET -> {
 					builder.streets( filterDTO.getValues() );
-					break;
-				case TOWN:
+					builder.opStreets( filterDTO.getOperatorType() );
+				}
+				case TOWN -> {
 					builder.towns( filterDTO.getValues() );
-					break;
-				case CITY:
+					builder.opTowns( filterDTO.getOperatorType() );
+				}
+				case CITY -> {
 					builder.cities( filterDTO.getValues() );
-					break;
-				case COUNTRY:
+					builder.opCities( filterDTO.getOperatorType() );
+				}
+				case COUNTRY -> {
 					builder.countries( filterDTO.getValues() );
-					break;
-				case POSTAL_CODE:
+					builder.opCountries( filterDTO.getOperatorType() );
+				}
+				case POSTAL_CODE -> {
 					builder.postalCodes( filterDTO.getValues() );
-					break;
-				default:
-					throw new CustomException( AppExceptionCodeEnum.STATUS_50001 );
+					builder.opPostalCodes( filterDTO.getOperatorType() );
+				}
+				default -> throw new CustomException( AppExceptionCodeEnum.STATUS_50001 );
 			}
 		}
 
@@ -111,10 +116,16 @@ public enum AddressFilterFieldEnum {
 	@Builder
 	public static class AddressFiltersRequest {
 		private List<Integer> ids;
+		private OperatorFilterEnum opIds;
 		private List<String> streets;
+		private OperatorFilterEnum opStreets;
 		private List<String> towns;
+		private OperatorFilterEnum opTowns;
 		private List<String> cities;
+		private OperatorFilterEnum opCities;
 		private List<String> countries;
+		private OperatorFilterEnum opCountries;
 		private List<String> postalCodes;
+		private OperatorFilterEnum opPostalCodes;
 	}
 }
