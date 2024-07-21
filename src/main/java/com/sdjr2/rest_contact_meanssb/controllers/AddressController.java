@@ -1,13 +1,10 @@
 package com.sdjr2.rest_contact_meanssb.controllers;
 
 import com.sdjr2.rest_contact_meanssb.models.dto.AddressDTO;
-import com.sdjr2.rest_contact_meanssb.models.dto.search.PaginationDTO;
 import com.sdjr2.rest_contact_meanssb.models.dto.search.SearchBodyDTO;
-import com.sdjr2.rest_contact_meanssb.models.entities.AddressEntity;
 import com.sdjr2.rest_contact_meanssb.services.AddressService;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.validation.Valid;
-import jakarta.validation.Validator;
 import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.Page;
 import org.springframework.http.HttpStatus;
@@ -23,15 +20,13 @@ import java.util.List;
  * <strong>Controller</strong> - Represents a handler of request about Addresses, this implements to
  * {@link BaseController}.
  * <p>
- * It uses the classes : <br> 01. Level Access -> the dto {@link AddressDTO} <br> 02. Level Logic -> the service
- * {@link AddressService} <br> 03. Level Data -> the entity {@link AddressEntity}.
+ * It uses the classes : <br> 01. Level Access : the dto {@link AddressDTO} <br> 02. Level Logic : the service
+ * {@link AddressService}.
  *
  * @author Jacinto R^2
  * @version 1.0
  * @category Controller
- * @upgrade 24/07/17
- * @see Validator Validator validates all constraints.
- * @see HttpServletRequest HttpServletRequest provides request information for HTTP servlets.
+ * @upgrade 24/07/19
  * @since 23/06/10
  */
 @RestController
@@ -44,25 +39,11 @@ public class AddressController implements BaseController<AddressDTO> {
 	 */
 	private final AddressService addressService;
 
-	/**
-	 * Handler method to perform a GET operation on a collection with address dto.
-	 *
-	 * @param httpServletRequest http servlet request.
-	 * @return a response {@link ResponseEntity} with a collection {@link List} of address dto {@link AddressDTO}.
-	 */
 	@GetMapping
 	public ResponseEntity<List<AddressDTO>> getAll ( HttpServletRequest httpServletRequest ) {
 		return new ResponseEntity<>( this.addressService.getAll(), HttpStatus.OK );
 	}
 
-	/**
-	 * Handler method to perform a GET operation on a collection with address dto through pagination.
-	 *
-	 * @param httpServletRequest http servlet request.
-	 * @param offset             index of the page to obtain.
-	 * @param limit              limit of values to obtain.
-	 * @return a response {@link ResponseEntity} with a pagination {@link Page} of address dto {@link AddressDTO}.
-	 */
 	@GetMapping(value = "/pagination")
 	public ResponseEntity<Page<AddressDTO>> getAllWithPagination ( HttpServletRequest httpServletRequest,
 																																 @RequestParam(defaultValue = "0", required = false) Integer offset,
@@ -70,31 +51,20 @@ public class AddressController implements BaseController<AddressDTO> {
 		return new ResponseEntity<>( this.addressService.getAllWithPagination( offset, limit ), HttpStatus.OK );
 	}
 
-	/**
-	 * Handler method to perform a GET operation on a collection with address dto through search.
-	 *
-	 * @param httpServletRequest http servlet request.
-	 * @param searchBodyDTO      dto with search parameters.
-	 * @param resValidation      binding result about validations.
-	 * @return a response {@link ResponseEntity} with a pagination {@link PaginationDTO} of elements dto
-	 *    {@link AddressDTO}.
-	 */
 	@GetMapping(value = "/search")
 	public ResponseEntity<Page<AddressDTO>> getAllWithSearch ( HttpServletRequest httpServletRequest,
-																																			@Valid @RequestBody SearchBodyDTO searchBodyDTO,
-																																			BindingResult resValidation ) {
+																														 @Valid @RequestBody SearchBodyDTO searchBodyDTO,
+																														 BindingResult resValidation ) {
 		this.checkValidation( resValidation );
 
 		return new ResponseEntity<>( this.addressService.getAllWithSearch( searchBodyDTO ), HttpStatus.OK );
 	}
 
-	/*********** GET ***********/
 	@GetMapping(value = "/{addressId}")
 	public ResponseEntity<AddressDTO> getOneById ( @PathVariable("addressId") Integer id ) {
 		return new ResponseEntity<>( this.addressService.getOneById( id ), HttpStatus.OK );
 	}
 
-	/*********** POST ***********/
 	@PostMapping
 	public ResponseEntity<AddressDTO> create ( @Valid @RequestBody AddressDTO addressDTO, BindingResult resValidation ) {
 		this.checkValidation( resValidation );
@@ -102,37 +72,18 @@ public class AddressController implements BaseController<AddressDTO> {
 		return new ResponseEntity<>( this.addressService.create( addressDTO ), HttpStatus.CREATED );
 	}
 
-	/*********** PUT ***********/
 	@PutMapping(value = "/{addressId}")
-	public ResponseEntity<AddressDTO> update ( @Valid @RequestBody AddressDTO addressDTO, BindingResult resValidation,
-																						 @PathVariable("addressId") Integer id ) {
+	public ResponseEntity<AddressDTO> update ( @PathVariable("addressId") Integer id,
+																						 @Valid @RequestBody AddressDTO addressDTO, BindingResult resValidation ) {
 		this.checkValidation( resValidation );
 
-		return new ResponseEntity<>( this.addressService.update( addressDTO, id ), HttpStatus.OK );
+		return new ResponseEntity<>( this.addressService.update( id, addressDTO ), HttpStatus.OK );
 	}
 
-	/*********** DELETE ***********/
 	@DeleteMapping(value = "/{addressId}")
 	public ResponseEntity<Void> delete ( @PathVariable("addressId") Integer id ) {
 		this.addressService.delete( id );
 
 		return new ResponseEntity<>( HttpStatus.NO_CONTENT );
-	}
-
-	@GetMapping(value = "/order")
-	public ResponseEntity<List<AddressEntity>> getAddressesWithOrder (
-			@RequestParam(value = "attribute", defaultValue = "postalCode", required = false) String attribute,
-			@RequestParam(value = "asc", defaultValue = "true", required = false) boolean isAsc ) {
-		return new ResponseEntity<>( this.addressService.getAddressesWithOrder( attribute, isAsc ), HttpStatus.OK );
-	}
-
-	@GetMapping(value = "/paginationAndOrder")
-	public ResponseEntity<Page<AddressEntity>> getAddressesWithPaginationAndOrder (
-			@RequestParam(value = "page", defaultValue = "0", required = false) Integer pageNum,
-			@RequestParam(value = "size", defaultValue = "15", required = false) Integer pageSize,
-			@RequestParam(value = "attribute", defaultValue = "postalCode", required = false) String attribute,
-			@RequestParam(value = "asc", defaultValue = "true", required = false) boolean isAsc ) {
-		return new ResponseEntity<>(
-				this.addressService.getAddressesWithPaginationAndOrder( pageNum, pageSize, attribute, isAsc ), HttpStatus.OK );
 	}
 }

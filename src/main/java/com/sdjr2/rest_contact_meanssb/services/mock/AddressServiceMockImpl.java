@@ -55,17 +55,6 @@ public class AddressServiceMockImpl implements AddressService {
 		return Page.empty();
 	}
 
-	@Override
-	public List<AddressEntity> getAddressesWithOrder ( String attribute, boolean isAsc ) {
-		return new ArrayList<>();
-	}
-
-	@Override
-	public Page<AddressEntity> getAddressesWithPaginationAndOrder ( Integer pageNum, Integer pageSize,
-																																	String attribute, boolean isAsc ) {
-		return Page.empty();
-	}
-
 	/**
 	 * Gets a list of towns about addresses
 	 *
@@ -90,7 +79,7 @@ public class AddressServiceMockImpl implements AddressService {
 	}
 
 	@Override
-	public AddressDTO update ( AddressDTO addressDTO, Integer id ) {
+	public AddressDTO update ( Integer id, AddressDTO addressDTO ) {
 		return null;
 	}
 
@@ -99,7 +88,7 @@ public class AddressServiceMockImpl implements AddressService {
 
 	}
 
-	private AddressEntity checkExistsAddress ( final Integer id ) {
+	private AddressEntity checkExistsAddress ( Integer id ) {
 		return this.addressRepo.findById( id ).orElseThrow( () -> new ResponseStatusException( HttpStatus.NOT_FOUND,
 				String.format( "Address with ID '%d' not found", id ) ) );
 	}

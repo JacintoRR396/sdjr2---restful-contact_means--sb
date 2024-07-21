@@ -5,7 +5,6 @@ import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
-import org.hibernate.annotations.Immutable;
 
 import java.io.Serial;
 import java.io.Serializable;
@@ -21,7 +20,7 @@ import java.io.Serializable;
  * @author Jacinto R^2
  * @version 1.0
  * @category Entity (ORM)
- * @upgrade 24/07/18
+ * @upgrade 24/07/19
  * @since 23/06/10
  */
 @Entity
@@ -30,14 +29,13 @@ import java.io.Serializable;
 @AllArgsConstructor
 @Getter
 @Setter
-@Immutable
 public class AddressEntity implements BaseEntity, Serializable {
 
 	@Serial
 	private static final long serialVersionUID = -8456791947043775284L;
 
 	public static final String TABLE_NAME = "dmd_address";
-	public static final String ATTR_ID = "address_id";
+	public static final String ATTR_ID = "id";
 	public static final String ATTR_STREET = "street";
 	public static final String ATTR_NUMBER = "number";
 	public static final String ATTR_LETTER = "letter";

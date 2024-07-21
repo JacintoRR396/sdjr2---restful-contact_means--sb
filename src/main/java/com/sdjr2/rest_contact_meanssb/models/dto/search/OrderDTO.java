@@ -12,8 +12,7 @@ import org.springframework.data.domain.Sort;
 /**
  * {@link FilterDTO} class.
  * <p>
- * <strong>DTO</strong> - Represents a generic sort used by advanced search, implements to
- * {@link BaseDTO}.
+ * <strong>DTO</strong> - Represents a generic sort used by advanced search, implements to {@link BaseDTO}.
  *
  * @author Jacinto R^2
  * @version 1.0

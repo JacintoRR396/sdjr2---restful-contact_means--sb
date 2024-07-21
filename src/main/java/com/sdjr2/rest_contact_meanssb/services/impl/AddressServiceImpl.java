@@ -5,6 +5,7 @@ import com.sdjr2.rest_contact_meanssb.exceptions.CustomException;
 import com.sdjr2.rest_contact_meanssb.models.dto.AddressDTO;
 import com.sdjr2.rest_contact_meanssb.models.dto.search.SearchBodyDTO;
 import com.sdjr2.rest_contact_meanssb.models.entities.AddressEntity;
+import com.sdjr2.rest_contact_meanssb.models.enums.search.AddressFilterFieldEnum;
 import com.sdjr2.rest_contact_meanssb.models.enums.search.AddressSortFieldEnum;
 import com.sdjr2.rest_contact_meanssb.models.mappers.AddressMapper;
 import com.sdjr2.rest_contact_meanssb.repositories.AddressJpaRepository;
@@ -33,7 +34,7 @@ import java.util.Objects;
  * @author Jacinto R^2
  * @version 1.0
  * @category Service
- * @upgrade 24/07/19
+ * @upgrade 24/07/21
  * @since 23/06/10
  */
 @Service
@@ -69,10 +70,23 @@ public class AddressServiceImpl implements AddressService {
 	@Override
 	@Transactional(readOnly = true)
 	public Page<AddressDTO> getAllWithSearch ( SearchBodyDTO searchBodyDTO ) {
-		Page<AddressEntity> pageEntities;
+		// Create a page request according to a search body dto
+		PageRequest pageReq = this.createPageRequestWithPaginationAndSort( searchBodyDTO );
 
-		// Check if there are ordinations
-		PageRequest pageReq;
+		// Check if filters exist and are valid
+		Page<AddressEntity> pageEntities = this.createPageWithPaginationAndSortAndFilter( searchBodyDTO, pageReq );
+
+		return new PageImpl<>( this.addressMapper.toDTOs( pageEntities.getContent() ), pageEntities.getPageable(),
+				pageEntities.getTotalElements() );
+	}
+
+	/**
+	 * Create a page request according to a search body dto.
+	 *
+	 * @param searchBodyDTO dto with search parameters about pagination, sort and filter.
+	 * @return a page request {@link PageRequest} for pagination with possible ordering.
+	 */
+	private PageRequest createPageRequestWithPaginationAndSort ( SearchBodyDTO searchBodyDTO ) {
 		if ( Objects.nonNull( searchBodyDTO.getSorts() ) && !searchBodyDTO.getSorts().isEmpty() ) {
 			List<Sort.Order> orders = new ArrayList<>();
 			searchBodyDTO.getSorts().forEach( sortDTO -> {
@@ -83,23 +97,35 @@ public class AddressServiceImpl implements AddressService {
 					throw new CustomException( ex, AppExceptionCodeEnum.STATUS_40002 );
 				}
 			} );
-			pageReq = PageRequest.of( searchBodyDTO.getOffset(), searchBodyDTO.getLimit(), Sort.by( orders ) );
+			return PageRequest.of( searchBodyDTO.getOffset(), searchBodyDTO.getLimit(), Sort.by( orders ) );
 		} else {
-			pageReq = PageRequest.of( searchBodyDTO.getOffset(), searchBodyDTO.getLimit() );
+			return PageRequest.of( searchBodyDTO.getOffset(), searchBodyDTO.getLimit() );
 		}
+	}
 
-		// TODO :: Check if filters exist and are valid
-		Specification<AddressEntity> specification;
+	/**
+	 * Create a page with entities according to a search body dto.
+	 *
+	 * @param searchBodyDTO dto with search parameters about pagination, sort and filter.
+	 * @param pageReq       page request according to search parameters about pagination and sort.
+	 * @return a page {@link Page} about address {@link AddressEntity}.
+	 */
+	private Page<AddressEntity> createPageWithPaginationAndSortAndFilter ( SearchBodyDTO searchBodyDTO,
+																																				 PageRequest pageReq ) {
 		if ( Objects.nonNull( searchBodyDTO.getFilters() ) && !searchBodyDTO.getFilters().isEmpty() ) {
-			List<String> towns = searchBodyDTO.getFilters().get( 0 ).getValues();
-			specification = Specification.where( AddressSpecifications.hasTowns( towns ) );
-			pageEntities = this.addressRepo.findAll( specification, pageReq );
+			AddressFilterFieldEnum.AddressFiltersRequest filtersRequest =
+					AddressFilterFieldEnum.getFiltersReqFromSearchDTO( searchBodyDTO.getFilters() );
+			Specification<AddressEntity> specification = Specification
+					.where( AddressSpecifications.hasValuesInt( AddressFilterFieldEnum.ID.getFieldMySQL(), filtersRequest.getIds() ) )
+					.and( AddressSpecifications.hasValuesStr( AddressFilterFieldEnum.STREET.getFieldMySQL(), filtersRequest.getStreets() ) )
+					.and( AddressSpecifications.hasValuesStr( AddressFilterFieldEnum.TOWN.getFieldMySQL(), filtersRequest.getTowns() ) )
+					.and( AddressSpecifications.hasValuesStr( AddressFilterFieldEnum.CITY.getFieldMySQL(), filtersRequest.getCities() ) )
+					.and( AddressSpecifications.hasValuesStr( AddressFilterFieldEnum.COUNTRY.getFieldMySQL(), filtersRequest.getCountries() ) )
+					.and( AddressSpecifications.hasValuesStr( AddressFilterFieldEnum.POSTAL_CODE.getFieldMySQL(), filtersRequest.getPostalCodes() ) );
+			return this.addressRepo.findAll( specification, pageReq );
 		} else {
-			pageEntities = this.addressRepo.findAll( pageReq );
+			return this.addressRepo.findAll( pageReq );
 		}
-
-		return new PageImpl<>( this.addressMapper.toDTOs( pageEntities.getContent() ), pageEntities.getPageable(),
-				pageEntities.getTotalElements() );
 	}
 
 	@Override
@@ -108,6 +134,20 @@ public class AddressServiceImpl implements AddressService {
 		AddressEntity entity = this.checkExistsAddress( id );
 
 		return this.addressMapper.toDTO( entity );
+	}
+
+	/**
+	 * Check if an entity exists by its id, otherwise throw an exception STATUS_40401.
+	 *
+	 * @param id element identifier.
+	 * @return a database record {@link AddressEntity}.
+	 */
+	private AddressEntity checkExistsAddress ( Integer id ) {
+		try {
+			return this.addressRepo.findById( id ).orElseThrow();
+		} catch ( NoSuchElementException ex ) {
+			throw new CustomException( ex, AppExceptionCodeEnum.STATUS_40401 );
+		}
 	}
 
 	@Override
@@ -122,12 +162,24 @@ public class AddressServiceImpl implements AddressService {
 		return this.addressMapper.toDTO( entityDB );
 	}
 
+	/**
+	 * Check if an entity not exists by its id, otherwise throw an exception STATUS_40010.
+	 *
+	 * @param street     first element of the pk.
+	 * @param number     second element of the pk.
+	 * @param postalCode third element of the pk.
+	 */
+	private void checkNotExistsAddress ( String street, String number, String postalCode ) {
+		this.addressRepo.findByStreetAndNumberAndPostalCode( street, number, postalCode ).ifPresent( entityDB -> {
+			throw new CustomException( AppExceptionCodeEnum.STATUS_40010 );
+		} );
+	}
+
 	@Override
 	@Transactional
-	public AddressDTO update ( AddressDTO addressDTO, Integer id ) {
+	public AddressDTO update ( Integer id, AddressDTO addressDTO ) {
 		AddressEntity entityDB = this.checkExistsAddress( addressDTO.getId() );
 
-		// TODO :: from user in token
 		AddressEntity entityReq = this.addressMapper.toEntity( addressDTO, entityDB, "SDJR2" );
 		entityDB = this.addressRepo.save( entityReq );
 
@@ -139,36 +191,5 @@ public class AddressServiceImpl implements AddressService {
 	public void delete ( Integer id ) {
 		AddressEntity entityDB = this.checkExistsAddress( id );
 		this.addressRepo.delete( entityDB );
-	}
-
-	@Override
-	public List<AddressEntity> getAddressesWithOrder ( String attribute, boolean isAsc ) {
-		final Sort.Direction typeOrder = ( isAsc ) ? Sort.Direction.ASC : Sort.Direction.DESC;
-		return this.addressRepo.findAll( Sort.by( typeOrder, attribute ) );
-	}
-
-	@Override
-	public Page<AddressEntity> getAddressesWithPaginationAndOrder ( Integer pageNum, Integer pageSize,
-																																	String attribute, boolean isAsc ) {
-		final Sort.Direction typeOrder = ( isAsc ) ? Sort.Direction.ASC : Sort.Direction.DESC;
-		return this.addressRepo.findAll( PageRequest.of( pageNum, pageSize, typeOrder, attribute ) );
-	}
-
-	public List<String> getTowns () {
-		return this.addressRepo.findAllTowns();
-	}
-
-	private void checkNotExistsAddress ( String street, String number, String postalCode ) {
-		this.addressRepo.findByStreetAndNumberAndPostalCode( street, number, postalCode ).ifPresent( entityDB -> {
-			throw new CustomException( AppExceptionCodeEnum.STATUS_40010 );
-		} );
-	}
-
-	private AddressEntity checkExistsAddress ( final Integer id ) {
-		try {
-			return this.addressRepo.findById( id ).orElseThrow();
-		} catch ( NoSuchElementException ex ) {
-			throw new CustomException( ex, AppExceptionCodeEnum.STATUS_40401 );
-		}
 	}
 }

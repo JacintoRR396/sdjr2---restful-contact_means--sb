@@ -16,14 +16,14 @@ import java.util.List;
  * This Service maps the addresses of the request {@link BaseDTO} to database {@link BaseEntity} with
  * {@link BaseMapper}.
  * <br>
- * It uses the classes : <br> 01. Level Access -> the dto {@link BaseDTO} <br> 02. Level Logic -> the mapper
- * {@link BaseMapper} <br> 03. Level Data -> the entity {@link BaseEntity}.
+ * It uses the classes : <br> 01. Level Access : the dto {@link BaseDTO} <br> 02. Level Logic : the mapper
+ * {@link BaseMapper} <br> 03. Level Data : the entity {@link BaseEntity}.
  *
  * @param <T> the parameter of the dto class, extends from {@link BaseDTO}
  * @author Jacinto R^2
  * @version 1.0
  * @category Service
- * @upgrade 24/07/17
+ * @upgrade 24/07/19
  * @since 23/06/10
  */
 public interface BaseService<T extends BaseDTO> {
@@ -31,7 +31,7 @@ public interface BaseService<T extends BaseDTO> {
 	/**
 	 * Gets a collection with elements dto.
 	 *
-	 * @return a collection {@link List} of elements {@link T}.
+	 * @return a collection {@link List} of elements dto {@link T}.
 	 */
 	List<T> getAll ();
 
@@ -40,47 +40,47 @@ public interface BaseService<T extends BaseDTO> {
 	 *
 	 * @param offset index of the page to obtain.
 	 * @param limit  limit of values to obtain.
-	 * @return a page {@link Page} of elements {@link T}.
+	 * @return a page {@link Page} of elements dto {@link T}.
 	 */
 	Page<T> getAllWithPagination ( Integer offset, Integer limit );
 
 	/**
-	 * Gets a collection with elements dto through search.
+	 * Gets a collection with elements dto through search (pagination, sort and filter).
 	 *
-	 * @param searchBodyDTO request body with the config to search.
-	 * @return a page {@link Page} of elements {@link T}.
+	 * @param searchBodyDTO dto with search parameters about pagination, sort and filter.
+	 * @return a page {@link Page} of elements dto {@link T}.
 	 */
 	Page<T> getAllWithSearch ( SearchBodyDTO searchBodyDTO );
 
 	/**
-	 * Gets an element for its identifier
+	 * Gets an element dto for its identifier.
 	 *
-	 * @param id is the primary key.
-	 * @return an {@link T} object.
+	 * @param id element identifier.
+	 * @return an element dto {@link T}.
 	 */
 	T getOneById ( Integer id );
 
 	/**
-	 * Save an element entity
+	 * Save an element dto.
 	 *
 	 * @param dto element request object.
-	 * @return an {@link T} object created in db and mapped to response.
+	 * @return an element dto {@link T}.
 	 */
 	T create ( T dto );
 
 	/**
-	 * Update an element entity
+	 * Update an element dto for its identifier.
 	 *
-	 * @param id  is the primary key.
+	 * @param id  element identifier.
 	 * @param dto element request object.
-	 * @return an {@link T} object updated in db and mapped to response.
+	 * @return an element dto {@link T}.
 	 */
-	T update ( T dto, Integer id );
+	T update ( Integer id, T dto );
 
 	/**
-	 * Delete an element entity for its pk
+	 * Delete an element dto for its identifier.
 	 *
-	 * @param id is the primary key.
+	 * @param id element identifier.
 	 */
 	void delete ( Integer id );
 }

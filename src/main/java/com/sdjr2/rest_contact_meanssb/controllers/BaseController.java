@@ -24,9 +24,10 @@ import java.util.Map;
  * @author Jacinto R^2
  * @version 1.0
  * @category Controller
- * @upgrade 24/07/18
- * @see HttpServletRequest HttpServletRequest provides request information for HTTP servlets.
- * @see BindingResult Binding result about validations.
+ * @upgrade 24/07/19
+ * @see HttpServletRequest 01. HttpServletRequest : provides request information for HTTP servlets.
+ * @see BindingResult 02. BindingResult : check validations.
+ * @see ResponseEntity 03. ResponseEntity : response with status and json.
  * @since 24/07/15
  */
 public interface BaseController<T extends BaseDTO> {
@@ -45,32 +46,59 @@ public interface BaseController<T extends BaseDTO> {
 	 * @param httpServletRequest http servlet request.
 	 * @param offset             index of the page to obtain.
 	 * @param limit              limit of values to obtain.
-	 * @return a response {@link ResponseEntity} with a pagination {@link Page} of elements dto {@link BaseDTO}.
+	 * @return a response {@link ResponseEntity} with a page {@link Page} of elements dto {@link BaseDTO}.
 	 */
 	ResponseEntity<Page<T>> getAllWithPagination ( HttpServletRequest httpServletRequest, Integer offset,
 																								 Integer limit );
 
 	/**
-	 * Handler method to perform a GET operation on a collection with elements dto through search.
+	 * Handler method to perform a GET operation on a collection with elements dto through search (pagination, sort and
+	 * filter).
 	 *
 	 * @param httpServletRequest http servlet request.
-	 * @param searchBodyDTO      dto with search parameters.
+	 * @param searchBodyDTO      dto with search parameters about pagination, sort and filter.
 	 * @param resValidation      binding result about validations.
-	 * @return a response {@link ResponseEntity} with a pagination {@link Page} of elements dto {@link BaseDTO}.
+	 * @return a response {@link ResponseEntity} with a page {@link Page} of elements dto {@link BaseDTO}.
 	 */
 	ResponseEntity<Page<T>> getAllWithSearch ( HttpServletRequest httpServletRequest, SearchBodyDTO searchBodyDTO,
 																						 BindingResult resValidation );
 
+	/**
+	 * Handler method to perform a GET operation of an element dto.
+	 *
+	 * @param id element identifier.
+	 * @return a response {@link ResponseEntity} with an element dto {@link BaseDTO}.
+	 */
 	ResponseEntity<T> getOneById ( Integer id );
 
+	/**
+	 * Handler method to perform a POST operation of an element dto.
+	 *
+	 * @param dto           request body with element dto.
+	 * @param resValidation check validations of the element dto.
+	 * @return a response {@link ResponseEntity} with an element dto {@link BaseDTO}.
+	 */
 	ResponseEntity<T> create ( T dto, BindingResult resValidation );
 
-	ResponseEntity<T> update ( T dto, BindingResult resValidation, Integer id );
+	/**
+	 * Handler method to perform a PUT operation of an element dto.
+	 *
+	 * @param id            element identifier.
+	 * @param dto           request body with element dto.
+	 * @param resValidation check validations of the element dto.
+	 * @return a response {@link ResponseEntity} with an element dto {@link BaseDTO}.
+	 */
+	ResponseEntity<T> update ( Integer id, T dto, BindingResult resValidation );
 
+	/**
+	 * Handler method to perform a DELETE operation of an element dto.
+	 *
+	 * @param id element identifier.
+	 */
 	ResponseEntity<Void> delete ( Integer id );
 
 	/**
-	 * Check if validation has errors
+	 * Check if validation has errors throw an exception STATUS_40001 with errors.
 	 *
 	 * @param resValidation set of ConstraintViolation object
 	 */

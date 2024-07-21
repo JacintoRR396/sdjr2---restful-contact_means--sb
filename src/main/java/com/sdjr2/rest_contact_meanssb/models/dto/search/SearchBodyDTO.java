@@ -13,8 +13,7 @@ import java.util.List;
 /**
  * {@link FilterDTO} class.
  * <p>
- * <strong>DTO</strong> - Represents the advanced search, implements to
- * {@link BaseDTO}.
+ * <strong>DTO</strong> - Represents the advanced search, implements to {@link BaseDTO}.
  *
  * @author Jacinto R^2
  * @version 1.0

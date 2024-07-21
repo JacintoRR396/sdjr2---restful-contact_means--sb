@@ -12,7 +12,7 @@ import java.util.Comparator;
  * {@link AddressDTO} class.
  * <p>
  * <strong>DTO</strong> - Represents an Address in the Request / Response, implements to
- * * {@link BaseDTO}.
+ * {@link BaseDTO}.
  *
  * @author Jacinto R^2
  * @version 1.0

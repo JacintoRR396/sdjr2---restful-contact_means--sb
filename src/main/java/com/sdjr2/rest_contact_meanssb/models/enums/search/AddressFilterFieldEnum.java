@@ -3,8 +3,13 @@ package com.sdjr2.rest_contact_meanssb.models.enums.search;
 import com.sdjr2.rest_contact_meanssb.exceptions.AppExceptionCodeEnum;
 import com.sdjr2.rest_contact_meanssb.exceptions.CustomException;
 import com.sdjr2.rest_contact_meanssb.models.dto.AddressDTO;
+import com.sdjr2.rest_contact_meanssb.models.dto.search.FilterDTO;
 import com.sdjr2.rest_contact_meanssb.models.entities.AddressEntity;
+import lombok.Builder;
+import lombok.Data;
 import lombok.Getter;
+
+import java.util.List;
 
 /**
  * {@link AddressFilterFieldEnum} enum.
@@ -15,11 +20,13 @@ import lombok.Getter;
  * @author Jacinto R^2
  * @version 1.0
  * @category Enum (Model)
- * @upgrade 24/07/19
+ * @upgrade 24/07/21
  * @since 24/07/18
  */
 @Getter
 public enum AddressFilterFieldEnum {
+	ID( "ID", AddressDTO.ATTR_ID, AddressEntity.ATTR_ID ),
+	STREET( "STREET", AddressDTO.ATTR_STREET, AddressEntity.ATTR_STREET ),
 	TOWN( "TOWN", AddressDTO.ATTR_TOWN, AddressEntity.ATTR_TOWN ),
 	CITY( "CITY", AddressDTO.ATTR_CITY, AddressEntity.ATTR_CITY ),
 	COUNTRY( "COUNTRY", AddressDTO.ATTR_COUNTRY, AddressEntity.ATTR_COUNTRY ),
@@ -68,5 +75,46 @@ public enum AddressFilterFieldEnum {
 		}
 
 		throw new CustomException( AppExceptionCodeEnum.STATUS_50001 );
+	}
+
+	public static AddressFiltersRequest getFiltersReqFromSearchDTO ( List<FilterDTO> filtersDTO ) {
+		AddressFiltersRequest.AddressFiltersRequestBuilder builder = AddressFiltersRequest.builder();
+		for ( FilterDTO filterDTO : filtersDTO ) {
+			switch ( AddressFilterFieldEnum.fromValue( filterDTO.getField() ) ) {
+				case ID:
+					builder.ids( filterDTO.getValues().stream().map( Integer::valueOf ).toList() );
+					break;
+				case STREET:
+					builder.streets( filterDTO.getValues() );
+					break;
+				case TOWN:
+					builder.towns( filterDTO.getValues() );
+					break;
+				case CITY:
+					builder.cities( filterDTO.getValues() );
+					break;
+				case COUNTRY:
+					builder.countries( filterDTO.getValues() );
+					break;
+				case POSTAL_CODE:
+					builder.postalCodes( filterDTO.getValues() );
+					break;
+				default:
+					throw new CustomException( AppExceptionCodeEnum.STATUS_50001 );
+			}
+		}
+
+		return builder.build();
+	}
+
+	@Data
+	@Builder
+	public static class AddressFiltersRequest {
+		private List<Integer> ids;
+		private List<String> streets;
+		private List<String> towns;
+		private List<String> cities;
+		private List<String> countries;
+		private List<String> postalCodes;
 	}
 }
