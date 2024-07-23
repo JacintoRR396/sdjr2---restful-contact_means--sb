@@ -22,7 +22,7 @@ import java.util.Optional;
  * @since 23/06/10
  */
 @Repository
-public interface AddressJpaRepository extends JpaRepository<AddressEntity, Integer>,
+public interface AddressJpaRepository extends JpaRepository<AddressEntity, Long>,
 		JpaSpecificationExecutor<AddressEntity> {
 
 	@Query("SELECT DISTINCT a.town FROM AddressEntity a")

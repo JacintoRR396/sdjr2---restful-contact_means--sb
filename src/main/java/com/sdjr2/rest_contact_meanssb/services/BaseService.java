@@ -58,7 +58,7 @@ public interface BaseService<T extends BaseDTO> {
 	 * @param id element identifier.
 	 * @return an element dto {@link T}.
 	 */
-	T getOneById ( Integer id );
+	T getOneById ( Long id );
 
 	/**
 	 * Save an element dto.
@@ -75,12 +75,12 @@ public interface BaseService<T extends BaseDTO> {
 	 * @param dto element request object.
 	 * @return an element dto {@link T}.
 	 */
-	T update ( Integer id, T dto );
+	T update ( Long id, T dto );
 
 	/**
 	 * Delete an element dto for its identifier.
 	 *
 	 * @param id element identifier.
 	 */
-	void delete ( Integer id );
+	void delete ( Long id );
 }

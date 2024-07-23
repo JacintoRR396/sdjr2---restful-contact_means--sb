@@ -6,7 +6,7 @@ public class DataMethods {
 
 	public static AddressDTO getAddressDTO () {
 		return AddressDTO.builder()
-				.id( 2 )
+				.id( 2L )
 				.street( "Corredera" )
 				.number( 155 )
 				.letter( "A" )

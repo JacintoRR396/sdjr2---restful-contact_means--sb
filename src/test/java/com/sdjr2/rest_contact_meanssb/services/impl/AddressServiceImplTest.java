@@ -50,7 +50,7 @@ class AddressServiceImplTest {
 		when( this.addressRepo.findAll() ).thenReturn( this.addressEntities );
 		when( this.addressMapper.toDTOs( this.addressEntities ) ).thenReturn( this.addressDTOs );
 
-		List<AddressDTO> res = this.addressService.getAddresses();
+		List<AddressDTO> res = this.addressService.getAll();
 		assertNotNull( res );
 		assertFalse( res.isEmpty() );
 
@@ -63,7 +63,7 @@ class AddressServiceImplTest {
 		when( this.addressRepo.findAll() ).thenReturn( new ArrayList<>() );
 		when( this.addressMapper.toDTOs( anyList() ) ).thenReturn( new ArrayList<>() );
 
-		List<AddressDTO> res = this.addressService.getAddresses();
+		List<AddressDTO> res = this.addressService.getAll();
 		assertNotNull( res );
 		assertTrue( res.isEmpty() );
 

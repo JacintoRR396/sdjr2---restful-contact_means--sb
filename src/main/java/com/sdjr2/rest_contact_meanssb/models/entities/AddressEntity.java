@@ -53,7 +53,7 @@ public class AddressEntity implements BaseEntity, Serializable {
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	@Column(name = ATTR_ID, unique = true, nullable = false)
-	private Integer id;
+	private Long id;
 
 	/**
 	 * street attribute

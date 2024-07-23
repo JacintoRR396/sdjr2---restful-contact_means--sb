@@ -61,7 +61,7 @@ public class AddressController implements BaseController<AddressDTO> {
 	}
 
 	@GetMapping(value = "/{addressId}")
-	public ResponseEntity<AddressDTO> getOneById ( @PathVariable("addressId") Integer id ) {
+	public ResponseEntity<AddressDTO> getOneById ( @PathVariable("addressId") Long id ) {
 		return new ResponseEntity<>( this.addressService.getOneById( id ), HttpStatus.OK );
 	}
 
@@ -73,7 +73,7 @@ public class AddressController implements BaseController<AddressDTO> {
 	}
 
 	@PutMapping(value = "/{addressId}")
-	public ResponseEntity<AddressDTO> update ( @PathVariable("addressId") Integer id,
+	public ResponseEntity<AddressDTO> update ( @PathVariable("addressId") Long id,
 																						 @Valid @RequestBody AddressDTO addressDTO, BindingResult resValidation ) {
 		this.checkValidation( resValidation );
 
@@ -81,7 +81,7 @@ public class AddressController implements BaseController<AddressDTO> {
 	}
 
 	@DeleteMapping(value = "/{addressId}")
-	public ResponseEntity<Void> delete ( @PathVariable("addressId") Integer id ) {
+	public ResponseEntity<Void> delete ( @PathVariable("addressId") Long id ) {
 		this.addressService.delete( id );
 
 		return new ResponseEntity<>( HttpStatus.NO_CONTENT );

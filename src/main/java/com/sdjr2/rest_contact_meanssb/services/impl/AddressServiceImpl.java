@@ -136,7 +136,7 @@ public class AddressServiceImpl implements AddressService {
 
 	@Override
 	@Transactional(readOnly = true)
-	public AddressDTO getOneById ( Integer id ) {
+	public AddressDTO getOneById ( Long id ) {
 		AddressEntity entity = this.checkExistsAddress( id );
 
 		return this.addressMapper.toDTO( entity );
@@ -148,7 +148,7 @@ public class AddressServiceImpl implements AddressService {
 	 * @param id element identifier.
 	 * @return a database record {@link AddressEntity}.
 	 */
-	private AddressEntity checkExistsAddress ( Integer id ) {
+	private AddressEntity checkExistsAddress ( Long id ) {
 		try {
 			return this.addressRepo.findById( id ).orElseThrow();
 		} catch ( NoSuchElementException ex ) {
@@ -183,7 +183,7 @@ public class AddressServiceImpl implements AddressService {
 
 	@Override
 	@Transactional
-	public AddressDTO update ( Integer id, AddressDTO addressDTO ) {
+	public AddressDTO update ( Long id, AddressDTO addressDTO ) {
 		AddressEntity entityDB = this.checkExistsAddress( addressDTO.getId() );
 
 		AddressEntity entityReq = this.addressMapper.toEntity( addressDTO, entityDB, "SDJR2" );
@@ -194,8 +194,9 @@ public class AddressServiceImpl implements AddressService {
 
 	@Override
 	@Transactional
-	public void delete ( Integer id ) {
+	public void delete ( Long id ) {
 		AddressEntity entityDB = this.checkExistsAddress( id );
+
 		this.addressRepo.delete( entityDB );
 	}
 }

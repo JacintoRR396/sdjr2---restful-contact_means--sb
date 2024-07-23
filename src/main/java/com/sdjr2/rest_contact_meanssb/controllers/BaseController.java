@@ -69,7 +69,7 @@ public interface BaseController<T extends BaseDTO> {
 	 * @param id element identifier.
 	 * @return a response {@link ResponseEntity} with an element dto {@link BaseDTO}.
 	 */
-	ResponseEntity<T> getOneById ( Integer id );
+	ResponseEntity<T> getOneById ( Long id );
 
 	/**
 	 * Handler method to perform a POST operation of an element dto.
@@ -88,14 +88,14 @@ public interface BaseController<T extends BaseDTO> {
 	 * @param resValidation check validations of the element dto.
 	 * @return a response {@link ResponseEntity} with an element dto {@link BaseDTO}.
 	 */
-	ResponseEntity<T> update ( Integer id, T dto, BindingResult resValidation );
+	ResponseEntity<T> update ( Long id, T dto, BindingResult resValidation );
 
 	/**
 	 * Handler method to perform a DELETE operation of an element dto.
 	 *
 	 * @param id element identifier.
 	 */
-	ResponseEntity<Void> delete ( Integer id );
+	ResponseEntity<Void> delete ( Long id );
 
 	/**
 	 * Check if validation has errors throw an exception STATUS_40001 with errors.
