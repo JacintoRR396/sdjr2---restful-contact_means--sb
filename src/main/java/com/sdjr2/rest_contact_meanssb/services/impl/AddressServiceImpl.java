@@ -73,8 +73,16 @@ public class AddressServiceImpl implements AddressService {
 		// Create a page request according to a search body dto (offset, limit and orders)
 		PageRequest pageReq = this.createPageRequestWithPaginationAndSort( searchBodyDTO );
 
-		// Create a page with entities according to a search body dto (filters and page request)
-		Page<AddressEntity> pageEntities = this.createPageWithPaginationAndSortAndFilter( searchBodyDTO, pageReq );
+		// Create a specification according to a search body dto (filters)
+		Specification<AddressEntity> specification = this.createSpecificationAboutFilters( searchBodyDTO );
+
+		// Create a page with entities according to a search body dto (page request and specification)
+		Page<AddressEntity> pageEntities;
+		if ( Objects.nonNull( specification ) ) {
+			pageEntities = this.addressRepo.findAll( specification, pageReq );
+		} else {
+			pageEntities = this.addressRepo.findAll( pageReq );
+		}
 
 		return new PageImpl<>( this.addressMapper.toDTOs( pageEntities.getContent() ), pageEntities.getPageable(),
 				pageEntities.getTotalElements() );
@@ -104,18 +112,18 @@ public class AddressServiceImpl implements AddressService {
 	}
 
 	/**
-	 * Create a page with entities according to a search body dto.
+	 * Create a specification with entities according to a search body dto.
 	 *
 	 * @param searchBodyDTO dto with search parameters about pagination, sort and filter.
-	 * @param pageReq       page request according to search parameters about pagination and sort.
-	 * @return a page {@link Page} about address {@link AddressEntity}.
+	 * @return a specification {@link Page} about address {@link AddressEntity}.
 	 */
-	private Page<AddressEntity> createPageWithPaginationAndSortAndFilter ( SearchBodyDTO searchBodyDTO,
-																																				 PageRequest pageReq ) {
+	private Specification<AddressEntity> createSpecificationAboutFilters ( SearchBodyDTO searchBodyDTO ) {
+		Specification<AddressEntity> specification = null;
+
 		if ( Objects.nonNull( searchBodyDTO.getFilters() ) && !searchBodyDTO.getFilters().isEmpty() ) {
 			AddressFilterFieldEnum.AddressFiltersRequest filtersRequest =
 					AddressFilterFieldEnum.getFiltersReqFromSearchDTO( searchBodyDTO.getFilters() );
-			Specification<AddressEntity> specification = Specification
+			specification = Specification
 					.where( AddressSpecifications.hasValuesInt(
 							AddressFilterFieldEnum.ID.getFieldMySQL(), filtersRequest.getOpIds(), filtersRequest.getIds() ) )
 					.and( AddressSpecifications.hasValuesStr(
@@ -128,15 +136,14 @@ public class AddressServiceImpl implements AddressService {
 							AddressFilterFieldEnum.COUNTRY.getFieldMySQL(), filtersRequest.getOpCountries(), filtersRequest.getCountries() ) )
 					.and( AddressSpecifications.hasValuesStr(
 							AddressFilterFieldEnum.POSTAL_CODE.getFieldMySQL(), filtersRequest.getOpPostalCodes(), filtersRequest.getPostalCodes() ) );
-			return this.addressRepo.findAll( specification, pageReq );
-		} else {
-			return this.addressRepo.findAll( pageReq );
 		}
+
+		return specification;
 	}
 
 	@Override
 	@Transactional(readOnly = true)
-	public AddressDTO getOneById ( Integer id ) {
+	public AddressDTO getOneById ( Long id ) {
 		AddressEntity entity = this.checkExistsAddress( id );
 
 		return this.addressMapper.toDTO( entity );
@@ -148,7 +155,7 @@ public class AddressServiceImpl implements AddressService {
 	 * @param id element identifier.
 	 * @return a database record {@link AddressEntity}.
 	 */
-	private AddressEntity checkExistsAddress ( Integer id ) {
+	private AddressEntity checkExistsAddress ( Long id ) {
 		try {
 			return this.addressRepo.findById( id ).orElseThrow();
 		} catch ( NoSuchElementException ex ) {
@@ -183,7 +190,7 @@ public class AddressServiceImpl implements AddressService {
 
 	@Override
 	@Transactional
-	public AddressDTO update ( Integer id, AddressDTO addressDTO ) {
+	public AddressDTO update ( Long id, AddressDTO addressDTO ) {
 		AddressEntity entityDB = this.checkExistsAddress( addressDTO.getId() );
 
 		AddressEntity entityReq = this.addressMapper.toEntity( addressDTO, entityDB, "SDJR2" );
@@ -194,8 +201,9 @@ public class AddressServiceImpl implements AddressService {
 
 	@Override
 	@Transactional
-	public void delete ( Integer id ) {
+	public void delete ( Long id ) {
 		AddressEntity entityDB = this.checkExistsAddress( id );
+
 		this.addressRepo.delete( entityDB );
 	}
 }

@@ -38,7 +38,7 @@ public class AddressServiceMockImpl implements AddressService {
 	/**
 	 * Address repository object
 	 */
-	private final AddressRepository<AddressEntity, Integer> addressRepo;
+	private final AddressRepository<AddressEntity, Long> addressRepo;
 
 	@Override
 	public List<AddressDTO> getAll () {
@@ -65,7 +65,7 @@ public class AddressServiceMockImpl implements AddressService {
 	}
 
 	@Override
-	public AddressDTO getOneById ( Integer id ) {
+	public AddressDTO getOneById ( Long id ) {
 		AddressEntity entity = this.checkExistsAddress( id );
 		return this.addressMapper.toDTO( entity );
 	}
@@ -79,16 +79,16 @@ public class AddressServiceMockImpl implements AddressService {
 	}
 
 	@Override
-	public AddressDTO update ( Integer id, AddressDTO addressDTO ) {
+	public AddressDTO update ( Long id, AddressDTO addressDTO ) {
 		return null;
 	}
 
 	@Override
-	public void delete ( Integer id ) {
+	public void delete ( Long id ) {
 
 	}
 
-	private AddressEntity checkExistsAddress ( Integer id ) {
+	private AddressEntity checkExistsAddress ( Long id ) {
 		return this.addressRepo.findById( id ).orElseThrow( () -> new ResponseStatusException( HttpStatus.NOT_FOUND,
 				String.format( "Address with ID '%d' not found", id ) ) );
 	}

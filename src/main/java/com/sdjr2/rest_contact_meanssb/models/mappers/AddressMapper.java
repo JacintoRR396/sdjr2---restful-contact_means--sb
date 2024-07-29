@@ -84,7 +84,7 @@ public abstract class AddressMapper implements BaseMapper<AddressDTO, AddressEnt
 																								 @MappingTarget AddressEntity addressEntity ) {
 		AuditableEntity auditableEntity;
 
-		if ( dto.getId().equals( 0 ) ) {
+		if ( dto.getId().equals( 0L ) ) {
 			auditableEntity = AuditableEntity.builder()
 					.createdAt( LocalDateTime.now() )
 					.createdBy( "admin" )

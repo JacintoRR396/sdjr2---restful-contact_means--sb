@@ -53,7 +53,7 @@ class AddressControllerTest {
 	void getAddressesTest () throws
 													 Exception {
 		String strDTOs = this.objMapper.writeValueAsString( this.addressDTOs );
-		when( this.addressService.getAddresses() ).thenReturn( this.addressDTOs );
+		when( this.addressService.getAll() ).thenReturn( this.addressDTOs );
 
 		this.mvc.perform( MockMvcRequestBuilders.get( "/addresses" ).contentType( MediaType.APPLICATION_JSON ) )
 				.andExpect( MockMvcResultMatchers.content().contentType( MediaType.APPLICATION_JSON ) )
@@ -61,7 +61,7 @@ class AddressControllerTest {
 				.andExpect( MockMvcResultMatchers.status().isOk() )
 				.andExpect( MockMvcResultMatchers.jsonPath( "$[0].id" ).value( 2 ) );
 
-		verify( this.addressService, only() ).getAddresses();
+		verify( this.addressService, only() ).getAll();
 	}
 
 	@Test
@@ -69,7 +69,7 @@ class AddressControllerTest {
 														 Exception {
 		AddressDTO dto = this.addressDTOs.get( 0 );
 		String strDTO = BaseDTO.toJsonStr( dto );
-		when( this.addressService.getAddressById( anyInt() ) ).thenReturn( dto );
+		when( this.addressService.getOneById( anyLong() ) ).thenReturn( dto );
 
 		this.mvc.perform( MockMvcRequestBuilders.get( "/addresses/2" )
 						.contentType( MediaType.APPLICATION_JSON ) )
@@ -78,7 +78,7 @@ class AddressControllerTest {
 				.andExpect( MockMvcResultMatchers.status().isOk() )
 				.andExpect( MockMvcResultMatchers.jsonPath( "$.id" ).value( 2 ) );
 
-		verify( this.addressService, only() ).getAddressById( anyInt() );
+		verify( this.addressService, only() ).getOneById( anyLong() );
 	}
 
 	@Test
@@ -86,7 +86,7 @@ class AddressControllerTest {
 														Exception {
 		AddressDTO dto = this.addressDTOs.get( 0 );
 		String strDTO = BaseDTO.toJsonStr( dto );
-		when( this.addressService.createAddress( any( AddressDTO.class ) ) ).thenReturn( dto );
+		when( this.addressService.create( any( AddressDTO.class ) ) ).thenReturn( dto );
 
 		this.mvc.perform( MockMvcRequestBuilders.post( "/addresses" )
 						.contentType( MediaType.APPLICATION_JSON ).content( strDTO ) )
@@ -94,6 +94,6 @@ class AddressControllerTest {
 				.andExpect( MockMvcResultMatchers.content().json( strDTO ) )
 				.andExpect( MockMvcResultMatchers.status().isCreated() );
 
-		verify( this.addressService, only() ).createAddress( dto );
+		verify( this.addressService, only() ).create( dto );
 	}
 }

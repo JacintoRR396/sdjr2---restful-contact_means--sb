@@ -1,13 +1,14 @@
 package com.sdjr2.rest_contact_meanssb.repositories;
 
+import Utils.DataMethods;
+import Utils.UtilMethods;
 import com.sdjr2.rest_contact_meanssb.models.entities.AddressEntity;
-import com.sdjr2.rest_contact_meanssb.models.entities.AuditableEntity;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.orm.jpa.DataJpaTest;
+import org.springframework.data.domain.Page;
 
-import java.time.LocalDateTime;
 import java.util.List;
 import java.util.NoSuchElementException;
 import java.util.Optional;
@@ -24,21 +25,62 @@ class AddressJpaRepositoryTest {
 
 	@BeforeEach
 	void setUp () {
-		List<AddressEntity> entities = this.addressJpaRepository.findAll();
-		this.numElements = entities.size();
+		List<AddressEntity> entitiesDB = this.addressJpaRepository.findAll();
+		this.numElements = entitiesDB.size();
 	}
 
 	@Test
 	void findAllTest () {
 		List<AddressEntity> entitiesRes = this.addressJpaRepository.findAll();
 
+		assertNotNull( entitiesRes );
 		assertFalse( entitiesRes.isEmpty() );
-		assertEquals( 4, entitiesRes.size() );
+		assertEquals( this.numElements, entitiesRes.size() );
+	}
+
+	@Test
+	void findAllWithPageRequestTest () {
+		int offset = 0;
+		int limit = 3;
+		Page<AddressEntity> pageEntitiesRes = this.addressJpaRepository.findAll(
+				DataMethods.getPageable( offset, limit, null ) );
+
+		UtilMethods.assertGenericPage( offset, limit, pageEntitiesRes );
+		assertEquals( limit, pageEntitiesRes.getNumberOfElements() );
+		assertEquals( this.numElements / limit, pageEntitiesRes.getTotalPages() );
+		assertEquals( this.numElements, ( int ) pageEntitiesRes.getTotalElements() );
+	}
+
+	@Test
+	void findAllWithPageRequestAndSortTest () {
+		int offset = 0;
+		int limit = 3;
+		Page<AddressEntity> pageEntitiesRes = this.addressJpaRepository.findAll(
+				DataMethods.getPageable( offset, limit, AddressEntity.ATTR_STREET ) );
+
+		UtilMethods.assertGenericPage( offset, limit, pageEntitiesRes );
+		assertEquals( limit, pageEntitiesRes.getNumberOfElements() );
+		assertEquals( this.numElements / limit, pageEntitiesRes.getTotalPages() );
+		assertEquals( this.numElements, ( int ) pageEntitiesRes.getTotalElements() );
+		assertEquals( "Ancha", pageEntitiesRes.getContent().get( 0 ).getStreet() );
+	}
+
+	@Test
+	void findAllWithPageRequestAndSortAndSpecificationTest () {
+		int offset = 0;
+		int limit = 3;
+		Page<AddressEntity> pageEntitiesRes = this.addressJpaRepository.findAll( DataMethods.getSpecification(),
+				DataMethods.getPageable( offset, limit, AddressEntity.ATTR_STREET ) );
+
+		UtilMethods.assertGenericPage( offset, limit, pageEntitiesRes );
+		assertEquals( 2, pageEntitiesRes.getNumberOfElements() );
+		assertEquals( 1, pageEntitiesRes.getTotalPages() );
+		assertEquals( 2, ( int ) pageEntitiesRes.getTotalElements() );
 	}
 
 	@Test
 	void findByIdTest () {
-		Optional<AddressEntity> entityOptRes = this.addressJpaRepository.findById( 1 );
+		Optional<AddressEntity> entityOptRes = this.addressJpaRepository.findById( 1L );
 
 		assertTrue( entityOptRes.isPresent() );
 		assertEquals( "Avda Piedra el Gallo", entityOptRes.orElseThrow().getStreet() );
@@ -46,34 +88,41 @@ class AddressJpaRepositoryTest {
 
 	@Test
 	void findByIdNotSuchElementExTest () {
-		Optional<AddressEntity> entityOptRes = this.addressJpaRepository.findById( this.numElements + 1 );
+		Optional<AddressEntity> entityOptRes = this.addressJpaRepository.findById( ( long ) this.numElements + 1 );
 
 		assertTrue( entityOptRes.isEmpty() );
 		assertThrows( NoSuchElementException.class, entityOptRes::orElseThrow );
 	}
 
 	@Test
-	void saveTest () {
-		String street = "Rosario";
-		AuditableEntity auditEntity = new AuditableEntity( LocalDateTime.now(), "test", LocalDateTime.now(), "test" );
-		AddressEntity entity = new AddressEntity( 0, street, "23", "A", "El Viso del Alcor", "Sevilla", "España", "41520", "-5.7199300", "37.391060", "", auditEntity );
+	void findByStreetAndNumberAndPostalCodeTest () {
+		String street = "Corredera";
+		Optional<AddressEntity> entityOptRes = this.addressJpaRepository.findByStreetAndNumberAndPostalCode(
+				street, "155", "41520" );
 
-		AddressEntity entityRes = this.addressJpaRepository.save( entity );
-
-		assertNotNull( entityRes );
-		assertEquals( this.numElements + 1, entityRes.getId() );
-		assertEquals( street, entityRes.getStreet() );
+		assertTrue( entityOptRes.isPresent() );
+		assertEquals( street, entityOptRes.orElseThrow().getStreet() );
 	}
 
 	@Test
-	void updateTest () {
-		Integer id = 1;
-		String street = "Cervantes";
-		Optional<AddressEntity> entityOpt = this.addressJpaRepository.findById( id );
-		AddressEntity entity = entityOpt.orElseThrow();
-		entity.setStreet( street );
+	void saveForCreateTest () {
+		AddressEntity entityReq = DataMethods.getAddressEntity();
 
-		AddressEntity entityRes = this.addressJpaRepository.save( entity );
+		AddressEntity entityRes = this.addressJpaRepository.save( entityReq );
+
+		assertNotNull( entityRes );
+		assertEquals( this.numElements + 1, entityRes.getId() );
+		assertEquals( entityReq.getStreet(), entityRes.getStreet() );
+	}
+
+	@Test
+	void saveForUpdateTest () {
+		Long id = 1L;
+		String street = "Cervantes";
+		AddressEntity entityDB = this.addressJpaRepository.findById( id ).orElseThrow();
+		entityDB.setStreet( street );
+
+		AddressEntity entityRes = this.addressJpaRepository.save( entityDB );
 
 		assertNotNull( entityRes );
 		assertEquals( id, entityRes.getId() );
@@ -82,7 +131,7 @@ class AddressJpaRepositoryTest {
 
 	@Test
 	void deleteByIdTest () {
-		Integer id = 1;
+		Long id = 1L;
 
 		this.addressJpaRepository.deleteById( id );
 
@@ -93,11 +142,10 @@ class AddressJpaRepositoryTest {
 
 	@Test
 	void deleteTest () {
-		Integer id = 1;
-		Optional<AddressEntity> entityOpt = this.addressJpaRepository.findById( id );
-		AddressEntity entity = entityOpt.orElseThrow();
+		Long id = 1L;
+		AddressEntity entityDB = this.addressJpaRepository.findById( id ).orElseThrow();
 
-		this.addressJpaRepository.delete( entity );
+		this.addressJpaRepository.delete( entityDB );
 
 		Optional<AddressEntity> entityOptRes = this.addressJpaRepository.findById( id );
 		assertTrue( entityOptRes.isEmpty() );

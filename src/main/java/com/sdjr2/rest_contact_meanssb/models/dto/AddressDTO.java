@@ -43,7 +43,7 @@ public class AddressDTO implements BaseDTO, Comparable<AddressDTO> {
 	/* VARIABLES */
 	@PositiveOrZero
 	@Digits(integer = 8, fraction = 0)
-	private Integer id;
+	private Long id;
 
 	@NotNull
 	@Pattern(regexp = UConstants.STREET_REGEX)
