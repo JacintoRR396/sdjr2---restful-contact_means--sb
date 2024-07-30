@@ -1,5 +1,6 @@
 package com.sdjr2.rest_contact_meanssb.models.entities;
 
+import com.sdjr2.rest_contact_meanssb.utils.UConstants;
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
@@ -8,6 +9,7 @@ import lombok.Setter;
 
 import java.io.Serial;
 import java.io.Serializable;
+import java.util.Objects;
 
 /**
  * {@link AddressEntity} class.
@@ -20,7 +22,7 @@ import java.io.Serializable;
  * @author Jacinto R^2
  * @version 1.0
  * @category Entity (ORM)
- * @upgrade 24/07/21
+ * @upgrade 24/07/30
  * @since 23/06/10
  */
 @Entity
@@ -70,7 +72,7 @@ public class AddressEntity implements BaseEntity, Serializable {
 	/**
 	 * letter of the number attribute
 	 */
-	@Column(name = ATTR_LETTER, length = 3)
+	@Column(name = ATTR_LETTER, nullable = false, length = 3)
 	private String letter;
 
 	/**
@@ -120,4 +122,24 @@ public class AddressEntity implements BaseEntity, Serializable {
 	 */
 	@Embedded
 	private AuditableEntity auditableEntity = new AuditableEntity();
+
+	/**
+	 * method to provide certain functionality before creation
+	 */
+	@PrePersist
+	public void prePersist () {
+		if ( Objects.isNull( this.letter ) ) {
+			this.letter = UConstants.NOT_APPLY;
+		}
+	}
+
+	/**
+	 * method to update certain functionality before creation
+	 */
+	@PreUpdate
+	public void preUpdate () {
+		if ( Objects.isNull( this.letter ) ) {
+			this.letter = UConstants.NOT_APPLY;
+		}
+	}
 }

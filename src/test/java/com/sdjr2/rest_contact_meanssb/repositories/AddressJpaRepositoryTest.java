@@ -3,6 +3,7 @@ package com.sdjr2.rest_contact_meanssb.repositories;
 import Utils.DataMethods;
 import Utils.UtilMethods;
 import com.sdjr2.rest_contact_meanssb.models.entities.AddressEntity;
+import com.sdjr2.rest_contact_meanssb.models.enums.search.AddressSortFieldEnum;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -56,7 +57,7 @@ class AddressJpaRepositoryTest {
 		int offset = 0;
 		int limit = 3;
 		Page<AddressEntity> pageEntitiesRes = this.addressJpaRepository.findAll(
-				DataMethods.getPageable( offset, limit, AddressEntity.ATTR_STREET ) );
+				DataMethods.getPageable( offset, limit, AddressSortFieldEnum.CITY.getFieldMySQL() ) );
 
 		UtilMethods.assertGenericPage( offset, limit, pageEntitiesRes );
 		assertEquals( limit, pageEntitiesRes.getNumberOfElements() );
@@ -70,12 +71,12 @@ class AddressJpaRepositoryTest {
 		int offset = 0;
 		int limit = 3;
 		Page<AddressEntity> pageEntitiesRes = this.addressJpaRepository.findAll( DataMethods.getSpecification(),
-				DataMethods.getPageable( offset, limit, AddressEntity.ATTR_STREET ) );
+				DataMethods.getPageable( offset, limit, AddressSortFieldEnum.CITY.getFieldMySQL() ) );
 
 		UtilMethods.assertGenericPage( offset, limit, pageEntitiesRes );
-		assertEquals( 2, pageEntitiesRes.getNumberOfElements() );
-		assertEquals( 1, pageEntitiesRes.getTotalPages() );
-		assertEquals( 2, ( int ) pageEntitiesRes.getTotalElements() );
+		assertEquals( 3, pageEntitiesRes.getNumberOfElements() );
+		assertEquals( 2, pageEntitiesRes.getTotalPages() );
+		assertEquals( 6, ( int ) pageEntitiesRes.getTotalElements() );
 	}
 
 	@Test
@@ -95,18 +96,19 @@ class AddressJpaRepositoryTest {
 	}
 
 	@Test
-	void findByStreetAndNumberAndPostalCodeTest () {
-		String street = "Corredera";
-		Optional<AddressEntity> entityOptRes = this.addressJpaRepository.findByStreetAndNumberAndPostalCode(
-				street, "155", "41520" );
+	void findByStreetAndNumberAndLetterAndPostalCodeTest () {
+		AddressEntity entityDB = DataMethods.getAddressEntity();
+		Optional<AddressEntity> entityOptRes = this.addressJpaRepository.findByStreetAndNumberAndLetterAndPostalCode(
+				entityDB.getStreet(), entityDB.getNumber(), entityDB.getLetter(), entityDB.getPostalCode() );
 
 		assertTrue( entityOptRes.isPresent() );
-		assertEquals( street, entityOptRes.orElseThrow().getStreet() );
+		assertEquals( entityDB.getStreet(), entityOptRes.orElseThrow().getStreet() );
 	}
 
 	@Test
 	void saveForCreateTest () {
 		AddressEntity entityReq = DataMethods.getAddressEntity();
+		entityReq.setId( 0L );
 
 		AddressEntity entityRes = this.addressJpaRepository.save( entityReq );
 

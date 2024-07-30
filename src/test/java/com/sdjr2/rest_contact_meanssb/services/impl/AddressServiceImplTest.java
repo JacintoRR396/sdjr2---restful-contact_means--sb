@@ -288,8 +288,8 @@ class AddressServiceImplTest {
 		dto.setId( 0L );
 		AddressEntity entity = DataMethods.getAddressEntity();
 
-		when( this.addressRepo.findByStreetAndNumberAndPostalCode( anyString(), anyString(), anyString() ) )
-				.thenReturn( Optional.empty() );
+		when( this.addressRepo.findByStreetAndNumberAndLetterAndPostalCode( anyString(), anyString(), anyString(),
+				anyString() ) ).thenReturn( Optional.empty() );
 		when( this.addressMapper.toEntity( any( AddressDTO.class ), any(), any() ) ).thenReturn( entity );
 		when( this.addressRepo.save( any( AddressEntity.class ) ) ).thenReturn( entity );
 		when( this.addressMapper.toDTO( any( AddressEntity.class ) ) ).thenReturn( dto );
@@ -298,8 +298,8 @@ class AddressServiceImplTest {
 		assertNotNull( res );
 		assertEquals( dto.getId(), res.getId() );
 
-		verify( this.addressRepo, times( 1 ) ).findByStreetAndNumberAndPostalCode(
-				anyString(), anyString(), anyString() );
+		verify( this.addressRepo, times( 1 ) ).findByStreetAndNumberAndLetterAndPostalCode(
+				anyString(), anyString(), anyString(), anyString() );
 		verify( this.addressMapper, times( 1 ) ).toEntity( any( AddressDTO.class ), any(), any() );
 		verify( this.addressRepo, times( 1 ) ).save( any( AddressEntity.class ) );
 		verify( this.addressMapper, times( 1 ) ).toDTO( any( AddressEntity.class ) );
@@ -308,24 +308,27 @@ class AddressServiceImplTest {
 	@Test
 	void createWithExceptionTest () {
 		AddressDTO dto = DataMethods.getAddressDTO();
+		dto.setId( 0L );
 		AddressEntity entity = DataMethods.getAddressEntity();
 
-		when( this.addressRepo.findByStreetAndNumberAndPostalCode( anyString(), anyString(), anyString() ) )
-				.thenReturn( Optional.of( entity ) );
+		when( this.addressRepo.findByStreetAndNumberAndLetterAndPostalCode( anyString(), anyString(), anyString(),
+				anyString() ) ).thenReturn( Optional.of( entity ) );
 
 		assertThrows( CustomException.class, () -> this.addressService.create( dto ) );
 
-		verify( this.addressRepo, times( 1 ) ).findByStreetAndNumberAndPostalCode(
-				anyString(), anyString(), anyString() );
+		verify( this.addressRepo, times( 1 ) ).findByStreetAndNumberAndLetterAndPostalCode(
+				anyString(), anyString(), anyString(), anyString() );
 	}
 
 	@Test
-	void updateWhenExistsTest () {
+	void updateWhenNotDuplicateAndExistsTest () {
 		AddressDTO dto = DataMethods.getAddressDTO();
 		Long id = dto.getId();
 		AddressEntity entity = DataMethods.getAddressEntity();
 		Optional<AddressEntity> entityOpt = Optional.of( entity );
 
+		when( this.addressRepo.findByStreetAndNumberAndLetterAndPostalCode( anyString(), anyString(), anyString(),
+				anyString() ) ).thenReturn( Optional.empty() );
 		when( this.addressRepo.findById( anyLong() ) ).thenReturn( entityOpt );
 		when( this.addressMapper.toEntity( any( AddressDTO.class ), any( AddressEntity.class ), anyString() ) )
 				.thenReturn( entity );
@@ -336,6 +339,8 @@ class AddressServiceImplTest {
 		assertNotNull( res );
 		assertEquals( dto.getId(), res.getId() );
 
+		verify( this.addressRepo, times( 1 ) ).findByStreetAndNumberAndLetterAndPostalCode(
+				anyString(), anyString(), anyString(), anyString() );
 		verify( this.addressRepo, times( 1 ) ).findById( anyLong() );
 		verify( this.addressMapper, times( 1 ) ).toEntity( any( AddressDTO.class ),
 				any( AddressEntity.class ), anyString() );
@@ -344,15 +349,34 @@ class AddressServiceImplTest {
 	}
 
 	@Test
-	void updateWithExceptionTest () {
+	void updateWithExceptionDuplicateTest () {
+		AddressDTO dto = DataMethods.getAddressDTO();
+		Long id = dto.getId();
+		AddressEntity entity = DataMethods.getAddressEntity();
+
+		when( this.addressRepo.findByStreetAndNumberAndLetterAndPostalCode( anyString(), anyString(), anyString(),
+				anyString() ) ).thenReturn( Optional.of( entity ) );
+
+		assertThrows( CustomException.class, () -> this.addressService.update( id, dto ) );
+
+		verify( this.addressRepo, times( 1 ) ).findByStreetAndNumberAndLetterAndPostalCode(
+				anyString(), anyString(), anyString(), anyString() );
+	}
+
+	@Test
+	void updateWithExceptionNotExistsTest () {
 		AddressDTO dto = DataMethods.getAddressDTO();
 		Long id = dto.getId();
 
+		when( this.addressRepo.findByStreetAndNumberAndLetterAndPostalCode( anyString(), anyString(), anyString(),
+				anyString() ) ).thenReturn( Optional.empty() );
 		when( this.addressRepo.findById( anyLong() ) ).thenThrow( NoSuchElementException.class );
 
 		assertThrows( CustomException.class, () -> this.addressService.update( id, dto ) );
 
-		verify( this.addressRepo, only() ).findById( anyLong() );
+		verify( this.addressRepo, times( 1 ) ).findByStreetAndNumberAndLetterAndPostalCode(
+				anyString(), anyString(), anyString(), anyString() );
+		verify( this.addressRepo, times( 1 ) ).findById( anyLong() );
 	}
 
 	@Test

@@ -46,7 +46,7 @@ public class DataMethods {
 	public static Specification<AddressEntity> getSpecification () {
 		return Specification
 				.where( AddressSpecifications.hasValuesStr(
-						AddressFilterFieldEnum.CITY.name(),
+						AddressFilterFieldEnum.CITY.getFieldMySQL(),
 						OperatorFilterEnum.SW,
 						List.of( "Sevilla" ) ) );
 	}

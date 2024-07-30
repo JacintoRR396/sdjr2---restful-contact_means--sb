@@ -1,9 +1,6 @@
 package com.sdjr2.rest_contact_meanssb.models.entities;
 
-import jakarta.persistence.Column;
-import jakarta.persistence.Embeddable;
-import jakarta.persistence.PrePersist;
-import jakarta.persistence.PreUpdate;
+import jakarta.persistence.*;
 import lombok.*;
 
 import java.time.LocalDateTime;
@@ -16,7 +13,7 @@ import java.time.LocalDateTime;
  * @author Jacinto R^2
  * @version 1.0
  * @category Entity (ORM)
- * @upgrade 24/07/19
+ * @upgrade 24/07/30
  * @since 23/06/10
  */
 @Embeddable
@@ -35,19 +32,21 @@ public class AuditableEntity {
 	/**
 	 * created at attribute
 	 */
-	@Column(name = ATTR_CREATED_AT, nullable = false)
+	@Column(name = ATTR_CREATED_AT, nullable = false, updatable = false)
+	@Temporal(TemporalType.TIMESTAMP)
 	private LocalDateTime createdAt;
 
 	/**
 	 * created by attribute
 	 */
-	@Column(name = ATTR_CREATED_BY, nullable = false)
+	@Column(name = ATTR_CREATED_BY, nullable = false, updatable = false)
 	private String createdBy;
 
 	/**
 	 * updated at attribute
 	 */
 	@Column(name = ATTR_UPDATED_AT, nullable = false)
+	@Temporal(TemporalType.TIMESTAMP)
 	private LocalDateTime updatedAt;
 
 	/**

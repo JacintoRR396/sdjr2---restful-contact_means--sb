@@ -18,7 +18,7 @@ import java.util.Optional;
  * @author Jacinto R^2
  * @version 1.0
  * @category Repository (DAO)
- * @upgrade 24/07/18
+ * @upgrade 24/07/30
  * @since 23/06/10
  */
 @Repository
@@ -28,5 +28,6 @@ public interface AddressJpaRepository extends JpaRepository<AddressEntity, Long>
 	@Query("SELECT DISTINCT a.town FROM AddressEntity a")
 	List<String> findAllTowns ();
 
-	Optional<AddressEntity> findByStreetAndNumberAndPostalCode ( String street, String number, String postalCode );
+	Optional<AddressEntity> findByStreetAndNumberAndLetterAndPostalCode (
+			String street, String number, String letter, String postalCode );
 }
