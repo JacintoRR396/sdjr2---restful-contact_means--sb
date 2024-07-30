@@ -26,8 +26,8 @@ public class DataMethods {
 	}
 
 	public static AddressEntity getAddressEntity () {
-		return new AddressEntity( 0L, "Rosario", "23", "A", "El Viso del Alcor", "Sevilla",
-				"España", "41520", "-5.7199300", "37.391060", "",
+		return new AddressEntity( 2L, "Corredera", "155", "A", "El Viso del Alcor", "Sevilla",
+				"España", "41520", "-5.7199300", "37.391060", "Vivo actualmente en el Piso",
 				DataMethods.getAuditableEntity() );
 	}
 
@@ -46,9 +46,9 @@ public class DataMethods {
 	public static Specification<AddressEntity> getSpecification () {
 		return Specification
 				.where( AddressSpecifications.hasValuesStr(
-						AddressFilterFieldEnum.STREET.name(),
+						AddressFilterFieldEnum.CITY.name(),
 						OperatorFilterEnum.SW,
-						List.of( "Avda" ) ) );
+						List.of( "Sevilla" ) ) );
 	}
 
 	public static AddressDTO getAddressDTO () {
@@ -76,14 +76,14 @@ public class DataMethods {
 		return List.of( orderDTO );
 	}
 
-	public static List<FilterDTO> getFiltersDTO(){
+	public static List<FilterDTO> getFiltersDTO () {
 		FilterDTO filterDTO = FilterDTO.builder()
 				.field( AddressFilterFieldEnum.CITY.name() )
 				.operatorType( OperatorFilterEnum.EQ )
-				.values( List.of("Sevilla") )
+				.values( List.of( "Sevilla" ) )
 				.build();
 
-		return List.of(filterDTO);
+		return List.of( filterDTO );
 	}
 
 	public static SearchBodyDTO getSearchBodyDTO ( Integer offset, Integer limit, List<OrderDTO> sorts,
