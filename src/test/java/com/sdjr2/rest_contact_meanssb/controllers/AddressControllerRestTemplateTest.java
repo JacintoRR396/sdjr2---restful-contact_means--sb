@@ -71,6 +71,7 @@ class AddressControllerRestTemplateTest {
 														JsonProcessingException {
 		AddressDTO dto = this.addressDTOs.get( 0 );
 		dto.setId( 0L );
+		dto.setStreet( "Murillo" );
 
 		// Can also be done with AddressDTO.class
 		ResponseEntity<String> resp = this.client.postForEntity( "/addresses", dto, String.class );

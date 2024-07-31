@@ -34,7 +34,7 @@ import java.util.Objects;
  * @author Jacinto R^2
  * @version 1.0
  * @category Service
- * @upgrade 24/07/21
+ * @upgrade 24/07/30
  * @since 23/06/10
  */
 @Service
@@ -144,7 +144,7 @@ public class AddressServiceImpl implements AddressService {
 	@Override
 	@Transactional(readOnly = true)
 	public AddressDTO getOneById ( Long id ) {
-		AddressEntity entity = this.checkExistsAddress( id );
+		AddressEntity entity = this.checkExistsById( id );
 
 		return this.addressMapper.toDTO( entity );
 	}
@@ -155,7 +155,7 @@ public class AddressServiceImpl implements AddressService {
 	 * @param id element identifier.
 	 * @return a database record {@link AddressEntity}.
 	 */
-	private AddressEntity checkExistsAddress ( Long id ) {
+	private AddressEntity checkExistsById ( Long id ) {
 		try {
 			return this.addressRepo.findById( id ).orElseThrow();
 		} catch ( NoSuchElementException ex ) {
@@ -166,8 +166,8 @@ public class AddressServiceImpl implements AddressService {
 	@Override
 	@Transactional
 	public AddressDTO create ( AddressDTO addressDTO ) {
-		this.checkNotExistsAddress( addressDTO.getStreet(), addressDTO.getNumber().toString(),
-				addressDTO.getPostalCode().toString() );
+		this.checkNotExistsByUniqueAttrs( addressDTO.getId(), addressDTO.getStreet(), addressDTO.getNumber().toString(),
+				addressDTO.getLetter(), addressDTO.getPostalCode().toString() );
 
 		AddressEntity entityReq = this.addressMapper.toEntity( addressDTO, null, null );
 		AddressEntity entityDB = this.addressRepo.save( entityReq );
@@ -176,22 +176,31 @@ public class AddressServiceImpl implements AddressService {
 	}
 
 	/**
-	 * Check if an entity not exists by its id, otherwise throw an exception STATUS_40010.
+	 * Check if an entity not exists by its unique attributes, otherwise throw an exception STATUS_40010.
 	 *
+	 * @param id         element identifier.
 	 * @param street     first element of the pk.
 	 * @param number     second element of the pk.
-	 * @param postalCode third element of the pk.
+	 * @param letter     third element of the pk.
+	 * @param postalCode fourth element of the pk.
 	 */
-	private void checkNotExistsAddress ( String street, String number, String postalCode ) {
-		this.addressRepo.findByStreetAndNumberAndPostalCode( street, number, postalCode ).ifPresent( entityDB -> {
-			throw new CustomException( AppExceptionCodeEnum.STATUS_40010 );
-		} );
+	private void checkNotExistsByUniqueAttrs ( Long id, String street, String number, String letter, String postalCode ) {
+		this.addressRepo.findByStreetAndNumberAndLetterAndPostalCode( street, number, letter, postalCode )
+				.ifPresent( entityDB -> {
+					// 1º about create and 2º about update
+					if ( id == 0L || !Objects.equals( id, entityDB.getId() ) ) {
+						throw new CustomException( AppExceptionCodeEnum.STATUS_40010 );
+					}
+				} );
 	}
 
 	@Override
 	@Transactional
 	public AddressDTO update ( Long id, AddressDTO addressDTO ) {
-		AddressEntity entityDB = this.checkExistsAddress( addressDTO.getId() );
+		this.checkNotExistsByUniqueAttrs( id, addressDTO.getStreet(), addressDTO.getNumber().toString(),
+				addressDTO.getLetter(), addressDTO.getPostalCode().toString() );
+
+		AddressEntity entityDB = this.checkExistsById( addressDTO.getId() );
 
 		AddressEntity entityReq = this.addressMapper.toEntity( addressDTO, entityDB, "SDJR2" );
 		entityDB = this.addressRepo.save( entityReq );
@@ -202,7 +211,7 @@ public class AddressServiceImpl implements AddressService {
 	@Override
 	@Transactional
 	public void delete ( Long id ) {
-		AddressEntity entityDB = this.checkExistsAddress( id );
+		AddressEntity entityDB = this.checkExistsById( id );
 
 		this.addressRepo.delete( entityDB );
 	}
