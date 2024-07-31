@@ -22,7 +22,7 @@ import java.util.Objects;
  * @author Jacinto R^2
  * @version 1.0
  * @category Entity (ORM)
- * @upgrade 24/07/30
+ * @upgrade 24/07/31
  * @since 23/06/10
  */
 @Entity
@@ -36,7 +36,7 @@ public class AddressEntity implements BaseEntity, Serializable {
 	@Serial
 	private static final long serialVersionUID = -8456791947043775284L;
 
-	public static final String TABLE_NAME = "dmd_address";
+	public static final String TABLE_DMD_NAME = "dmd_address";
 	public static final String ATTR_ID = "id";
 	public static final String ATTR_STREET = "street";
 	public static final String ATTR_NUMBER = "number";
@@ -54,7 +54,7 @@ public class AddressEntity implements BaseEntity, Serializable {
 	 */
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
-	@Column(name = ATTR_ID, unique = true, nullable = false)
+	@Column(name = ATTR_ID, unique = true, nullable = false, updatable = false)
 	private Long id;
 
 	/**
