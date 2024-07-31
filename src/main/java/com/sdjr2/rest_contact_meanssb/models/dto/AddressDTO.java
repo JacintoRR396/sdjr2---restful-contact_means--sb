@@ -17,7 +17,7 @@ import java.util.Comparator;
  * @author Jacinto R^2
  * @version 1.0
  * @category DTO
- * @upgrade 24/07/18
+ * @upgrade 24/07/30
  * @since 23/06/11
  */
 @NoArgsConstructor
@@ -55,7 +55,7 @@ public class AddressDTO implements BaseDTO, Comparable<AddressDTO> {
 	private Integer number;
 
 	@Pattern(regexp = UConstants.LETTER_REGEX)
-	private String letter;
+	private String letter = UConstants.NOT_APPLY;
 
 	@Pattern(regexp = UConstants.TOWN_REGEX)
 	private String town;
@@ -90,6 +90,7 @@ public class AddressDTO implements BaseDTO, Comparable<AddressDTO> {
 		result = prime * result + this.id.hashCode();
 		result = prime * result + this.street.hashCode();
 		result = prime * result + this.number.hashCode();
+		result = prime * result + this.letter.hashCode();
 		result = prime * result + this.postalCode.hashCode();
 		return result;
 	}
@@ -105,6 +106,7 @@ public class AddressDTO implements BaseDTO, Comparable<AddressDTO> {
 		return this.id.equals( other.getId() )
 				&& this.street.equals( other.getStreet() )
 				&& this.number.intValue() == other.getNumber().intValue()
+				&& this.letter.equals( other.getLetter() )
 				&& this.postalCode.equals( other.getPostalCode() );
 	}
 
@@ -129,12 +131,15 @@ public class AddressDTO implements BaseDTO, Comparable<AddressDTO> {
 
 	@Override
 	public int compareTo ( final AddressDTO obj ) {
-		// Street, Number & PostalCode
+		// Street, Number, Letter & PostalCode
 		int res = this.getPostalCode().compareTo( obj.getPostalCode() );
 		if ( res == 0 ) {
 			res = this.getStreet().compareTo( obj.getStreet() );
 			if ( res == 0 ) {
 				res = this.getNumber().compareTo( obj.getNumber() );
+				if ( res == 0 ) {
+					res = this.getLetter().compareTo( obj.getLetter() );
+				}
 			}
 		}
 
