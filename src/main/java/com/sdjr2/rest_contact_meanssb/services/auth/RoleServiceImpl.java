@@ -21,7 +21,6 @@ import org.springframework.data.jpa.domain.Specification;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
-import java.util.ArrayList;
 import java.util.List;
 import java.util.NoSuchElementException;
 import java.util.Objects;
@@ -93,27 +92,10 @@ public class RoleServiceImpl implements RoleService {
 				pageEntities.getTotalElements() );
 	}
 
-	/**
-	 * Create a page request according to a search body dto.
-	 *
-	 * @param searchBodyDTO dto with search parameters about pagination, sort and filter.
-	 * @return a page request {@link PageRequest} for pagination with possible ordering.
-	 */
-	private PageRequest createPageRequestWithPaginationAndSort ( SearchBodyDTO searchBodyDTO ) {
-		if ( Objects.nonNull( searchBodyDTO.getSorts() ) && !searchBodyDTO.getSorts().isEmpty() ) {
-			List<Sort.Order> orders = new ArrayList<>();
-			searchBodyDTO.getSorts().forEach( sortDTO -> {
-				try {
-					RoleSortFieldEnum sortFieldEnum = RoleSortFieldEnum.fromValue( sortDTO.getField() );
-					orders.add( new Sort.Order( sortDTO.getDirection(), sortFieldEnum.getFieldMySQL() ) );
-				} catch ( CustomException ex ) {
-					throw new CustomException( ex, AppExceptionCodeEnum.STATUS_40002 );
-				}
-			} );
-			return PageRequest.of( searchBodyDTO.getOffset(), searchBodyDTO.getLimit(), Sort.by( orders ) );
-		} else {
-			return PageRequest.of( searchBodyDTO.getOffset(), searchBodyDTO.getLimit() );
-		}
+	@Override
+	public Sort.Order createSortOrder ( String field, Sort.Direction direction ) {
+		RoleSortFieldEnum sortFieldEnum = RoleSortFieldEnum.fromValue( field );
+		return new Sort.Order( direction, sortFieldEnum.getFieldMySQL() );
 	}
 
 	/**

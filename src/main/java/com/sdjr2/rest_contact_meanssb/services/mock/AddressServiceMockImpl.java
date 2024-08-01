@@ -8,6 +8,7 @@ import com.sdjr2.rest_contact_meanssb.repositories.AddressRepository;
 import com.sdjr2.rest_contact_meanssb.services.AddressService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Sort;
 import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
 import org.springframework.web.server.ResponseStatusException;
@@ -53,6 +54,11 @@ public class AddressServiceMockImpl implements AddressService {
 	@Override
 	public Page<AddressDTO> getAllWithSearch ( SearchBodyDTO searchBodyDTO ) {
 		return Page.empty();
+	}
+
+	@Override
+	public Sort.Order createSortOrder ( String field, Sort.Direction direction ) {
+		return null;
 	}
 
 	/**

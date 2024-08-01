@@ -1,12 +1,18 @@
 package com.sdjr2.rest_contact_meanssb.services;
 
+import com.sdjr2.rest_contact_meanssb.exceptions.AppExceptionCodeEnum;
+import com.sdjr2.rest_contact_meanssb.exceptions.CustomException;
 import com.sdjr2.rest_contact_meanssb.models.dto.BaseDTO;
 import com.sdjr2.rest_contact_meanssb.models.dto.search.SearchBodyDTO;
 import com.sdjr2.rest_contact_meanssb.models.entities.BaseEntity;
 import com.sdjr2.rest_contact_meanssb.models.mappers.BaseMapper;
 import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Sort;
 
+import java.util.ArrayList;
 import java.util.List;
+import java.util.Objects;
 
 /**
  * {@link BaseService} interface.
@@ -51,6 +57,37 @@ public interface BaseService<T extends BaseDTO> {
 	 * @return a page {@link Page} of elements dto {@link T}.
 	 */
 	Page<T> getAllWithSearch ( SearchBodyDTO searchBodyDTO );
+
+	/**
+	 * Create a page request according to a search body dto.
+	 *
+	 * @param searchBodyDTO dto with search parameters about pagination, sort and filter.
+	 * @return a page request {@link PageRequest} for pagination with possible ordering.
+	 */
+	default PageRequest createPageRequestWithPaginationAndSort ( SearchBodyDTO searchBodyDTO ) {
+		if ( Objects.nonNull( searchBodyDTO.getSorts() ) && !searchBodyDTO.getSorts().isEmpty() ) {
+			List<Sort.Order> orders = new ArrayList<>();
+			searchBodyDTO.getSorts().forEach( sortDTO -> {
+				try {
+					orders.add( this.createSortOrder( sortDTO.getField(), sortDTO.getDirection() ) );
+				} catch ( CustomException ex ) {
+					throw new CustomException( ex, AppExceptionCodeEnum.STATUS_40002 );
+				}
+			} );
+			return PageRequest.of( searchBodyDTO.getOffset(), searchBodyDTO.getLimit(), Sort.by( orders ) );
+		} else {
+			return PageRequest.of( searchBodyDTO.getOffset(), searchBodyDTO.getLimit() );
+		}
+	}
+
+	/**
+	 * Create a sort order according to a field of the sort dto in the search body dto.
+	 *
+	 * @param field field in the database.
+	 * @param direction direction about sort the field.
+	 * @return a sort order {@link Sort.Order}.
+	 */
+	Sort.Order createSortOrder ( String field, Sort.Direction direction );
 
 	/**
 	 * Gets an element dto for its identifier.

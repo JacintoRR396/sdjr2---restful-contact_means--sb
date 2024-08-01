@@ -22,7 +22,6 @@ import org.springframework.data.jpa.domain.Specification;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
-import java.util.ArrayList;
 import java.util.List;
 import java.util.NoSuchElementException;
 import java.util.Objects;
@@ -35,7 +34,7 @@ import java.util.Objects;
  * @author Jacinto R^2
  * @version 1.0
  * @category Service
- * @upgrade 24/07/30
+ * @upgrade 24/08/01
  * @since 23/06/10
  */
 @Service
@@ -94,27 +93,10 @@ public class AddressServiceImpl implements AddressService {
 				pageEntities.getTotalElements() );
 	}
 
-	/**
-	 * Create a page request according to a search body dto.
-	 *
-	 * @param searchBodyDTO dto with search parameters about pagination, sort and filter.
-	 * @return a page request {@link PageRequest} for pagination with possible ordering.
-	 */
-	private PageRequest createPageRequestWithPaginationAndSort ( SearchBodyDTO searchBodyDTO ) {
-		if ( Objects.nonNull( searchBodyDTO.getSorts() ) && !searchBodyDTO.getSorts().isEmpty() ) {
-			List<Sort.Order> orders = new ArrayList<>();
-			searchBodyDTO.getSorts().forEach( sortDTO -> {
-				try {
-					AddressSortFieldEnum sortFieldEnum = AddressSortFieldEnum.fromValue( sortDTO.getField() );
-					orders.add( new Sort.Order( sortDTO.getDirection(), sortFieldEnum.getFieldMySQL() ) );
-				} catch ( CustomException ex ) {
-					throw new CustomException( ex, AppExceptionCodeEnum.STATUS_40002 );
-				}
-			} );
-			return PageRequest.of( searchBodyDTO.getOffset(), searchBodyDTO.getLimit(), Sort.by( orders ) );
-		} else {
-			return PageRequest.of( searchBodyDTO.getOffset(), searchBodyDTO.getLimit() );
-		}
+	@Override
+	public Sort.Order createSortOrder ( String field, Sort.Direction direction ) {
+		AddressSortFieldEnum sortFieldEnum = AddressSortFieldEnum.fromValue( field );
+		return new Sort.Order( direction, sortFieldEnum.getFieldMySQL() );
 	}
 
 	/**
