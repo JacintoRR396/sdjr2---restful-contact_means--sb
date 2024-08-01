@@ -36,12 +36,12 @@ public class RoleDTO implements BaseDTO, Comparable<RoleDTO> {
 	private Long id;
 
 	@NotNull
-	@Size(min=6,max=20)
+	@Size(min = 6, max = 20)
 	@Pattern(regexp = UConstants.REGEX_ROLE)
 	private String name;
 
 	@NotNull
-	@Size(min=10,max=300)
+	@Size(min = 10, max = 300)
 	@Pattern(regexp = UConstants.ADDITIONAL_INFO_REGEX)
 	private String description;
 
@@ -79,13 +79,13 @@ public class RoleDTO implements BaseDTO, Comparable<RoleDTO> {
 	}
 
 	@Override
-	public int compareTo( final RoleDTO obj) {
+	public int compareTo ( final RoleDTO obj ) {
 		// Name
 		return this.getName().compareTo( obj.getName() );
 	}
 
 	/* METHODS OF CLASSES */
-	public static RoleDTO valueOf(final RoleDTO obj) {
-		return new RoleDTO( obj.getId(), obj.getName(), obj.getDescription());
+	public static RoleDTO valueOf ( final RoleDTO obj ) {
+		return new RoleDTO( obj.getId(), obj.getName(), obj.getDescription() );
 	}
 }

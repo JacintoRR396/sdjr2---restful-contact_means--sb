@@ -12,12 +12,10 @@ import com.sdjr2.rest_contact_meanssb.services.BaseService;
  * <strong>Service</strong> - Represents an interface service that manages business logic about Roles, this
  * extends from {@link BaseService}.
  * <p>
- * This Service maps the roles of the request {@link RoleDTO} to database {@link RoleEntity} with
- * {@link RoleMapper}.
+ * This Service maps the roles of the request {@link RoleDTO} to database {@link RoleEntity} with {@link RoleMapper}.
  * <br>
  * It uses the classes : <br> 01. Level Access : the dto {@link RoleDTO} <br> 02. Level Logic : the mapper
- * {@link RoleMapper} <br> 03. Level Data : the repo {@link RoleJpaRepository} and the entity
- * {@link RoleEntity}.
+ * {@link RoleMapper} <br> 03. Level Data : the repo {@link RoleJpaRepository} and the entity {@link RoleEntity}.
  *
  * @author Jacinto R^2
  * @version 1.0

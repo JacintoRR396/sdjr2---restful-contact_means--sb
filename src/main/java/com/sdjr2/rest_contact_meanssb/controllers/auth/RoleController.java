@@ -47,15 +47,15 @@ public class RoleController implements BaseController<RoleDTO> {
 
 	@GetMapping(value = "/pagination")
 	public ResponseEntity<Page<RoleDTO>> getAllWithPagination ( HttpServletRequest httpServletRequest,
-																																 @RequestParam(defaultValue = "0", required = false) Integer offset,
-																																 @RequestParam(defaultValue = "5", required = false) Integer limit ) {
+																															@RequestParam(defaultValue = "0", required = false) Integer offset,
+																															@RequestParam(defaultValue = "5", required = false) Integer limit ) {
 		return new ResponseEntity<>( this.roleService.getAllWithPagination( offset, limit ), HttpStatus.OK );
 	}
 
 	@GetMapping(value = "/search")
 	public ResponseEntity<Page<RoleDTO>> getAllWithSearch ( HttpServletRequest httpServletRequest,
-																														 @Valid @RequestBody SearchBodyDTO searchBodyDTO,
-																														 BindingResult resValidation ) {
+																													@Valid @RequestBody SearchBodyDTO searchBodyDTO,
+																													BindingResult resValidation ) {
 		this.checkValidation( resValidation );
 
 		return new ResponseEntity<>( this.roleService.getAllWithSearch( searchBodyDTO ), HttpStatus.OK );

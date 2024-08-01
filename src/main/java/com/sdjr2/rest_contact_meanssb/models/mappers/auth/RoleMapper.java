@@ -42,9 +42,9 @@ public abstract class RoleMapper implements BaseMapper<RoleDTO, RoleEntity> {
 	/**
 	 * Map role request object to role entity.
 	 *
-	 * @param dto      role request object
+	 * @param dto          role request object
 	 * @param usernameRole role of the username
-	 * @param entityDB role entity in db
+	 * @param entityDB     role entity in db
 	 * @return RoleEntity {@link RoleEntity}
 	 */
 	@Mapping(source = "dto.id", target = "id")
@@ -56,16 +56,16 @@ public abstract class RoleMapper implements BaseMapper<RoleDTO, RoleEntity> {
 	/**
 	 * Map role request object to role entity with additional logic
 	 *
-	 * @param dto      role request object
+	 * @param dto          role request object
 	 * @param usernameRole role of the username
-	 * @param entityDB role entity in db
-	 * @param entityReq role entity about req
+	 * @param entityDB     role entity in db
+	 * @param entityReq    role entity about req
 	 * @return RoleEntity {@link RoleEntity}
 	 */
 	@AfterMapping
 	protected RoleEntity afterMappingToEntity ( RoleDTO dto, String usernameRole, RoleEntity entityDB,
-																								 @MappingTarget RoleEntity entityReq ) {
-		entityReq.setAuditableEntity( this.mapAuditableEntity(dto.getId(), usernameRole, entityDB) );
+																							@MappingTarget RoleEntity entityReq ) {
+		entityReq.setAuditableEntity( this.mapAuditableEntity( dto.getId(), usernameRole, entityDB ) );
 
 		return entityReq;
 	}

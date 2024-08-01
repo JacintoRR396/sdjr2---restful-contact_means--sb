@@ -170,14 +170,14 @@ public class AddressServiceImpl implements AddressService {
 		this.checkNotExistsByUniqueAttrs( addressDTO.getId(), addressDTO.getStreet(), addressDTO.getNumber().toString(),
 				addressDTO.getLetter(), addressDTO.getPostalCode().toString() );
 
-		AddressEntity entityReq = this.addressMapper.toEntity( addressDTO, RoleTypeEnum.ROLE_ADMIN.name(), null);
+		AddressEntity entityReq = this.addressMapper.toEntity( addressDTO, RoleTypeEnum.ROLE_ADMIN.name(), null );
 		AddressEntity entityDB = this.addressRepo.save( entityReq );
 
 		return this.addressMapper.toDTO( entityDB );
 	}
 
 	/**
-	 * Check if an entity not exists by its unique attributes, otherwise throw an exception STATUS_40010.
+	 * Check if an entity not exists by its unique attributes, otherwise throw an exception STATUS_40011.
 	 *
 	 * @param id         element identifier.
 	 * @param street     first element of the pk.
@@ -190,7 +190,7 @@ public class AddressServiceImpl implements AddressService {
 				.ifPresent( entityDB -> {
 					// 1º about create and 2º about update
 					if ( id == 0L || !Objects.equals( id, entityDB.getId() ) ) {
-						throw new CustomException( AppExceptionCodeEnum.STATUS_40010 );
+						throw new CustomException( AppExceptionCodeEnum.STATUS_40011 );
 					}
 				} );
 	}
@@ -198,7 +198,7 @@ public class AddressServiceImpl implements AddressService {
 	@Override
 	@Transactional
 	public AddressDTO update ( Long id, AddressDTO addressDTO ) {
-		addressDTO.setId(id);
+		addressDTO.setId( id );
 
 		this.checkNotExistsByUniqueAttrs( addressDTO.getId(), addressDTO.getStreet(), addressDTO.getNumber().toString(),
 				addressDTO.getLetter(), addressDTO.getPostalCode().toString() );

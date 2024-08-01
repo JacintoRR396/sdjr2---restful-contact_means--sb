@@ -4,14 +4,13 @@ import com.sdjr2.rest_contact_meanssb.exceptions.AppExceptionCodeEnum;
 import com.sdjr2.rest_contact_meanssb.exceptions.CustomException;
 import com.sdjr2.rest_contact_meanssb.models.dto.auth.RoleDTO;
 import com.sdjr2.rest_contact_meanssb.models.dto.search.SearchBodyDTO;
-import com.sdjr2.rest_contact_meanssb.models.entities.AddressEntity;
 import com.sdjr2.rest_contact_meanssb.models.entities.auth.RoleEntity;
+import com.sdjr2.rest_contact_meanssb.models.enums.auth.RoleFilterFieldEnum;
+import com.sdjr2.rest_contact_meanssb.models.enums.auth.RoleSortFieldEnum;
 import com.sdjr2.rest_contact_meanssb.models.enums.auth.RoleTypeEnum;
-import com.sdjr2.rest_contact_meanssb.models.enums.search.AddressFilterFieldEnum;
-import com.sdjr2.rest_contact_meanssb.models.enums.search.AddressSortFieldEnum;
 import com.sdjr2.rest_contact_meanssb.models.mappers.auth.RoleMapper;
 import com.sdjr2.rest_contact_meanssb.repositories.auth.RoleJpaRepository;
-import com.sdjr2.rest_contact_meanssb.repositories.filters.AddressSpecifications;
+import com.sdjr2.rest_contact_meanssb.repositories.auth.RoleSpecifications;
 import lombok.RequiredArgsConstructor;
 import org.springframework.context.annotation.Primary;
 import org.springframework.data.domain.Page;
@@ -55,14 +54,14 @@ public class RoleServiceImpl implements RoleService {
 
 	@Override
 	@Transactional(readOnly = true)
-	public List<RoleDTO> getAll() {
+	public List<RoleDTO> getAll () {
 		return this.roleMapper.toDTOs( this.roleRepo.findAll() );
 	}
 
 	@Override
 	@Transactional(readOnly = true)
 	public Page<RoleDTO> getAllWithPagination ( Integer offset, Integer limit ) {
-		Page<RoleEntity> pageEntities = this.roleRepo.findAll( PageRequest.of( offset, limit));
+		Page<RoleEntity> pageEntities = this.roleRepo.findAll( PageRequest.of( offset, limit ) );
 
 		return new PageImpl<>( this.roleMapper.toDTOs( pageEntities.getContent() ), pageEntities.getPageable(),
 				pageEntities.getTotalElements() );
@@ -71,26 +70,22 @@ public class RoleServiceImpl implements RoleService {
 	@Override
 	@Transactional(readOnly = true)
 	public Page<RoleDTO> getAllWithSearch ( SearchBodyDTO searchBodyDTO ) {
-		// TODO
 		// Create a page request according to a search body dto (offset, limit and orders)
 		PageRequest pageReq = this.createPageRequestWithPaginationAndSort( searchBodyDTO );
 
 		// Create a specification according to a search body dto (filters)
-		Specification<AddressEntity> specification = this.createSpecificationAboutFilters( searchBodyDTO );
+		Specification<RoleEntity> specification = this.createSpecificationAboutFilters( searchBodyDTO );
 
 		// Create a page with entities according to a search body dto (page request and specification)
-		/*
-		Page<AddressEntity> pageEntities;
+		Page<RoleEntity> pageEntities;
 		if ( Objects.nonNull( specification ) ) {
-			pageEntities = this.addressRepo.findAll( specification, pageReq );
+			pageEntities = this.roleRepo.findAll( specification, pageReq );
 		} else {
-			pageEntities = this.addressRepo.findAll( pageReq );
+			pageEntities = this.roleRepo.findAll( pageReq );
 		}
 
-		return new PageImpl<>( this.addressMapper.toDTOs( pageEntities.getContent() ), pageEntities.getPageable(),
+		return new PageImpl<>( this.roleMapper.toDTOs( pageEntities.getContent() ), pageEntities.getPageable(),
 				pageEntities.getTotalElements() );
-		 */
-		return null;
 	}
 
 	/**
@@ -104,7 +99,7 @@ public class RoleServiceImpl implements RoleService {
 			List<Sort.Order> orders = new ArrayList<>();
 			searchBodyDTO.getSorts().forEach( sortDTO -> {
 				try {
-					AddressSortFieldEnum sortFieldEnum = AddressSortFieldEnum.fromValue( sortDTO.getField() );
+					RoleSortFieldEnum sortFieldEnum = RoleSortFieldEnum.fromValue( sortDTO.getField() );
 					orders.add( new Sort.Order( sortDTO.getDirection(), sortFieldEnum.getFieldMySQL() ) );
 				} catch ( CustomException ex ) {
 					throw new CustomException( ex, AppExceptionCodeEnum.STATUS_40002 );
@@ -120,27 +115,19 @@ public class RoleServiceImpl implements RoleService {
 	 * Create a specification with entities according to a search body dto.
 	 *
 	 * @param searchBodyDTO dto with search parameters about pagination, sort and filter.
-	 * @return a specification {@link Page} about address {@link AddressEntity}.
+	 * @return a specification {@link Page} about roles {@link RoleEntity}.
 	 */
-	private Specification<AddressEntity> createSpecificationAboutFilters ( SearchBodyDTO searchBodyDTO ) {
-		Specification<AddressEntity> specification = null;
+	private Specification<RoleEntity> createSpecificationAboutFilters ( SearchBodyDTO searchBodyDTO ) {
+		Specification<RoleEntity> specification = null;
 
 		if ( Objects.nonNull( searchBodyDTO.getFilters() ) && !searchBodyDTO.getFilters().isEmpty() ) {
-			AddressFilterFieldEnum.AddressFiltersRequest filtersRequest =
-					AddressFilterFieldEnum.getFiltersReqFromSearchDTO( searchBodyDTO.getFilters() );
+			RoleFilterFieldEnum.RoleFiltersRequest filtersRequest =
+					RoleFilterFieldEnum.getFiltersReqFromSearchDTO( searchBodyDTO.getFilters() );
 			specification = Specification
-					.where( AddressSpecifications.hasValuesInt(
-							AddressFilterFieldEnum.ID.getFieldMySQL(), filtersRequest.getOpIds(), filtersRequest.getIds() ) )
-					.and( AddressSpecifications.hasValuesStr(
-							AddressFilterFieldEnum.STREET.getFieldMySQL(), filtersRequest.getOpStreets(), filtersRequest.getStreets() ) )
-					.and( AddressSpecifications.hasValuesStr(
-							AddressFilterFieldEnum.TOWN.getFieldMySQL(), filtersRequest.getOpTowns(), filtersRequest.getTowns() ) )
-					.and( AddressSpecifications.hasValuesStr(
-							AddressFilterFieldEnum.CITY.getFieldMySQL(), filtersRequest.getOpCities(), filtersRequest.getCities() ) )
-					.and( AddressSpecifications.hasValuesStr(
-							AddressFilterFieldEnum.COUNTRY.getFieldMySQL(), filtersRequest.getOpCountries(), filtersRequest.getCountries() ) )
-					.and( AddressSpecifications.hasValuesStr(
-							AddressFilterFieldEnum.POSTAL_CODE.getFieldMySQL(), filtersRequest.getOpPostalCodes(), filtersRequest.getPostalCodes() ) );
+					.where( RoleSpecifications.hasValuesInt(
+							RoleFilterFieldEnum.ID.getFieldMySQL(), filtersRequest.getOpIds(), filtersRequest.getIds() ) )
+					.and( RoleSpecifications.hasValuesStr(
+							RoleFilterFieldEnum.NAME.getFieldMySQL(), filtersRequest.getOpNames(), filtersRequest.getNames() ) );
 		}
 
 		return specification;
@@ -173,24 +160,24 @@ public class RoleServiceImpl implements RoleService {
 	public RoleDTO create ( RoleDTO dto ) {
 		this.checkNotExistsByUniqueAttrs( dto.getId(), dto.getName() );
 
-		RoleEntity entityReq = this.roleMapper.toEntity( dto, RoleTypeEnum.ROLE_ADMIN.name(), null);
+		RoleEntity entityReq = this.roleMapper.toEntity( dto, RoleTypeEnum.ROLE_ADMIN.name(), null );
 		RoleEntity entityDB = this.roleRepo.save( entityReq );
 
 		return this.roleMapper.toDTO( entityDB );
 	}
 
 	/**
-	 * Check if an entity not exists by its unique attributes, otherwise throw an exception STATUS_40010.
+	 * Check if an entity not exists by its unique attributes, otherwise throw an exception STATUS_40011.
 	 *
-	 * @param id         element identifier.
-	 * @param name     first element of the pk.
+	 * @param id   element identifier.
+	 * @param name first element of the pk.
 	 */
 	private void checkNotExistsByUniqueAttrs ( Long id, String name ) {
 		this.roleRepo.findByName( name )
 				.ifPresent( entityDB -> {
 					// 1º about create and 2º about update
 					if ( id == 0L || !Objects.equals( id, entityDB.getId() ) ) {
-						throw new CustomException( AppExceptionCodeEnum.STATUS_40010 );
+						throw new CustomException( AppExceptionCodeEnum.STATUS_40011 );
 					}
 				} );
 	}
@@ -198,7 +185,7 @@ public class RoleServiceImpl implements RoleService {
 	@Override
 	@Transactional
 	public RoleDTO update ( Long id, RoleDTO dto ) {
-		dto.setId(id);
+		dto.setId( id );
 
 		RoleEntity entityDB = this.checkExistsById( dto.getId() );
 		this.checkNotExistsByUniqueAttrs( dto.getId(), dto.getName() );
