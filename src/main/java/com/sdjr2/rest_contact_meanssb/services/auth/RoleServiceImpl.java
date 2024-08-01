@@ -43,12 +43,17 @@ import java.util.Objects;
 public class RoleServiceImpl implements RoleService {
 
 	/**
-	 * Address mapper object
+	 * Role mapper object
 	 */
 	private final RoleMapper roleMapper;
 
 	/**
-	 * Address repository object
+	 * Role specifications object
+	 */
+	private final RoleSpecifications specifications;
+
+	/**
+	 * Role repository object
 	 */
 	private final RoleJpaRepository roleRepo;
 
@@ -124,9 +129,9 @@ public class RoleServiceImpl implements RoleService {
 			RoleFilterFieldEnum.RoleFiltersRequest filtersRequest =
 					RoleFilterFieldEnum.getFiltersReqFromSearchDTO( searchBodyDTO.getFilters() );
 			specification = Specification
-					.where( RoleSpecifications.hasValuesInt(
+					.where( this.specifications.hasValuesInt(
 							RoleFilterFieldEnum.ID.getFieldMySQL(), filtersRequest.getOpIds(), filtersRequest.getIds() ) )
-					.and( RoleSpecifications.hasValuesStr(
+					.and( this.specifications.hasValuesStr(
 							RoleFilterFieldEnum.NAME.getFieldMySQL(), filtersRequest.getOpNames(), filtersRequest.getNames() ) );
 		}
 
