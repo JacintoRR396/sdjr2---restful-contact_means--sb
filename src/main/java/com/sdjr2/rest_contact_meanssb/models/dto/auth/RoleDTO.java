@@ -2,9 +2,7 @@ package com.sdjr2.rest_contact_meanssb.models.dto.auth;
 
 import com.fasterxml.jackson.annotation.JsonInclude;
 import com.sdjr2.rest_contact_meanssb.models.dto.BaseDTO;
-import com.sdjr2.rest_contact_meanssb.models.enums.auth.RoleTypeEnum;
 import com.sdjr2.rest_contact_meanssb.utils.UConstants;
-import jakarta.validation.Valid;
 import jakarta.validation.constraints.*;
 import lombok.*;
 

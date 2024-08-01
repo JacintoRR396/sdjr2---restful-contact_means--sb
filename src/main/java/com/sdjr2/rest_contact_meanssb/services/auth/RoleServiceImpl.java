@@ -200,8 +200,8 @@ public class RoleServiceImpl implements RoleService {
 	public RoleDTO update ( Long id, RoleDTO dto ) {
 		dto.setId(id);
 
-		this.checkNotExistsByUniqueAttrs( dto.getId(), dto.getName() );
 		RoleEntity entityDB = this.checkExistsById( dto.getId() );
+		this.checkNotExistsByUniqueAttrs( dto.getId(), dto.getName() );
 
 		RoleEntity entityReq = this.roleMapper.toEntity( dto, RoleTypeEnum.ROLE_MEMBER.name(), entityDB );
 		entityDB = this.roleRepo.save( entityReq );

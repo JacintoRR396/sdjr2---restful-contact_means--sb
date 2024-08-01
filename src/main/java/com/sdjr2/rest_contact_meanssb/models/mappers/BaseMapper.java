@@ -1,8 +1,11 @@
 package com.sdjr2.rest_contact_meanssb.models.mappers;
 
 import com.sdjr2.rest_contact_meanssb.models.dto.BaseDTO;
+import com.sdjr2.rest_contact_meanssb.models.entities.AuditableEntity;
 import com.sdjr2.rest_contact_meanssb.models.entities.BaseEntity;
+import com.sdjr2.rest_contact_meanssb.models.entities.auth.RoleEntity;
 
+import java.time.LocalDateTime;
 import java.util.List;
 
 /**
@@ -18,7 +21,7 @@ import java.util.List;
  * @author Jacinto R^2
  * @version 1.0
  * @category Mapper
- * @upgrade 24/07/16
+ * @upgrade 24/08/01
  * @since 23/06/20
  */
 public interface BaseMapper<D extends BaseDTO, E extends BaseEntity> {
@@ -54,4 +57,23 @@ public interface BaseMapper<D extends BaseDTO, E extends BaseEntity> {
 	 * @return {@link List<E>} entities object list.
 	 */
 	List<E> toEntities ( List<D> dtos );
+
+	default AuditableEntity mapAuditableEntity(Long dtoId, String usernameRole, E entityDB){
+		AuditableEntity auditableEntity;
+
+		if ( dtoId.equals( 0L ) ) {
+			auditableEntity = AuditableEntity.builder()
+				.createdAt( LocalDateTime.now())
+				.createdBy( usernameRole )
+				.updatedAt( LocalDateTime.now() )
+				.updatedBy( usernameRole )
+				.build();
+		} else {
+			auditableEntity = entityDB.getAuditableEntity();
+			auditableEntity.setUpdatedAt( LocalDateTime.now() );
+			auditableEntity.setUpdatedBy( usernameRole );
+		}
+
+		return auditableEntity;
+	}
 }

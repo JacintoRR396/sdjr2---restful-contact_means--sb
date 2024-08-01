@@ -3,14 +3,11 @@ package com.sdjr2.rest_contact_meanssb.models.mappers.auth;
 import com.sdjr2.rest_contact_meanssb.models.dto.auth.RoleDTO;
 import com.sdjr2.rest_contact_meanssb.models.entities.AuditableEntity;
 import com.sdjr2.rest_contact_meanssb.models.entities.auth.RoleEntity;
-import com.sdjr2.rest_contact_meanssb.models.enums.auth.RoleTypeEnum;
 import com.sdjr2.rest_contact_meanssb.models.mappers.BaseMapper;
 import org.mapstruct.AfterMapping;
 import org.mapstruct.Mapper;
 import org.mapstruct.Mapping;
 import org.mapstruct.MappingTarget;
-
-import java.time.LocalDateTime;
 
 /**
  * {@link RoleMapper} class.
@@ -27,7 +24,7 @@ import java.time.LocalDateTime;
  * @upgrade 24/08/01
  * @since 24/08/01
  */
-@Mapper(componentModel = "spring", imports = { RoleTypeEnum.class })
+@Mapper(componentModel = "spring")
 public abstract class RoleMapper implements BaseMapper<RoleDTO, RoleEntity> {
 
 	/**
@@ -68,21 +65,7 @@ public abstract class RoleMapper implements BaseMapper<RoleDTO, RoleEntity> {
 	@AfterMapping
 	protected RoleEntity afterMappingToEntity ( RoleDTO dto, String usernameRole, RoleEntity entityDB,
 																								 @MappingTarget RoleEntity entityReq ) {
-		AuditableEntity auditableEntity;
-
-		if ( dto.getId().equals( 0L ) ) {
-			auditableEntity = AuditableEntity.builder()
-					.createdAt( LocalDateTime.now() )
-					.createdBy( usernameRole )
-					.updatedAt( LocalDateTime.now() )
-					.updatedBy( usernameRole )
-					.build();
-		} else {
-			auditableEntity = entityDB.getAuditableEntity();
-			auditableEntity.setUpdatedAt( LocalDateTime.now() );
-			auditableEntity.setUpdatedBy( usernameRole );
-		}
-		entityReq.setAuditableEntity( auditableEntity );
+		entityReq.setAuditableEntity( this.mapAuditableEntity(dto.getId(), usernameRole, entityDB) );
 
 		return entityReq;
 	}
