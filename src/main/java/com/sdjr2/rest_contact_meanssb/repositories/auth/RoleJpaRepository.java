@@ -4,6 +4,8 @@ import com.sdjr2.rest_contact_meanssb.models.entities.auth.RoleEntity;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Repository;
 
+import java.util.Optional;
+
 /**
  * {@link RoleJpaRepository} class.
  * <p>
@@ -13,9 +15,10 @@ import org.springframework.stereotype.Repository;
  * @author Jacinto R^2
  * @version 1.0
  * @category Repository (DAO)
- * @upgrade 24/07/31
+ * @upgrade 24/08/01
  * @since 24/07/31
  */
 @Repository
 public interface RoleJpaRepository extends JpaRepository<RoleEntity, Long> {
+  Optional<RoleEntity> findByName(String name);
 }

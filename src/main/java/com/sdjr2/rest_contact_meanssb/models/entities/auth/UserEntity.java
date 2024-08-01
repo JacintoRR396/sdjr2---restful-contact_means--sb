@@ -24,7 +24,7 @@ import java.util.List;
  * @author Jacinto R^2
  * @version 1.0
  * @category Entity (ORM)
- * @upgrade 24/07/31
+ * @upgrade 24/08/01
  * @since 24/07/31
  */
 @Entity
@@ -44,8 +44,8 @@ public class UserEntity implements BaseEntity, Serializable {
 	public static final String ATTR_PWD = "pwd";
 	public static final String ATTR_NICKNAME = "nickname";
 	public static final String ATTR_EMAIL = "email";
-	public static final String ATTR_LAST_ACCESS = "last_access";
 	public static final String ATTR_IS_ACTIVE = "is_active";
+	public static final String ATTR_LAST_ACCESS = "last_access";
 	public static final String ATTR_ROLES = "roles";
 
 	public static final String TABLE_DMR_WROLE_NAME = "dmr_user_role";
@@ -83,17 +83,17 @@ public class UserEntity implements BaseEntity, Serializable {
 	private String email;
 
 	/**
+	 * is active attribute
+	 */
+	@Column(name = ATTR_IS_ACTIVE, nullable = false)
+	private Boolean isActive;
+
+	/**
 	 * created at attribute
 	 */
 	@Column(name = ATTR_LAST_ACCESS, nullable = false)
 	@Temporal(TemporalType.TIMESTAMP)
 	private LocalDateTime lastAccess;
-
-	/**
-	 * is active attribute
-	 */
-	@Column(name = ATTR_IS_ACTIVE, nullable = false)
-	private Boolean isActive;
 
 	/**
 	 * roles attribute
@@ -118,7 +118,7 @@ public class UserEntity implements BaseEntity, Serializable {
 	 */
 	@PrePersist
 	public void prePersist () {
-		this.lastAccess = LocalDateTime.now();
 		this.isActive = true;
+		this.lastAccess = LocalDateTime.now();
 	}
 }
