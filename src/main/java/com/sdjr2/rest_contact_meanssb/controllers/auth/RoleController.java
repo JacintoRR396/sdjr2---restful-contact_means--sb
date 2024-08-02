@@ -36,7 +36,7 @@ import java.util.List;
 public class RoleController implements BaseController<RoleDTO> {
 
 	/**
-	 * Address service object
+	 * Role service object
 	 */
 	private final RoleService roleService;
 

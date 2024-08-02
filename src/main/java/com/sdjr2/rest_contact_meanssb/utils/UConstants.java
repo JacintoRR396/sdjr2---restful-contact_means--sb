@@ -18,13 +18,15 @@ public class UConstants {
 	// --- FORMAT DATE ---
 	public static final String S_FORMAT_DATE_FRONT = "dd/MM/yyyy";
 	public static final String S_FORMAT_DATE_BACK = "yyyy-MM-dd";
+	public static final String S_FORMAT_TIME_FRONT = "HH:mm:ss";
 	public static final String S_FORMAT_TIME_BACK = "HH:mm:ss";
+	public static final String S_FORMAT_DATETIME_FRONT = "dd/MM/yyyy HH:mm:ss";
 	public static final String S_FORMAT_DATETIME_BACK = "yyyy-MM-dd HH:mm:ss";
 	public static final String S_FORMAT_TIMESTAMP_BACK = "yyyy-MM-dd'T'HH:mm:ss.SSSXXX";
 
 	// --- REG_EXP ---
 	public static final String REGEX_EMAIL = "^(?=.{1,64}@)[A-Za-z0-9_-]+(\\.[A-Za-z0-9_-]+)*@"
-		+ "[^-][A-Za-z0-9-]+(\\.[A-Za-z0-9-]+)*(\\.[A-Za-z]{2,})$";
+			+ "[^-][A-Za-z0-9-]+(\\.[A-Za-z0-9-]+)*(\\.[A-Za-z]{2,})$";
 	public static final String REGEX_ROLE = "ROLE_[A-Z]{1,15}";
 
 	public static final String REGEX_NAME_GENERIC = "^[A-Z]{1}[a-zñA-Záéíóú\\s/]";

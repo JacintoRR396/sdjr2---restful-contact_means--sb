@@ -4,10 +4,7 @@ import com.sdjr2.rest_contact_meanssb.models.dto.auth.RoleDTO;
 import com.sdjr2.rest_contact_meanssb.models.entities.AuditableEntity;
 import com.sdjr2.rest_contact_meanssb.models.entities.auth.RoleEntity;
 import com.sdjr2.rest_contact_meanssb.models.mappers.BaseMapper;
-import org.mapstruct.AfterMapping;
-import org.mapstruct.Mapper;
-import org.mapstruct.Mapping;
-import org.mapstruct.MappingTarget;
+import org.mapstruct.*;
 
 /**
  * {@link RoleMapper} class.
@@ -24,7 +21,7 @@ import org.mapstruct.MappingTarget;
  * @upgrade 24/08/01
  * @since 24/08/01
  */
-@Mapper(componentModel = "spring")
+@Mapper(componentModel = "spring", builder = @Builder(disableBuilder = true))
 public abstract class RoleMapper implements BaseMapper<RoleDTO, RoleEntity> {
 
 	/**

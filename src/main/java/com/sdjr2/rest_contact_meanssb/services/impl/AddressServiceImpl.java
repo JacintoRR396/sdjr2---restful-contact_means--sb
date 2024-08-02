@@ -50,7 +50,7 @@ public class AddressServiceImpl implements AddressService {
 	/**
 	 * Address specifications object
 	 */
-	private final AddressSpecifications specifications;
+	private final AddressSpecifications addressSpecs;
 
 	/**
 	 * Address repository object
@@ -112,17 +112,17 @@ public class AddressServiceImpl implements AddressService {
 			AddressFilterFieldEnum.AddressFiltersRequest filtersRequest =
 					AddressFilterFieldEnum.getFiltersReqFromSearchDTO( searchBodyDTO.getFilters() );
 			specification = Specification
-					.where( this.specifications.hasValuesInt(
+					.where( this.addressSpecs.hasValuesInt(
 							AddressFilterFieldEnum.ID.getFieldMySQL(), filtersRequest.getOpIds(), filtersRequest.getIds() ) )
-					.and( this.specifications.hasValuesStr(
+					.and( this.addressSpecs.hasValuesStr(
 							AddressFilterFieldEnum.STREET.getFieldMySQL(), filtersRequest.getOpStreets(), filtersRequest.getStreets() ) )
-					.and( this.specifications.hasValuesStr(
+					.and( this.addressSpecs.hasValuesStr(
 							AddressFilterFieldEnum.TOWN.getFieldMySQL(), filtersRequest.getOpTowns(), filtersRequest.getTowns() ) )
-					.and( this.specifications.hasValuesStr(
+					.and( this.addressSpecs.hasValuesStr(
 							AddressFilterFieldEnum.CITY.getFieldMySQL(), filtersRequest.getOpCities(), filtersRequest.getCities() ) )
-					.and( this.specifications.hasValuesStr(
+					.and( this.addressSpecs.hasValuesStr(
 							AddressFilterFieldEnum.COUNTRY.getFieldMySQL(), filtersRequest.getOpCountries(), filtersRequest.getCountries() ) )
-					.and( this.specifications.hasValuesStr(
+					.and( this.addressSpecs.hasValuesStr(
 							AddressFilterFieldEnum.POSTAL_CODE.getFieldMySQL(), filtersRequest.getOpPostalCodes(), filtersRequest.getPostalCodes() ) );
 		}
 

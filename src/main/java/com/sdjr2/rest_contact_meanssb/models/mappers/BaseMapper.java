@@ -3,6 +3,7 @@ package com.sdjr2.rest_contact_meanssb.models.mappers;
 import com.sdjr2.rest_contact_meanssb.models.dto.BaseDTO;
 import com.sdjr2.rest_contact_meanssb.models.entities.AuditableEntity;
 import com.sdjr2.rest_contact_meanssb.models.entities.BaseEntity;
+import org.mapstruct.Mapping;
 
 import java.time.LocalDateTime;
 import java.util.List;
@@ -20,7 +21,7 @@ import java.util.List;
  * @author Jacinto R^2
  * @version 1.0
  * @category Mapper
- * @upgrade 24/08/01
+ * @upgrade 24/08/02
  * @since 23/06/20
  */
 public interface BaseMapper<D extends BaseDTO, E extends BaseEntity> {
@@ -39,6 +40,7 @@ public interface BaseMapper<D extends BaseDTO, E extends BaseEntity> {
 	 * @param dto dto object
 	 * @return {@link E} entity object.
 	 */
+	@Mapping(target = "auditableEntity", ignore = true)
 	E toEntity ( D dto );
 
 	/**

@@ -20,6 +20,9 @@ import org.springframework.context.annotation.Configuration;
 @Data
 public class GlobalProperties {
 
+	// Generic
+	private String notApply;
+
 	// Logs
 	private String logMsgBaseOk;
 	private String logMsgBaseInfo;
@@ -28,7 +31,9 @@ public class GlobalProperties {
 	// Constants
 	private String formatDateFrontend;
 	private String formatDateBackend;
+	private String formatTimeFrontend;
 	private String formatTimeBackend;
+	private String formatDateTimeFrontend;
 	private String formatDateTimeBackend;
 	private String formatTimestampBackend;
 

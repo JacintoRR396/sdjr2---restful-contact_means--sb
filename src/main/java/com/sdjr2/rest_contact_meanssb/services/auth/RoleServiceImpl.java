@@ -33,7 +33,7 @@ import java.util.Objects;
  * @author Jacinto R^2
  * @version 1.0
  * @category Service
- * @upgrade 24/08/01
+ * @upgrade 24/08/02
  * @since 24/08/01
  */
 @Service
@@ -49,7 +49,7 @@ public class RoleServiceImpl implements RoleService {
 	/**
 	 * Role specifications object
 	 */
-	private final RoleSpecifications specifications;
+	private final RoleSpecifications roleSpecs;
 
 	/**
 	 * Role repository object
@@ -111,9 +111,9 @@ public class RoleServiceImpl implements RoleService {
 			RoleFilterFieldEnum.RoleFiltersRequest filtersRequest =
 					RoleFilterFieldEnum.getFiltersReqFromSearchDTO( searchBodyDTO.getFilters() );
 			specification = Specification
-					.where( this.specifications.hasValuesInt(
+					.where( this.roleSpecs.hasValuesInt(
 							RoleFilterFieldEnum.ID.getFieldMySQL(), filtersRequest.getOpIds(), filtersRequest.getIds() ) )
-					.and( this.specifications.hasValuesStr(
+					.and( this.roleSpecs.hasValuesStr(
 							RoleFilterFieldEnum.NAME.getFieldMySQL(), filtersRequest.getOpNames(), filtersRequest.getNames() ) );
 		}
 
