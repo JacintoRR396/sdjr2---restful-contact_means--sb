@@ -69,6 +69,12 @@
             <artifactId>spring-boot-starter-test</artifactId>
             <scope>test</scope>
         </dependency>
+        <!-- Spring Boot : Security -->
+        <dependency>
+            <groupId>org.springframework.boot</groupId>
+            <artifactId>spring-boot-starter-security</artifactId>
+        </dependency>
+
         <!-- Spring : Core -->
         <dependency>
             <groupId>org.springframework</groupId>
@@ -93,6 +99,7 @@
             <artifactId>javax.interceptor-api</artifactId>
             <version>1.2.2</version>
         </dependency>
+
         <!-- Data Base : H2 -->
         <dependency>
             <groupId>com.h2database</groupId>

@@ -4,7 +4,7 @@ import com.fasterxml.jackson.annotation.JsonInclude;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import com.sdjr2.rest_contact_meanssb.models.dto.BaseDTO;
 import com.sdjr2.rest_contact_meanssb.utils.UConstants;
-import jakarta.validation.Valid;
+import com.sdjr2.rest_contact_meanssb.validations.UserExistsById;
 import jakarta.validation.constraints.*;
 import lombok.*;
 
@@ -20,7 +20,7 @@ import java.util.List;
  * @author Jacinto R^2
  * @version 1.0
  * @category DTO
- * @upgrade 24/08/01
+ * @upgrade 24/08/03
  * @since 24/08/01
  */
 @NoArgsConstructor
@@ -43,14 +43,17 @@ public class UserDTO implements BaseDTO, Comparable<UserDTO> {
 	/* VARIABLES */
 	@PositiveOrZero
 	@Digits(integer = 8, fraction = 0)
+	@UserExistsById
 	private Long id;
 
 	@NotNull
 	@Size(min = 8, max = 40)
+	//@UserNotExistsByUsername
 	private String username;
 
 	@NotNull
 	@Size(min = 10, max = 60)
+	@JsonProperty(access = JsonProperty.Access.WRITE_ONLY)
 	private String pwd;
 
 	@Size(min = 6, max = 30)
@@ -66,8 +69,7 @@ public class UserDTO implements BaseDTO, Comparable<UserDTO> {
 	@JsonProperty(ATTR_LAST_ACCESS)
 	private String lastAccess;
 
-	@Valid
-	private List<RoleDTO> roles;
+	private List<String> roles;
 
 	/* METHODS OF INSTANCE */
 	@Override

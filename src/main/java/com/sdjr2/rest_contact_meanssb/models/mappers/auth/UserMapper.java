@@ -1,12 +1,18 @@
 package com.sdjr2.rest_contact_meanssb.models.mappers.auth;
 
+import com.sdjr2.rest_contact_meanssb.models.dto.auth.RoleDTO;
 import com.sdjr2.rest_contact_meanssb.models.dto.auth.UserDTO;
 import com.sdjr2.rest_contact_meanssb.models.entities.AuditableEntity;
 import com.sdjr2.rest_contact_meanssb.models.entities.auth.UserEntity;
 import com.sdjr2.rest_contact_meanssb.models.mappers.BaseMapper;
+import com.sdjr2.rest_contact_meanssb.services.auth.RoleService;
 import com.sdjr2.rest_contact_meanssb.utils.UDateTimeService;
 import org.mapstruct.*;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.crypto.password.PasswordEncoder;
+
+import java.time.LocalDateTime;
+import java.util.List;
 
 /**
  * {@link UserMapper} class.
@@ -20,17 +26,29 @@ import org.springframework.beans.factory.annotation.Autowired;
  * @author Jacinto R^2
  * @version 1.0
  * @category Mapper
- * @upgrade 24/08/02
+ * @upgrade 24/08/03
  * @since 24/08/01
  */
 @Mapper(componentModel = "spring", builder = @Builder(disableBuilder = true))
 public abstract class UserMapper implements BaseMapper<UserDTO, UserEntity> {
 
 	/**
+	 * Password encoder object
+	 */
+	@Autowired
+	protected PasswordEncoder passwordEncoder;
+
+	/**
 	 * Role mapper object
 	 */
 	@Autowired
 	protected RoleMapper roleMapper;
+
+	/**
+	 * Role service object
+	 */
+	@Autowired
+	protected RoleService roleService;
 
 	/**
 	 * DateTime service object
@@ -51,7 +69,7 @@ public abstract class UserMapper implements BaseMapper<UserDTO, UserEntity> {
 	@Mapping(source = "entity.email", target = "email")
 	@Mapping(source = "entity.enabled", target = "isEnabled")
 	@Mapping(target = "lastAccess", ignore = true)
-	@Mapping(expression = "java(this.roleMapper.toDTOs(entity.getRoles()))", target = "roles")
+	@Mapping(target = "roles", ignore = true)
 	@Override
 	public abstract UserDTO toDTO ( UserEntity entity );
 
@@ -66,6 +84,8 @@ public abstract class UserMapper implements BaseMapper<UserDTO, UserEntity> {
 	protected UserDTO afterMappingToDTO ( UserEntity entity, @MappingTarget UserDTO dtoRes ) {
 		dtoRes.setPwd( "******" );
 		dtoRes.setLastAccess( this.uDateTimeService.parseLocalDateTimeToStringAboutFrontend( entity.getLastAccess() ) );
+		List<RoleDTO> rolesDTO = this.roleMapper.toDTOs( entity.getRoles() );
+		dtoRes.setRoles( rolesDTO.stream().map( RoleDTO::getName ).toList() );
 
 		return dtoRes;
 	}
@@ -83,9 +103,9 @@ public abstract class UserMapper implements BaseMapper<UserDTO, UserEntity> {
 	@Mapping(target = "pwd", ignore = true)
 	@Mapping(source = "dto.nickname", target = "nickname")
 	@Mapping(source = "dto.email", target = "email")
-	@Mapping(target = "enabled", ignore = true)
+	@Mapping(source = "dto.isEnabled", target = "enabled")
 	@Mapping(target = "lastAccess", ignore = true)
-	@Mapping(expression = "java(this.roleMapper.toEntities(dto.getRoles()))", target = "roles")
+	@Mapping(target = "roles", ignore = true)
 	@Mapping(target = "auditableEntity", ignore = true)
 	public abstract UserEntity toEntity ( UserDTO dto, String usernameRole, UserEntity entityDB );
 
@@ -101,12 +121,28 @@ public abstract class UserMapper implements BaseMapper<UserDTO, UserEntity> {
 	@AfterMapping
 	protected UserEntity afterMappingToEntity ( UserDTO dto, String usernameRole, UserEntity entityDB,
 																							@MappingTarget UserEntity entityReq ) {
-		// TODO ::
-		//  pwd > with crypt
-		//  lastAccess > with format backend
-		entityReq.setEnabled( true );
+		entityReq.setPwd( this.passwordEncoder.encode( dto.getPwd() ) );
+		entityReq.setLastAccess( LocalDateTime.now() );
+
+		List<RoleDTO> roles = this.roleService.getAll().stream().filter( roleDTO ->
+				dto.getRoles().stream().anyMatch( role -> roleDTO.getName().equals( role ) )
+		).toList();
+		entityReq.setRoles( this.roleMapper.toEntities( roles ) );
+
 		entityReq.setAuditableEntity( this.mapAuditableEntity( dto.getId(), usernameRole, entityDB ) );
 
 		return entityReq;
 	}
+
+	@Mapping(source = "dto.id", target = "id")
+	@Mapping(source = "dto.username", target = "username")
+	@Mapping(source = "dto.pwd", target = "pwd")
+	@Mapping(source = "dto.nickname", target = "nickname")
+	@Mapping(source = "dto.email", target = "email")
+	@Mapping(source = "dto.isEnabled", target = "enabled")
+	@Mapping(target = "lastAccess", ignore = true)
+	@Mapping(target = "roles", ignore = true)
+	@Mapping(target = "auditableEntity", ignore = true)
+	@Override
+	public abstract UserEntity toEntity ( UserDTO dto );
 }
