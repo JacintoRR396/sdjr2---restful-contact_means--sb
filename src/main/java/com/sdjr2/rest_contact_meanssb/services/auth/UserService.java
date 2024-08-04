@@ -24,4 +24,12 @@ import com.sdjr2.rest_contact_meanssb.services.BaseService;
  * @since 24/08/01
  */
 public interface UserService extends BaseService<UserDTO> {
+
+	/**
+	 * Gets an element dto for its unique attrs, otherwise throw an exception STATUS_40402.
+	 *
+	 * @param username first unique attribute.
+	 * @return an element dto {@link UserDTO}.
+	 */
+	UserDTO getOneByUserName ( String username );
 }

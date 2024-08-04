@@ -12,18 +12,41 @@ import lombok.Getter;
  * @author Jacinto R^2
  * @version 1.0
  * @category Enum (Model)
- * @upgrade 24/08/01
- * @since 24/08/01
+ * @upgrade 24/08/04
+ * @since 24/08/04
  */
 @Getter
 public enum RoleTypeEnum {
-	ROLE_ADMIN,
-	ROLE_MEMBER,
-	ROLE_USER;
+	ROLE_ADMIN( "ROLE_ADMIN", "ADMIN" ),
+	ROLE_MEMBER( "ROLE_MEMBER", "MEMBER" ),
+	ROLE_USER( "ROLE_USER", "USER" );
 
-	public static RoleTypeEnum fromValue(String value) {
+	private final String value;
+	private final String valueSimple;
+
+	RoleTypeEnum ( String value, String valueSimple ) {
+		this.value = value;
+		this.valueSimple = valueSimple;
+	}
+
+	@Override
+	public String toString () {
+		return this.value;
+	}
+
+	public static RoleTypeEnum fromValue ( String value ) {
 		for ( RoleTypeEnum type : RoleTypeEnum.values() ) {
-			if ( type.name().equals( value.toUpperCase()) ) {
+			if ( type.getValue().equals( value.toUpperCase() ) ) {
+				return type;
+			}
+		}
+
+		throw new CustomException( AppExceptionCodeEnum.STATUS_50001 );
+	}
+
+	public static RoleTypeEnum fromValueSimple ( String value ) {
+		for ( RoleTypeEnum type : RoleTypeEnum.values() ) {
+			if ( type.getValueSimple().equals( value.toUpperCase() ) ) {
 				return type;
 			}
 		}

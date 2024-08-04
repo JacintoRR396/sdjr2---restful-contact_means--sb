@@ -19,6 +19,7 @@ public class UserExistsByIdValidator implements ConstraintValidator<UserExistsBy
 
 	@Override
 	public boolean isValid ( Long value, ConstraintValidatorContext context ) {
+		if ( Objects.isNull( this.userRepo ) ) return true;
 		// 1º about create, 2º about update
 		return Objects.isNull( value )
 				|| value == 0L || this.userRepo.findById( value ).isPresent();

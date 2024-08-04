@@ -26,6 +26,7 @@ public enum AppExceptionCodeEnum {
 	STATUS_40300( HttpStatus.FORBIDDEN, 40300, "Forbidden" ),
 	STATUS_40400( HttpStatus.NOT_FOUND, 40400, "Not Found" ),
 	STATUS_40401( HttpStatus.NOT_FOUND, 40401, "Not Found: There is no record with that identifier" ),
+	STATUS_40402( HttpStatus.NOT_FOUND, 40402, "Not Found: There is no record with those unique attributes" ),
 	STATUS_40500( HttpStatus.METHOD_NOT_ALLOWED, 40500, "Method Not Allowed" ),
 	STATUS_40600( HttpStatus.NOT_ACCEPTABLE, 40600, "Media Type Not Acceptable" ),
 	STATUS_41500( HttpStatus.UNSUPPORTED_MEDIA_TYPE, 41500, "Media Type Not Unsupported" ),

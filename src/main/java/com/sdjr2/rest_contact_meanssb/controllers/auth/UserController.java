@@ -61,8 +61,8 @@ public class UserController implements BaseController<UserDTO> {
 		return new ResponseEntity<>( this.userService.getAllWithSearch( searchBodyDTO ), HttpStatus.OK );
 	}
 
-	@GetMapping(value = "/{roleId}")
-	public ResponseEntity<UserDTO> getOneById ( @PathVariable("roleId") Long id ) {
+	@GetMapping(value = "/{userId}")
+	public ResponseEntity<UserDTO> getOneById ( @PathVariable("userId") Long id ) {
 		return new ResponseEntity<>( this.userService.getOneById( id ), HttpStatus.OK );
 	}
 
@@ -73,16 +73,16 @@ public class UserController implements BaseController<UserDTO> {
 		return new ResponseEntity<>( this.userService.create( dto ), HttpStatus.CREATED );
 	}
 
-	@PutMapping(value = "/{roleId}")
-	public ResponseEntity<UserDTO> update ( @PathVariable("roleId") Long id,
+	@PutMapping(value = "/{userId}")
+	public ResponseEntity<UserDTO> update ( @PathVariable("userId") Long id,
 																					@Valid @RequestBody UserDTO dto, BindingResult resValidation ) {
 		this.checkValidation( resValidation );
 
 		return new ResponseEntity<>( this.userService.update( id, dto ), HttpStatus.OK );
 	}
 
-	@DeleteMapping(value = "/{roleId}")
-	public ResponseEntity<Void> delete ( @PathVariable("roleId") Long id ) {
+	@DeleteMapping(value = "/{userId}")
+	public ResponseEntity<Void> delete ( @PathVariable("userId") Long id ) {
 		this.userService.delete( id );
 
 		return new ResponseEntity<>( HttpStatus.NO_CONTENT );

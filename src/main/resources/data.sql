@@ -7,9 +7,10 @@ INSERT INTO `dmd_address` (street, number, letter, town, city, country, postal_c
 	('Ancha',01,'N/A','Mairena del Alcor','Sevilla','España',41510,'-5.7199300','37.891060','Iglesia de la Merced','2024-06-17 13:00','ROLE_ADMIN','2024-06-17 13:00','ROLE_ADMIN');
 
 INSERT INTO `dmd_user` (username, pwd, nickname, email, enabled, last_access, created_at, created_by, updated_at, updated_by) VALUES
-    ('sdjr2_001','pwd.Test_1234','erCalvo_-_21','sdjr2_001@gmail.com',true,'2024-07-31 19:30','2024-07-31 19:30','ROLE_ADMIN','2024-07-31 19:30','ROLE_ADMIN'),
-    ('rbg_001','pwd.Test_123456','lady_-_29','rbg_001@gmail.com',false,'2024-08-02 20:30','2024-08-02 20:30','ROLE_ADMIN','2024-08-02 20:30','ROLE_ADMIN'),
-    ('test_00','pwd.Test_00','machine00','test_00@gmail.com',true,'2024-08-02 20:30','2024-08-02 20:30','ROLE_ADMIN','2024-08-02 20:30','ROLE_ADMIN');
+    ('sdjr2_001','$2a$10$Xg6h/V/CiwE3EowwgDpeQelxl37x9gLSvL6XPfO4cEuuaRqEGWHKK','erCalvo_-_21','sdjr2_001@gmail.com',true,'2024-07-31 19:30','2024-07-31 19:30','ROLE_ADMIN','2024-07-31 19:30','ROLE_ADMIN'),
+    ('rbg_001','$2a$10$Xg6h/V/CiwE3EowwgDpeQelxl37x9gLSvL6XPfO4cEuuaRqEGWHKK','lady_-_29','rbg_001@gmail.com',true,'2024-08-02 20:30','2024-08-02 20:30','ROLE_ADMIN','2024-08-02 20:30','ROLE_ADMIN'),
+    ('test_00','$2a$10$Xg6h/V/CiwE3EowwgDpeQelxl37x9gLSvL6XPfO4cEuuaRqEGWHKK','machine00','test_00@gmail.com',true,'2024-08-02 20:30','2024-08-02 20:30','ROLE_ADMIN','2024-08-02 20:30','ROLE_ADMIN'),
+    ('test_01','$2a$10$Xg6h/V/CiwE3EowwgDpeQelxl37x9gLSvL6XPfO4cEuuaRqEGWHKK','machine01','test_00@gmail.com',false,'2024-08-02 20:30','2024-08-02 20:30','ROLE_ADMIN','2024-08-02 20:30','ROLE_ADMIN');
 
 INSERT INTO `dmp_role` (name, description, created_at, created_by, updated_at, updated_by) VALUES
     ('ROLE_ADMIN','Monitors and manages both the configuration and functionalities of an application','2024-07-31 19:30','ROLE_ADMIN','2024-07-31 19:30','ROLE_ADMIN'),
@@ -17,4 +18,4 @@ INSERT INTO `dmp_role` (name, description, created_at, created_by, updated_at, u
     ('ROLE_USER','Guest user who can perform certain functionalities of a member','2024-07-31 19:30','ROLE_ADMIN','2024-07-31 19:30','ROLE_ADMIN');
 
 INSERT INTO `dmr_user_role` (user_id, role_id) VALUES
-    (1,1),(1,2),(2,2),(3,3);
+    (1,1),(1,2),(2,2),(3,3),(4,3);

@@ -6,6 +6,8 @@ import jakarta.validation.ConstraintValidatorContext;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Component;
 
+import java.util.Objects;
+
 @Component
 @RequiredArgsConstructor
 public class UserNotExistsByUsernameValidator implements ConstraintValidator<UserNotExistsByUsername, String> {
@@ -17,6 +19,8 @@ public class UserNotExistsByUsernameValidator implements ConstraintValidator<Use
 
 	@Override
 	public boolean isValid ( String value, ConstraintValidatorContext context ) {
+		if ( Objects.isNull( this.userRepo ) ) return true;
+
 		return this.userRepo.findByUsername( value ).isEmpty();
 	}
 }

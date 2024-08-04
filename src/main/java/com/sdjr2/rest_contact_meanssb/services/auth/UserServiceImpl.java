@@ -24,6 +24,7 @@ import org.springframework.transaction.annotation.Transactional;
 import java.util.List;
 import java.util.NoSuchElementException;
 import java.util.Objects;
+import java.util.Optional;
 
 /**
  * {@link UserServiceImpl} class.
@@ -33,7 +34,7 @@ import java.util.Objects;
  * @author Jacinto R^2
  * @version 1.0
  * @category Service
- * @upgrade 24/08/02
+ * @upgrade 24/08/04
  * @since 24/08/02
  */
 @Service
@@ -131,9 +132,9 @@ public class UserServiceImpl implements UserService {
 	@Override
 	@Transactional(readOnly = true)
 	public UserDTO getOneById ( Long id ) {
-		UserEntity entity = this.checkExistsById( id );
+		UserEntity entityDB = this.checkExistsById( id );
 
-		return this.userMapper.toDTO( entity );
+		return this.userMapper.toDTO( entityDB );
 	}
 
 	/**
@@ -151,8 +152,21 @@ public class UserServiceImpl implements UserService {
 	}
 
 	@Override
+	@Transactional(readOnly = true)
+	public UserDTO getOneByUserName ( String username ) {
+		Optional<UserEntity> entityDBOpt = this.userRepo.findByUsername( username );
+
+		if ( entityDBOpt.isPresent() ) {
+			return this.userMapper.toDTO( entityDBOpt.get() );
+		}
+
+		throw new CustomException( AppExceptionCodeEnum.STATUS_40402 );
+	}
+
+	@Override
 	@Transactional
 	public UserDTO create ( UserDTO dto ) {
+		// Validation its id in the DTO through @UserExistsById
 		this.checkNotExistsByUniqueAttrs( dto.getId(), dto.getUsername() );
 
 		UserEntity entityReq = this.userMapper.toEntity( dto, RoleTypeEnum.ROLE_ADMIN.name(), null );
@@ -182,6 +196,7 @@ public class UserServiceImpl implements UserService {
 	public UserDTO update ( Long id, UserDTO dto ) {
 		dto.setId( id );
 
+		// Validation its id in the DTO through @UserExistsById
 		UserEntity entityDB = this.checkExistsById( dto.getId() );
 		this.checkNotExistsByUniqueAttrs( dto.getId(), dto.getUsername() );
 
@@ -194,6 +209,7 @@ public class UserServiceImpl implements UserService {
 	@Override
 	@Transactional
 	public void delete ( Long id ) {
+		// Validation its id in the DTO through @UserExistsById
 		UserEntity entityDB = this.checkExistsById( id );
 
 		this.userRepo.delete( entityDB );
