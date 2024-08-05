@@ -36,7 +36,7 @@ import java.util.List;
 public class UserEntity implements BaseEntity, Serializable {
 
 	@Serial
-	private static final long serialVersionUID = -8456791947043775284L;
+	private static final long serialVersionUID = 131649805290675146L;
 
 	public static final String TABLE_DMD_NAME = "dmd_user";
 	public static final String ATTR_ID = "id";

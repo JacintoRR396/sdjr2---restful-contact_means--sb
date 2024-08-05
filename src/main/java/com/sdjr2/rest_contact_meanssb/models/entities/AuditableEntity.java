@@ -3,6 +3,8 @@ package com.sdjr2.rest_contact_meanssb.models.entities;
 import jakarta.persistence.*;
 import lombok.*;
 
+import java.io.Serial;
+import java.io.Serializable;
 import java.time.LocalDateTime;
 
 /**
@@ -22,7 +24,10 @@ import java.time.LocalDateTime;
 @Getter
 @Setter
 @Builder
-public class AuditableEntity {
+public class AuditableEntity implements Serializable {
+
+	@Serial
+	private static final long serialVersionUID = -6270433870678625218L;
 
 	public static final String ATTR_CREATED_AT = "created_at";
 	public static final String ATTR_CREATED_BY = "created_by";

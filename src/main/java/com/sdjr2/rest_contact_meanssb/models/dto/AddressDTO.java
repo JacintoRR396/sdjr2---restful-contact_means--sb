@@ -6,6 +6,8 @@ import com.sdjr2.rest_contact_meanssb.utils.UConstants;
 import jakarta.validation.constraints.*;
 import lombok.*;
 
+import java.io.Serial;
+import java.io.Serializable;
 import java.util.Comparator;
 
 /**
@@ -26,7 +28,10 @@ import java.util.Comparator;
 @Setter
 @Builder
 @JsonInclude(JsonInclude.Include.NON_NULL)
-public class AddressDTO implements BaseDTO, Comparable<AddressDTO> {
+public class AddressDTO implements BaseDTO, Comparable<AddressDTO>, Serializable {
+
+	@Serial
+	private static final long serialVersionUID = -6649157406633205057L;
 
 	public static final String ATTR_ID = "id";
 	public static final String ATTR_STREET = "street";

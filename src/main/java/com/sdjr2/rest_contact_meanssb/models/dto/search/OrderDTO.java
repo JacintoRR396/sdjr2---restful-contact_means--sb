@@ -9,6 +9,9 @@ import lombok.Data;
 import lombok.NoArgsConstructor;
 import org.springframework.data.domain.Sort;
 
+import java.io.Serial;
+import java.io.Serializable;
+
 /**
  * {@link FilterDTO} class.
  * <p>
@@ -24,7 +27,10 @@ import org.springframework.data.domain.Sort;
 @AllArgsConstructor
 @Data
 @Builder
-public class OrderDTO implements BaseDTO {
+public class OrderDTO implements BaseDTO, Serializable {
+
+	@Serial
+	private static final long serialVersionUID = 7936136111365894157L;
 
 	/*
 	 * attribute field

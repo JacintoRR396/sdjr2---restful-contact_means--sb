@@ -6,6 +6,9 @@ import jakarta.validation.constraints.NotNull;
 import jakarta.validation.constraints.Size;
 import lombok.*;
 
+import java.io.Serial;
+import java.io.Serializable;
+
 /**
  * {@link UserAuthReqDTO} class.
  * <p>
@@ -24,7 +27,10 @@ import lombok.*;
 @Setter
 @Builder
 @JsonInclude(JsonInclude.Include.NON_NULL)
-public class UserAuthReqDTO implements BaseDTO {
+public class UserAuthReqDTO implements BaseDTO, Serializable {
+
+	@Serial
+	private static final long serialVersionUID = 314769481123829598L;
 
 	public static final String ATTR_USERNAME = "username";
 	public static final String ATTR_PWD = "password";

@@ -5,6 +5,9 @@ import com.sdjr2.rest_contact_meanssb.models.dto.BaseDTO;
 import jakarta.validation.constraints.NotNull;
 import lombok.*;
 
+import java.io.Serial;
+import java.io.Serializable;
+
 /**
  * {@link UserAuthRespDTO} class.
  * <p>
@@ -23,7 +26,10 @@ import lombok.*;
 @Setter
 @Builder
 @JsonInclude(JsonInclude.Include.NON_NULL)
-public class UserAuthRespDTO implements BaseDTO {
+public class UserAuthRespDTO implements BaseDTO, Serializable {
+
+	@Serial
+	private static final long serialVersionUID = 9154163485713810217L;
 
 	public static final String ATTR_USERNAME = "username";
 	public static final String ATTR_TOKEN = "token";

@@ -34,7 +34,7 @@ import java.util.Objects;
 public class AddressEntity implements BaseEntity, Serializable {
 
 	@Serial
-	private static final long serialVersionUID = -8456791947043775284L;
+	private static final long serialVersionUID = 5622094071967246451L;
 
 	public static final String TABLE_DMD_NAME = "dmd_address";
 	public static final String ATTR_ID = "id";

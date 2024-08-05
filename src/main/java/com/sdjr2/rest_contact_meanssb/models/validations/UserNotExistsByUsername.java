@@ -1,4 +1,4 @@
-package com.sdjr2.rest_contact_meanssb.validations;
+package com.sdjr2.rest_contact_meanssb.models.validations;
 
 import jakarta.validation.Constraint;
 import jakarta.validation.Payload;

@@ -4,10 +4,12 @@ import com.fasterxml.jackson.annotation.JsonInclude;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import com.sdjr2.rest_contact_meanssb.models.dto.BaseDTO;
 import com.sdjr2.rest_contact_meanssb.utils.UConstants;
-import com.sdjr2.rest_contact_meanssb.validations.UserExistsById;
+import com.sdjr2.rest_contact_meanssb.models.validations.UserExistsById;
 import jakarta.validation.constraints.*;
 import lombok.*;
 
+import java.io.Serial;
+import java.io.Serializable;
 import java.util.Comparator;
 import java.util.List;
 
@@ -29,7 +31,10 @@ import java.util.List;
 @Setter
 @Builder
 @JsonInclude(JsonInclude.Include.NON_NULL)
-public class UserDTO implements BaseDTO, Comparable<UserDTO> {
+public class UserDTO implements BaseDTO, Comparable<UserDTO>, Serializable {
+
+	@Serial
+	private static final long serialVersionUID = -171358681059131076L;
 
 	public static final String ATTR_ID = "id";
 	public static final String ATTR_USERNAME = "username";

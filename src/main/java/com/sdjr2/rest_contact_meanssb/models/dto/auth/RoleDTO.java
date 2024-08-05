@@ -6,6 +6,9 @@ import com.sdjr2.rest_contact_meanssb.utils.UConstants;
 import jakarta.validation.constraints.*;
 import lombok.*;
 
+import java.io.Serial;
+import java.io.Serializable;
+
 /**
  * {@link RoleDTO} class.
  * <p>
@@ -24,7 +27,10 @@ import lombok.*;
 @Setter
 @Builder
 @JsonInclude(JsonInclude.Include.NON_NULL)
-public class RoleDTO implements BaseDTO, Comparable<RoleDTO> {
+public class RoleDTO implements BaseDTO, Comparable<RoleDTO>, Serializable {
+
+	@Serial
+	private static final long serialVersionUID = 3474589087053457452L;
 
 	public static final String ATTR_ID = "id";
 	public static final String ATTR_NAME = "name";

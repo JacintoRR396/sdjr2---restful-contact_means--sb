@@ -34,7 +34,7 @@ import java.io.Serializable;
 public class RoleEntity implements BaseEntity, Serializable {
 
 	@Serial
-	private static final long serialVersionUID = -8456791947043775284L;
+	private static final long serialVersionUID = -7081820793460872836L;
 
 	public static final String TABLE_DMP_NAME = "dmp_role";
 	public static final String ATTR_ID = "id";

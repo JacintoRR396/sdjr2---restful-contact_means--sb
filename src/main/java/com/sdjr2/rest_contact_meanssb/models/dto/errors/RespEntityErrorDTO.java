@@ -5,6 +5,8 @@ import com.fasterxml.jackson.annotation.JsonProperty;
 import com.sdjr2.rest_contact_meanssb.models.dto.BaseDTO;
 import lombok.Data;
 
+import java.io.Serial;
+import java.io.Serializable;
 import java.util.Map;
 
 /**
@@ -21,7 +23,10 @@ import java.util.Map;
  */
 @Data
 @JsonInclude(JsonInclude.Include.NON_NULL)
-public class RespEntityErrorDTO implements BaseDTO {
+public class RespEntityErrorDTO implements BaseDTO, Serializable {
+
+	@Serial
+	private static final long serialVersionUID = -7048689708460974248L;
 
 	private String id;
 
