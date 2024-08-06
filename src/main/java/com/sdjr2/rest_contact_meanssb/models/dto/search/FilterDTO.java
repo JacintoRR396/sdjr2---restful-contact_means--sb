@@ -10,6 +10,8 @@ import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
+import java.io.Serial;
+import java.io.Serializable;
 import java.util.List;
 
 /**
@@ -27,7 +29,10 @@ import java.util.List;
 @AllArgsConstructor
 @Data
 @Builder
-public class FilterDTO implements BaseDTO {
+public class FilterDTO implements BaseDTO, Serializable {
+
+	@Serial
+	private static final long serialVersionUID = 4444506372828582233L;
 
 	/*
 	 * attribute field

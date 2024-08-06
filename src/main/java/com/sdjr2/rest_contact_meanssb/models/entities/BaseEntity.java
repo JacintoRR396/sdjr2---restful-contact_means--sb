@@ -8,8 +8,9 @@ package com.sdjr2.rest_contact_meanssb.models.entities;
  * @author Jacinto R^2
  * @version 1.0
  * @category Entity (ORM)
- * @upgrade 24/07/15
+ * @upgrade 24/08/01
  * @since 23/06/20
  */
 public interface BaseEntity {
+  AuditableEntity getAuditableEntity();
 }

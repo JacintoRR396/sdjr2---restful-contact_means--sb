@@ -22,7 +22,7 @@ import java.time.LocalDateTime;
  * @author Jacinto R^2
  * @version 1.0
  * @category Mapper
- * @upgrade 24/07/15
+ * @upgrade 24/08/01
  * @since 23/06/11
  */
 @Mapper(componentModel = "spring")
@@ -52,8 +52,8 @@ public abstract class AddressMapper implements BaseMapper<AddressDTO, AddressEnt
 	 * Map address request object to address entity.
 	 *
 	 * @param dto      address request object
+	 * @param usernameRole username
 	 * @param entityDB address entity in db
-	 * @param username username
 	 * @return AddressEntity {@link AddressEntity}
 	 */
 	@Mapping(source = "dto.id", target = "id")
@@ -68,36 +68,23 @@ public abstract class AddressMapper implements BaseMapper<AddressDTO, AddressEnt
 	@Mapping(source = "dto.latitude", target = "latitude")
 	@Mapping(source = "dto.additionalInfo", target = "additionalInfo")
 	@Mapping(target = "auditableEntity", ignore = true)
-	public abstract AddressEntity toEntity ( AddressDTO dto, AddressEntity entityDB, String username );
+	public abstract AddressEntity toEntity ( AddressDTO dto, String usernameRole, AddressEntity entityDB );
 
 	/**
 	 * Map address request object to address entity with additional logic
 	 *
 	 * @param dto           address request object
+	 * @param usernameRole username
 	 * @param entityDB      address entity in db
-	 * @param username      username
-	 * @param addressEntity address entity about req
+	 * @param entityReq address entity about req
 	 * @return AddressEntity {@link AddressEntity}
 	 */
 	@AfterMapping
-	protected AddressEntity afterMappingToEntity ( AddressDTO dto, AddressEntity entityDB, String username,
-																								 @MappingTarget AddressEntity addressEntity ) {
-		AuditableEntity auditableEntity;
+	protected AddressEntity afterMappingToEntity ( AddressDTO dto, String usernameRole, AddressEntity entityDB,
+																								 @MappingTarget AddressEntity entityReq ) {
+		AuditableEntity auditableEntity = this.mapAuditableEntity(dto.getId(), usernameRole, entityDB);
+		entityReq.setAuditableEntity( auditableEntity );
 
-		if ( dto.getId().equals( 0L ) ) {
-			auditableEntity = AuditableEntity.builder()
-					.createdAt( LocalDateTime.now() )
-					.createdBy( "admin" )
-					.updatedAt( LocalDateTime.now() )
-					.updatedBy( "admin" )
-					.build();
-		} else {
-			auditableEntity = entityDB.getAuditableEntity();
-			auditableEntity.setUpdatedAt( LocalDateTime.now() );
-			auditableEntity.setUpdatedBy( username );
-		}
-		addressEntity.setAuditableEntity( auditableEntity );
-
-		return addressEntity;
+		return entityReq;
 	}
 }

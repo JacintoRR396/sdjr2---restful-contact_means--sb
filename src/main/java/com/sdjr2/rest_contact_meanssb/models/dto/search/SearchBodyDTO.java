@@ -8,6 +8,8 @@ import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
+import java.io.Serial;
+import java.io.Serializable;
 import java.util.List;
 
 /**
@@ -25,7 +27,10 @@ import java.util.List;
 @AllArgsConstructor
 @Data
 @Builder
-public class SearchBodyDTO implements BaseDTO {
+public class SearchBodyDTO implements BaseDTO, Serializable {
+
+	@Serial
+	private static final long serialVersionUID = -7306091258046405531L;
 
 	/*
 	 * attribute page index

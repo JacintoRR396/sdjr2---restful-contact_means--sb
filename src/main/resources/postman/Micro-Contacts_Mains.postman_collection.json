@@ -8,10 +8,65 @@
 	},
 	"item": [
 		{
-			"name": "ADDRESSES",
+			"name": "AUTH - USER",
 			"item": [
 				{
-					"name": "GET Addresses ALL",
+					"name": "GET User ALL",
+					"request": {
+						"auth": {
+							"type": "noauth"
+						},
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{schema}}://{{server}}{{port}}/{{basePath}}/users",
+							"protocol": "{{schema}}",
+							"host": [
+								"{{server}}{{port}}"
+							],
+							"path": [
+								"{{basePath}}",
+								"users"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "GET User ALL with Page",
+					"request": {
+						"auth": {
+							"type": "noauth"
+						},
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{schema}}://{{server}}{{port}}/{{basePath}}/users/pagination?offset=0&limit=2",
+							"protocol": "{{schema}}",
+							"host": [
+								"{{server}}{{port}}"
+							],
+							"path": [
+								"{{basePath}}",
+								"users",
+								"pagination"
+							],
+							"query": [
+								{
+									"key": "offset",
+									"value": "0"
+								},
+								{
+									"key": "limit",
+									"value": "2"
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "GET User ALL with Search",
 					"protocolProfileBehavior": {
 						"disableBodyPruning": true
 					},
@@ -23,8 +78,1398 @@
 						"header": [],
 						"body": {
 							"mode": "raw",
-							"raw": ""
+							"raw": "{\r\n    \"offset\": 0,\r\n    \"limit\": 3,\r\n    \"sorts\": [\r\n        {\r\n            \"field\": \"IS_ENABLED\",\r\n            \"direction\": \"DESC\"\r\n        }\r\n    ],\r\n    \"filters\": [\r\n        {\r\n            \"field\": \"EMAIL\",\r\n            \"operator_type\": \"EW\",\r\n            \"values\": [\r\n                \"@gmail.com\"\r\n            ]\r\n        }\r\n    ]\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
 						},
+						"url": {
+							"raw": "{{schema}}://{{server}}{{port}}/{{basePath}}/users/search",
+							"protocol": "{{schema}}",
+							"host": [
+								"{{server}}{{port}}"
+							],
+							"path": [
+								"{{basePath}}",
+								"users",
+								"search"
+							]
+						}
+					},
+					"response": [
+						{
+							"name": "GET User ALL with Search - 200",
+							"originalRequest": {
+								"method": "GET",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": "{\r\n    \"offset\": 0,\r\n    \"limit\": 3,\r\n    \"sorts\": [\r\n        {\r\n            \"field\": \"IS_ENABLED\",\r\n            \"direction\": \"DESC\"\r\n        }\r\n    ],\r\n    \"filters\": [\r\n        {\r\n            \"field\": \"EMAIL\",\r\n            \"operator_type\": \"EW\",\r\n            \"values\": [\r\n                \"@gmail.com\"\r\n            ]\r\n        }\r\n    ]\r\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "{{schema}}://{{server}}{{port}}/{{basePath}}/users/search",
+									"protocol": "{{schema}}",
+									"host": [
+										"{{server}}{{port}}"
+									],
+									"path": [
+										"{{basePath}}",
+										"users",
+										"search"
+									]
+								}
+							},
+							"status": "OK",
+							"code": 200,
+							"_postman_previewlanguage": "json",
+							"header": [
+								{
+									"key": "Content-Type",
+									"value": "application/json",
+									"description": "",
+									"type": "text"
+								}
+							],
+							"cookie": [],
+							"body": "{\n    \"content\": [\n        {\n            \"id\": 1,\n            \"username\": \"sdjr2_001\",\n            \"nickname\": \"erCalvo_-_21\",\n            \"email\": \"sdjr2_001@gmail.com\",\n            \"roles\": [\n                \"ROLE_ADMIN\",\n                \"ROLE_MEMBER\"\n            ],\n            \"is_enabled\": true,\n            \"last_access\": \"31/07/2024 19:30:00\"\n        },\n        {\n            \"id\": 3,\n            \"username\": \"test_00\",\n            \"nickname\": \"machine00\",\n            \"email\": \"test_00@gmail.com\",\n            \"roles\": [\n                \"ROLE_USER\"\n            ],\n            \"is_enabled\": true,\n            \"last_access\": \"02/08/2024 20:30:00\"\n        },\n        {\n            \"id\": 2,\n            \"username\": \"rbg_001\",\n            \"nickname\": \"lady_-_29\",\n            \"email\": \"rbg_001@gmail.com\",\n            \"roles\": [\n                \"ROLE_MEMBER\"\n            ],\n            \"is_enabled\": false,\n            \"last_access\": \"02/08/2024 20:30:00\"\n        }\n    ],\n    \"page\": {\n        \"size\": 3,\n        \"number\": 0,\n        \"totalElements\": 3,\n        \"totalPages\": 1\n    }\n}"
+						},
+						{
+							"name": "GET User ALL with Search - 40002",
+							"originalRequest": {
+								"method": "GET",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": "{\r\n    \"offset\": 0,\r\n    \"limit\": 3,\r\n    \"sorts\": [\r\n        {\r\n            \"field\": \"IS_ENABLE\",\r\n            \"direction\": \"DESC\"\r\n        }\r\n    ],\r\n    \"filters\": [\r\n        {\r\n            \"field\": \"EMAIL\",\r\n            \"operator_type\": \"EW\",\r\n            \"values\": [\r\n                \"@gmail.com\"\r\n            ]\r\n        }\r\n    ]\r\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "{{schema}}://{{server}}{{port}}/{{basePath}}/users/search",
+									"protocol": "{{schema}}",
+									"host": [
+										"{{server}}{{port}}"
+									],
+									"path": [
+										"{{basePath}}",
+										"users",
+										"search"
+									]
+								}
+							},
+							"status": "Bad Request",
+							"code": 400,
+							"_postman_previewlanguage": "json",
+							"header": [
+								{
+									"key": "Content-Type",
+									"value": "application/json",
+									"description": "",
+									"type": "text"
+								}
+							],
+							"cookie": [],
+							"body": "{\n    \"id\": \"f0579ce8-8cde-43f0-ae25-4788fe977924\",\n    \"timestamp\": \"2024-08-03T13:09:53.996+02:00\",\n    \"http_status_code\": 400,\n    \"error_code\": 40002,\n    \"error_message\": \"Bad Request: Value enumeration not valid\",\n    \"ex_message\": \"500 INTERNAL_SERVER_ERROR \\\"Internal Server Error : Value not allowed in the enumeration\\\"\",\n    \"ex_track_trace\": \"[com.sdjr2.rest_contact_meanssb.models.enums.auth.UserSortFieldEnum.fromValue(UserSortFieldEnum.java:50), com.sdjr2.rest_contact_meanssb.services.auth.UserServiceImpl.createSortOrder(UserServiceImpl.java:97), com.sdjr2.rest_contact_meanssb.services.BaseService.lambda$createPageRequestWithPaginationAndSort$0(BaseService.java:72), java.base/java.util.ArrayList.forEach(ArrayList.java:1511), com.sdjr2.rest_contact_meanssb.services.BaseService.createPageRequestWithPaginationAndSort(BaseService.java:70), com.sdjr2.rest_contact_meanssb.services.auth.UserServiceImpl.getAllWithSearch(UserServiceImpl.java:78), java.base/jdk.internal.reflect.NativeMethodAccessorImpl.invoke0(Native Method), java.base/jdk.internal.reflect.NativeMethodAccessorImpl.invoke(NativeMethodAccessorImpl.java:77), java.base/jdk.internal.reflect.DelegatingMethodAccessorImpl.invoke(DelegatingMethodAccessorImpl.java:43), java.base/java.lang.reflect.Method.invoke(Method.java:568), org.springframework.aop.support.AopUtils.invokeJoinpointUsingReflection(AopUtils.java:354), org.springframework.aop.framework.ReflectiveMethodInvocation.invokeJoinpoint(ReflectiveMethodInvocation.java:196), org.springframework.aop.framework.ReflectiveMethodInvocation.proceed(ReflectiveMethodInvocation.java:163), org.springframework.aop.framework.CglibAopProxy$CglibMethodInvocation.proceed(CglibAopProxy.java:768), org.springframework.transaction.interceptor.TransactionInterceptor$1.proceedWithInvocation(TransactionInterceptor.java:123), org.springframework.transaction.interceptor.TransactionAspectSupport.invokeWithinTransaction(TransactionAspectSupport.java:392), org.springframework.transaction.interceptor.TransactionInterceptor.invoke(TransactionInterceptor.java:119), org.springframework.aop.framework.ReflectiveMethodInvocation.proceed(ReflectiveMethodInvocation.java:184), org.springframework.aop.framework.CglibAopProxy$CglibMethodInvocation.proceed(CglibAopProxy.java:768), org.springframework.aop.framework.CglibAopProxy$DynamicAdvisedInterceptor.intercept(CglibAopProxy.java:720), com.sdjr2.rest_contact_meanssb.services.auth.UserServiceImpl$$SpringCGLIB$$0.getAllWithSearch(<generated>), com.sdjr2.rest_contact_meanssb.controllers.auth.UserController.getAllWithSearch(UserController.java:61), java.base/jdk.internal.reflect.NativeMethodAccessorImpl.invoke0(Native Method), java.base/jdk.internal.reflect.NativeMethodAccessorImpl.invoke(NativeMethodAccessorImpl.java:77), java.base/jdk.internal.reflect.DelegatingMethodAccessorImpl.invoke(DelegatingMethodAccessorImpl.java:43), java.base/java.lang.reflect.Method.invoke(Method.java:568), org.springframework.web.method.support.InvocableHandlerMethod.doInvoke(InvocableHandlerMethod.java:255), org.springframework.web.method.support.InvocableHandlerMethod.invokeForRequest(InvocableHandlerMethod.java:188), org.springframework.web.servlet.mvc.method.annotation.ServletInvocableHandlerMethod.invokeAndHandle(ServletInvocableHandlerMethod.java:118), org.springframework.web.servlet.mvc.method.annotation.RequestMappingHandlerAdapter.invokeHandlerMethod(RequestMappingHandlerAdapter.java:926), org.springframework.web.servlet.mvc.method.annotation.RequestMappingHandlerAdapter.handleInternal(RequestMappingHandlerAdapter.java:831), org.springframework.web.servlet.mvc.method.AbstractHandlerMethodAdapter.handle(AbstractHandlerMethodAdapter.java:87), org.springframework.web.servlet.DispatcherServlet.doDispatch(DispatcherServlet.java:1089), org.springframework.web.servlet.DispatcherServlet.doService(DispatcherServlet.java:979), org.springframework.web.servlet.FrameworkServlet.processRequest(FrameworkServlet.java:1014), org.springframework.web.servlet.FrameworkServlet.doGet(FrameworkServlet.java:903), jakarta.servlet.http.HttpServlet.service(HttpServlet.java:564), org.springframework.web.servlet.FrameworkServlet.service(FrameworkServlet.java:885), jakarta.servlet.http.HttpServlet.service(HttpServlet.java:658), org.apache.catalina.core.ApplicationFilterChain.internalDoFilter(ApplicationFilterChain.java:195), org.apache.catalina.core.ApplicationFilterChain.doFilter(ApplicationFilterChain.java:140), org.apache.tomcat.websocket.server.WsFilter.doFilter(WsFilter.java:51), org.apache.catalina.core.ApplicationFilterChain.internalDoFilter(ApplicationFilterChain.java:164), org.apache.catalina.core.ApplicationFilterChain.doFilter(ApplicationFilterChain.java:140), org.springframework.web.filter.CompositeFilter$VirtualFilterChain.doFilter(CompositeFilter.java:108), org.springframework.security.web.FilterChainProxy.lambda$doFilterInternal$3(FilterChainProxy.java:231), org.springframework.security.web.FilterChainProxy$VirtualFilterChain.doFilter(FilterChainProxy.java:365), org.springframework.security.web.access.intercept.AuthorizationFilter.doFilter(AuthorizationFilter.java:100), org.springframework.security.web.FilterChainProxy$VirtualFilterChain.doFilter(FilterChainProxy.java:374), org.springframework.security.web.access.ExceptionTranslationFilter.doFilter(ExceptionTranslationFilter.java:126), org.springframework.security.web.access.ExceptionTranslationFilter.doFilter(ExceptionTranslationFilter.java:120), org.springframework.security.web.FilterChainProxy$VirtualFilterChain.doFilter(FilterChainProxy.java:374), org.springframework.security.web.session.SessionManagementFilter.doFilter(SessionManagementFilter.java:131), org.springframework.security.web.session.SessionManagementFilter.doFilter(SessionManagementFilter.java:85), org.springframework.security.web.FilterChainProxy$VirtualFilterChain.doFilter(FilterChainProxy.java:374), org.springframework.security.web.authentication.AnonymousAuthenticationFilter.doFilter(AnonymousAuthenticationFilter.java:100), org.springframework.security.web.FilterChainProxy$VirtualFilterChain.doFilter(FilterChainProxy.java:374), org.springframework.security.web.servletapi.SecurityContextHolderAwareRequestFilter.doFilter(SecurityContextHolderAwareRequestFilter.java:179), org.springframework.security.web.FilterChainProxy$VirtualFilterChain.doFilter(FilterChainProxy.java:374), org.springframework.security.web.savedrequest.RequestCacheAwareFilter.doFilter(RequestCacheAwareFilter.java:63), org.springframework.security.web.FilterChainProxy$VirtualFilterChain.doFilter(FilterChainProxy.java:374), org.springframework.security.web.authentication.logout.LogoutFilter.doFilter(LogoutFilter.java:107), org.springframework.security.web.authentication.logout.LogoutFilter.doFilter(LogoutFilter.java:93), org.springframework.security.web.FilterChainProxy$VirtualFilterChain.doFilter(FilterChainProxy.java:374), org.springframework.web.filter.CorsFilter.doFilterInternal(CorsFilter.java:91), org.springframework.web.filter.OncePerRequestFilter.doFilter(OncePerRequestFilter.java:116), org.springframework.security.web.FilterChainProxy$VirtualFilterChain.doFilter(FilterChainProxy.java:374), org.springframework.security.web.header.HeaderWriterFilter.doHeadersAfter(HeaderWriterFilter.java:90), org.springframework.security.web.header.HeaderWriterFilter.doFilterInternal(HeaderWriterFilter.java:75), org.springframework.web.filter.OncePerRequestFilter.doFilter(OncePerRequestFilter.java:116), org.springframework.security.web.FilterChainProxy$VirtualFilterChain.doFilter(FilterChainProxy.java:374), org.springframework.security.web.context.SecurityContextHolderFilter.doFilter(SecurityContextHolderFilter.java:82), org.springframework.security.web.context.SecurityContextHolderFilter.doFilter(SecurityContextHolderFilter.java:69), org.springframework.security.web.FilterChainProxy$VirtualFilterChain.doFilter(FilterChainProxy.java:374), org.springframework.security.web.context.request.async.WebAsyncManagerIntegrationFilter.doFilterInternal(WebAsyncManagerIntegrationFilter.java:62), org.springframework.web.filter.OncePerRequestFilter.doFilter(OncePerRequestFilter.java:116), org.springframework.security.web.FilterChainProxy$VirtualFilterChain.doFilter(FilterChainProxy.java:374), org.springframework.security.web.session.DisableEncodeUrlFilter.doFilterInternal(DisableEncodeUrlFilter.java:42), org.springframework.web.filter.OncePerRequestFilter.doFilter(OncePerRequestFilter.java:116), org.springframework.security.web.FilterChainProxy$VirtualFilterChain.doFilter(FilterChainProxy.java:374), org.springframework.security.web.FilterChainProxy.doFilterInternal(FilterChainProxy.java:233), org.springframework.security.web.FilterChainProxy.doFilter(FilterChainProxy.java:191), org.springframework.web.filter.CompositeFilter$VirtualFilterChain.doFilter(CompositeFilter.java:113), org.springframework.web.servlet.handler.HandlerMappingIntrospector.lambda$createCacheFilter$3(HandlerMappingIntrospector.java:195), org.springframework.web.filter.CompositeFilter$VirtualFilterChain.doFilter(CompositeFilter.java:113), org.springframework.web.filter.CompositeFilter.doFilter(CompositeFilter.java:74), org.springframework.security.config.annotation.web.configuration.WebMvcSecurityConfiguration$CompositeFilterChainProxy.doFilter(WebMvcSecurityConfiguration.java:230), org.springframework.web.filter.DelegatingFilterProxy.invokeDelegate(DelegatingFilterProxy.java:352), org.springframework.web.filter.DelegatingFilterProxy.doFilter(DelegatingFilterProxy.java:268), org.apache.catalina.core.ApplicationFilterChain.internalDoFilter(ApplicationFilterChain.java:164), org.apache.catalina.core.ApplicationFilterChain.doFilter(ApplicationFilterChain.java:140), org.springframework.web.filter.RequestContextFilter.doFilterInternal(RequestContextFilter.java:100), org.springframework.web.filter.OncePerRequestFilter.doFilter(OncePerRequestFilter.java:116), org.apache.catalina.core.ApplicationFilterChain.internalDoFilter(ApplicationFilterChain.java:164), org.apache.catalina.core.ApplicationFilterChain.doFilter(ApplicationFilterChain.java:140), org.springframework.web.filter.FormContentFilter.doFilterInternal(FormContentFilter.java:93), org.springframework.web.filter.OncePerRequestFilter.doFilter(OncePerRequestFilter.java:116), org.apache.catalina.core.ApplicationFilterChain.internalDoFilter(ApplicationFilterChain.java:164), org.apache.catalina.core.ApplicationFilterChain.doFilter(ApplicationFilterChain.java:140), org.springframework.web.filter.CharacterEncodingFilter.doFilterInternal(CharacterEncodingFilter.java:201), org.springframework.web.filter.OncePerRequestFilter.doFilter(OncePerRequestFilter.java:116), org.apache.catalina.core.ApplicationFilterChain.internalDoFilter(ApplicationFilterChain.java:164), org.apache.catalina.core.ApplicationFilterChain.doFilter(ApplicationFilterChain.java:140), org.apache.catalina.core.StandardWrapperValve.invoke(StandardWrapperValve.java:167), org.apache.catalina.core.StandardContextValve.invoke(StandardContextValve.java:90), org.apache.catalina.authenticator.AuthenticatorBase.invoke(AuthenticatorBase.java:482), org.apache.catalina.core.StandardHostValve.invoke(StandardHostValve.java:115), org.apache.catalina.valves.ErrorReportValve.invoke(ErrorReportValve.java:93), org.apache.catalina.core.StandardEngineValve.invoke(StandardEngineValve.java:74), org.apache.catalina.connector.CoyoteAdapter.service(CoyoteAdapter.java:344), org.apache.coyote.http11.Http11Processor.service(Http11Processor.java:389), org.apache.coyote.AbstractProcessorLight.process(AbstractProcessorLight.java:63), org.apache.coyote.AbstractProtocol$ConnectionHandler.process(AbstractProtocol.java:896), org.apache.tomcat.util.net.NioEndpoint$SocketProcessor.doRun(NioEndpoint.java:1741), org.apache.tomcat.util.net.SocketProcessorBase.run(SocketProcessorBase.java:52), org.apache.tomcat.util.threads.ThreadPoolExecutor.runWorker(ThreadPoolExecutor.java:1190), org.apache.tomcat.util.threads.ThreadPoolExecutor$Worker.run(ThreadPoolExecutor.java:659), org.apache.tomcat.util.threads.TaskThread$WrappingRunnable.run(TaskThread.java:63), java.base/java.lang.Thread.run(Thread.java:833)]\"\n}"
+						}
+					]
+				},
+				{
+					"name": "GET User ONE",
+					"request": {
+						"auth": {
+							"type": "noauth"
+						},
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{schema}}://{{server}}{{port}}/{{basePath}}/users/:userId",
+							"protocol": "{{schema}}",
+							"host": [
+								"{{server}}{{port}}"
+							],
+							"path": [
+								"{{basePath}}",
+								"users",
+								":userId"
+							],
+							"variable": [
+								{
+									"key": "userId",
+									"value": "1"
+								}
+							]
+						}
+					},
+					"response": [
+						{
+							"name": "GET User ONE - 200",
+							"originalRequest": {
+								"method": "GET",
+								"header": [],
+								"url": {
+									"raw": "{{schema}}://{{server}}{{port}}/{{basePath}}/users/:userId",
+									"protocol": "{{schema}}",
+									"host": [
+										"{{server}}{{port}}"
+									],
+									"path": [
+										"{{basePath}}",
+										"users",
+										":userId"
+									],
+									"variable": [
+										{
+											"key": "userId",
+											"value": "1"
+										}
+									]
+								}
+							},
+							"status": "OK",
+							"code": 200,
+							"_postman_previewlanguage": "json",
+							"header": [
+								{
+									"key": "Content-Type",
+									"value": "application/json",
+									"description": "",
+									"type": "text"
+								}
+							],
+							"cookie": [],
+							"body": "{\n    \"id\": 1,\n    \"username\": \"sdjr2_001\",\n    \"pwd\": \"******\",\n    \"nickname\": \"erCalvo_-_21\",\n    \"email\": \"sdjr2_001@gmail.com\",\n    \"roles\": [\n        \"ROLE_ADMIN\",\n        \"ROLE_MEMBER\"\n    ],\n    \"is_enabled\": true,\n    \"last_access\": \"31/07/2024 19:30:00\"\n}"
+						},
+						{
+							"name": "GET User ONE - 40401",
+							"originalRequest": {
+								"method": "GET",
+								"header": [],
+								"url": {
+									"raw": "{{schema}}://{{server}}{{port}}/{{basePath}}/users/:userId",
+									"protocol": "{{schema}}",
+									"host": [
+										"{{server}}{{port}}"
+									],
+									"path": [
+										"{{basePath}}",
+										"users",
+										":userId"
+									],
+									"variable": [
+										{
+											"key": "userId",
+											"value": "100"
+										}
+									]
+								}
+							},
+							"status": "Not Found",
+							"code": 404,
+							"_postman_previewlanguage": "json",
+							"header": [
+								{
+									"key": "Content-Type",
+									"value": "application/json",
+									"description": "",
+									"type": "text"
+								}
+							],
+							"cookie": [],
+							"body": "{\n    \"id\": \"58c307bf-0df2-45f7-a2db-023d65386214\",\n    \"timestamp\": \"2024-08-03T13:14:21.273+02:00\",\n    \"http_status_code\": 404,\n    \"error_code\": 40401,\n    \"error_message\": \"Not Found: There is no record with that identifier\",\n    \"ex_message\": \"No value present\",\n    \"ex_track_trace\": \"[java.base/java.util.Optional.orElseThrow(Optional.java:377), com.sdjr2.rest_contact_meanssb.services.auth.UserServiceImpl.checkExistsById(UserServiceImpl.java:147), com.sdjr2.rest_contact_meanssb.services.auth.UserServiceImpl.getOneById(UserServiceImpl.java:134), java.base/jdk.internal.reflect.NativeMethodAccessorImpl.invoke0(Native Method), java.base/jdk.internal.reflect.NativeMethodAccessorImpl.invoke(NativeMethodAccessorImpl.java:77), java.base/jdk.internal.reflect.DelegatingMethodAccessorImpl.invoke(DelegatingMethodAccessorImpl.java:43), java.base/java.lang.reflect.Method.invoke(Method.java:568), org.springframework.aop.support.AopUtils.invokeJoinpointUsingReflection(AopUtils.java:354), org.springframework.aop.framework.ReflectiveMethodInvocation.invokeJoinpoint(ReflectiveMethodInvocation.java:196), org.springframework.aop.framework.ReflectiveMethodInvocation.proceed(ReflectiveMethodInvocation.java:163), org.springframework.aop.framework.CglibAopProxy$CglibMethodInvocation.proceed(CglibAopProxy.java:768), org.springframework.transaction.interceptor.TransactionInterceptor$1.proceedWithInvocation(TransactionInterceptor.java:123), org.springframework.transaction.interceptor.TransactionAspectSupport.invokeWithinTransaction(TransactionAspectSupport.java:392), org.springframework.transaction.interceptor.TransactionInterceptor.invoke(TransactionInterceptor.java:119), org.springframework.aop.framework.ReflectiveMethodInvocation.proceed(ReflectiveMethodInvocation.java:184), org.springframework.aop.framework.CglibAopProxy$CglibMethodInvocation.proceed(CglibAopProxy.java:768), org.springframework.aop.framework.CglibAopProxy$DynamicAdvisedInterceptor.intercept(CglibAopProxy.java:720), com.sdjr2.rest_contact_meanssb.services.auth.UserServiceImpl$$SpringCGLIB$$0.getOneById(<generated>), com.sdjr2.rest_contact_meanssb.controllers.auth.UserController.getOneById(UserController.java:66), java.base/jdk.internal.reflect.NativeMethodAccessorImpl.invoke0(Native Method), java.base/jdk.internal.reflect.NativeMethodAccessorImpl.invoke(NativeMethodAccessorImpl.java:77), java.base/jdk.internal.reflect.DelegatingMethodAccessorImpl.invoke(DelegatingMethodAccessorImpl.java:43), java.base/java.lang.reflect.Method.invoke(Method.java:568), org.springframework.web.method.support.InvocableHandlerMethod.doInvoke(InvocableHandlerMethod.java:255), org.springframework.web.method.support.InvocableHandlerMethod.invokeForRequest(InvocableHandlerMethod.java:188), org.springframework.web.servlet.mvc.method.annotation.ServletInvocableHandlerMethod.invokeAndHandle(ServletInvocableHandlerMethod.java:118), org.springframework.web.servlet.mvc.method.annotation.RequestMappingHandlerAdapter.invokeHandlerMethod(RequestMappingHandlerAdapter.java:926), org.springframework.web.servlet.mvc.method.annotation.RequestMappingHandlerAdapter.handleInternal(RequestMappingHandlerAdapter.java:831), org.springframework.web.servlet.mvc.method.AbstractHandlerMethodAdapter.handle(AbstractHandlerMethodAdapter.java:87), org.springframework.web.servlet.DispatcherServlet.doDispatch(DispatcherServlet.java:1089), org.springframework.web.servlet.DispatcherServlet.doService(DispatcherServlet.java:979), org.springframework.web.servlet.FrameworkServlet.processRequest(FrameworkServlet.java:1014), org.springframework.web.servlet.FrameworkServlet.doGet(FrameworkServlet.java:903), jakarta.servlet.http.HttpServlet.service(HttpServlet.java:564), org.springframework.web.servlet.FrameworkServlet.service(FrameworkServlet.java:885), jakarta.servlet.http.HttpServlet.service(HttpServlet.java:658), org.apache.catalina.core.ApplicationFilterChain.internalDoFilter(ApplicationFilterChain.java:195), org.apache.catalina.core.ApplicationFilterChain.doFilter(ApplicationFilterChain.java:140), org.apache.tomcat.websocket.server.WsFilter.doFilter(WsFilter.java:51), org.apache.catalina.core.ApplicationFilterChain.internalDoFilter(ApplicationFilterChain.java:164), org.apache.catalina.core.ApplicationFilterChain.doFilter(ApplicationFilterChain.java:140), org.springframework.web.filter.CompositeFilter$VirtualFilterChain.doFilter(CompositeFilter.java:108), org.springframework.security.web.FilterChainProxy.lambda$doFilterInternal$3(FilterChainProxy.java:231), org.springframework.security.web.FilterChainProxy$VirtualFilterChain.doFilter(FilterChainProxy.java:365), org.springframework.security.web.access.intercept.AuthorizationFilter.doFilter(AuthorizationFilter.java:100), org.springframework.security.web.FilterChainProxy$VirtualFilterChain.doFilter(FilterChainProxy.java:374), org.springframework.security.web.access.ExceptionTranslationFilter.doFilter(ExceptionTranslationFilter.java:126), org.springframework.security.web.access.ExceptionTranslationFilter.doFilter(ExceptionTranslationFilter.java:120), org.springframework.security.web.FilterChainProxy$VirtualFilterChain.doFilter(FilterChainProxy.java:374), org.springframework.security.web.session.SessionManagementFilter.doFilter(SessionManagementFilter.java:131), org.springframework.security.web.session.SessionManagementFilter.doFilter(SessionManagementFilter.java:85), org.springframework.security.web.FilterChainProxy$VirtualFilterChain.doFilter(FilterChainProxy.java:374), org.springframework.security.web.authentication.AnonymousAuthenticationFilter.doFilter(AnonymousAuthenticationFilter.java:100), org.springframework.security.web.FilterChainProxy$VirtualFilterChain.doFilter(FilterChainProxy.java:374), org.springframework.security.web.servletapi.SecurityContextHolderAwareRequestFilter.doFilter(SecurityContextHolderAwareRequestFilter.java:179), org.springframework.security.web.FilterChainProxy$VirtualFilterChain.doFilter(FilterChainProxy.java:374), org.springframework.security.web.savedrequest.RequestCacheAwareFilter.doFilter(RequestCacheAwareFilter.java:63), org.springframework.security.web.FilterChainProxy$VirtualFilterChain.doFilter(FilterChainProxy.java:374), org.springframework.security.web.authentication.logout.LogoutFilter.doFilter(LogoutFilter.java:107), org.springframework.security.web.authentication.logout.LogoutFilter.doFilter(LogoutFilter.java:93), org.springframework.security.web.FilterChainProxy$VirtualFilterChain.doFilter(FilterChainProxy.java:374), org.springframework.web.filter.CorsFilter.doFilterInternal(CorsFilter.java:91), org.springframework.web.filter.OncePerRequestFilter.doFilter(OncePerRequestFilter.java:116), org.springframework.security.web.FilterChainProxy$VirtualFilterChain.doFilter(FilterChainProxy.java:374), org.springframework.security.web.header.HeaderWriterFilter.doHeadersAfter(HeaderWriterFilter.java:90), org.springframework.security.web.header.HeaderWriterFilter.doFilterInternal(HeaderWriterFilter.java:75), org.springframework.web.filter.OncePerRequestFilter.doFilter(OncePerRequestFilter.java:116), org.springframework.security.web.FilterChainProxy$VirtualFilterChain.doFilter(FilterChainProxy.java:374), org.springframework.security.web.context.SecurityContextHolderFilter.doFilter(SecurityContextHolderFilter.java:82), org.springframework.security.web.context.SecurityContextHolderFilter.doFilter(SecurityContextHolderFilter.java:69), org.springframework.security.web.FilterChainProxy$VirtualFilterChain.doFilter(FilterChainProxy.java:374), org.springframework.security.web.context.request.async.WebAsyncManagerIntegrationFilter.doFilterInternal(WebAsyncManagerIntegrationFilter.java:62), org.springframework.web.filter.OncePerRequestFilter.doFilter(OncePerRequestFilter.java:116), org.springframework.security.web.FilterChainProxy$VirtualFilterChain.doFilter(FilterChainProxy.java:374), org.springframework.security.web.session.DisableEncodeUrlFilter.doFilterInternal(DisableEncodeUrlFilter.java:42), org.springframework.web.filter.OncePerRequestFilter.doFilter(OncePerRequestFilter.java:116), org.springframework.security.web.FilterChainProxy$VirtualFilterChain.doFilter(FilterChainProxy.java:374), org.springframework.security.web.FilterChainProxy.doFilterInternal(FilterChainProxy.java:233), org.springframework.security.web.FilterChainProxy.doFilter(FilterChainProxy.java:191), org.springframework.web.filter.CompositeFilter$VirtualFilterChain.doFilter(CompositeFilter.java:113), org.springframework.web.servlet.handler.HandlerMappingIntrospector.lambda$createCacheFilter$3(HandlerMappingIntrospector.java:195), org.springframework.web.filter.CompositeFilter$VirtualFilterChain.doFilter(CompositeFilter.java:113), org.springframework.web.filter.CompositeFilter.doFilter(CompositeFilter.java:74), org.springframework.security.config.annotation.web.configuration.WebMvcSecurityConfiguration$CompositeFilterChainProxy.doFilter(WebMvcSecurityConfiguration.java:230), org.springframework.web.filter.DelegatingFilterProxy.invokeDelegate(DelegatingFilterProxy.java:352), org.springframework.web.filter.DelegatingFilterProxy.doFilter(DelegatingFilterProxy.java:268), org.apache.catalina.core.ApplicationFilterChain.internalDoFilter(ApplicationFilterChain.java:164), org.apache.catalina.core.ApplicationFilterChain.doFilter(ApplicationFilterChain.java:140), org.springframework.web.filter.RequestContextFilter.doFilterInternal(RequestContextFilter.java:100), org.springframework.web.filter.OncePerRequestFilter.doFilter(OncePerRequestFilter.java:116), org.apache.catalina.core.ApplicationFilterChain.internalDoFilter(ApplicationFilterChain.java:164), org.apache.catalina.core.ApplicationFilterChain.doFilter(ApplicationFilterChain.java:140), org.springframework.web.filter.FormContentFilter.doFilterInternal(FormContentFilter.java:93), org.springframework.web.filter.OncePerRequestFilter.doFilter(OncePerRequestFilter.java:116), org.apache.catalina.core.ApplicationFilterChain.internalDoFilter(ApplicationFilterChain.java:164), org.apache.catalina.core.ApplicationFilterChain.doFilter(ApplicationFilterChain.java:140), org.springframework.web.filter.CharacterEncodingFilter.doFilterInternal(CharacterEncodingFilter.java:201), org.springframework.web.filter.OncePerRequestFilter.doFilter(OncePerRequestFilter.java:116), org.apache.catalina.core.ApplicationFilterChain.internalDoFilter(ApplicationFilterChain.java:164), org.apache.catalina.core.ApplicationFilterChain.doFilter(ApplicationFilterChain.java:140), org.apache.catalina.core.StandardWrapperValve.invoke(StandardWrapperValve.java:167), org.apache.catalina.core.StandardContextValve.invoke(StandardContextValve.java:90), org.apache.catalina.authenticator.AuthenticatorBase.invoke(AuthenticatorBase.java:482), org.apache.catalina.core.StandardHostValve.invoke(StandardHostValve.java:115), org.apache.catalina.valves.ErrorReportValve.invoke(ErrorReportValve.java:93), org.apache.catalina.core.StandardEngineValve.invoke(StandardEngineValve.java:74), org.apache.catalina.connector.CoyoteAdapter.service(CoyoteAdapter.java:344), org.apache.coyote.http11.Http11Processor.service(Http11Processor.java:389), org.apache.coyote.AbstractProcessorLight.process(AbstractProcessorLight.java:63), org.apache.coyote.AbstractProtocol$ConnectionHandler.process(AbstractProtocol.java:896), org.apache.tomcat.util.net.NioEndpoint$SocketProcessor.doRun(NioEndpoint.java:1741), org.apache.tomcat.util.net.SocketProcessorBase.run(SocketProcessorBase.java:52), org.apache.tomcat.util.threads.ThreadPoolExecutor.runWorker(ThreadPoolExecutor.java:1190), org.apache.tomcat.util.threads.ThreadPoolExecutor$Worker.run(ThreadPoolExecutor.java:659), org.apache.tomcat.util.threads.TaskThread$WrappingRunnable.run(TaskThread.java:63), java.base/java.lang.Thread.run(Thread.java:833)]\"\n}"
+						}
+					]
+				},
+				{
+					"name": "POST User",
+					"request": {
+						"auth": {
+							"type": "noauth"
+						},
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"id\": 0,\r\n    \"pwd\":\"testingAppV0001\",\r\n    \"username\": \"testapp_001\",\r\n    \"nickname\": \"machine_testing\",\r\n    \"email\": \"testapp_001@hotmail.com\",\r\n    \"roles\": [\r\n        \"ROLE_MEMBER\",\r\n        \"ROLE_USER\"\r\n    ]\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{schema}}://{{server}}{{port}}/{{basePath}}/users",
+							"protocol": "{{schema}}",
+							"host": [
+								"{{server}}{{port}}"
+							],
+							"path": [
+								"{{basePath}}",
+								"users"
+							]
+						}
+					},
+					"response": [
+						{
+							"name": "POST User - 201",
+							"originalRequest": {
+								"method": "POST",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": "{\r\n    \"id\": 0,\r\n    \"pwd\":\"testingAppV0001\",\r\n    \"username\": \"testapp_001\",\r\n    \"nickname\": \"machine_testing\",\r\n    \"email\": \"testapp_001@hotmail.com\",\r\n    \"roles\": [\r\n        \"ROLE_MEMBER\",\r\n        \"ROLE_USER\"\r\n    ]\r\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "{{schema}}://{{server}}{{port}}/{{basePath}}/users",
+									"protocol": "{{schema}}",
+									"host": [
+										"{{server}}{{port}}"
+									],
+									"path": [
+										"{{basePath}}",
+										"users"
+									]
+								}
+							},
+							"status": "Created",
+							"code": 201,
+							"_postman_previewlanguage": "json",
+							"header": [
+								{
+									"key": "Vary",
+									"value": "Origin"
+								},
+								{
+									"key": "Vary",
+									"value": "Access-Control-Request-Method"
+								},
+								{
+									"key": "Vary",
+									"value": "Access-Control-Request-Headers"
+								},
+								{
+									"key": "X-Content-Type-Options",
+									"value": "nosniff"
+								},
+								{
+									"key": "X-XSS-Protection",
+									"value": "0"
+								},
+								{
+									"key": "Cache-Control",
+									"value": "no-cache, no-store, max-age=0, must-revalidate"
+								},
+								{
+									"key": "Pragma",
+									"value": "no-cache"
+								},
+								{
+									"key": "Expires",
+									"value": "0"
+								},
+								{
+									"key": "X-Frame-Options",
+									"value": "DENY"
+								},
+								{
+									"key": "Content-Type",
+									"value": "application/json"
+								},
+								{
+									"key": "Transfer-Encoding",
+									"value": "chunked"
+								},
+								{
+									"key": "Date",
+									"value": "Sat, 03 Aug 2024 17:44:32 GMT"
+								},
+								{
+									"key": "Keep-Alive",
+									"value": "timeout=60"
+								},
+								{
+									"key": "Connection",
+									"value": "keep-alive"
+								}
+							],
+							"cookie": [],
+							"body": "{\n    \"id\": 4,\n    \"username\": \"testapp_001\",\n    \"nickname\": \"machine_testing\",\n    \"email\": \"testapp_001@hotmail.com\",\n    \"roles\": [\n        \"ROLE_MEMBER\",\n        \"ROLE_USER\"\n    ],\n    \"is_enabled\": true,\n    \"last_access\": \"03/08/2024 19:44:32\"\n}"
+						},
+						{
+							"name": "POST Role - 40001",
+							"originalRequest": {
+								"method": "POST",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": "{\r\n    \"id\": 0,\r\n    \"name\": \"ROLE_R2\",\r\n    \"description\": \"Testing\"\r\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "{{schema}}://{{server}}{{port}}/{{basePath}}/roles",
+									"protocol": "{{schema}}",
+									"host": [
+										"{{server}}{{port}}"
+									],
+									"path": [
+										"{{basePath}}",
+										"roles"
+									]
+								}
+							},
+							"status": "Bad Request",
+							"code": 400,
+							"_postman_previewlanguage": "json",
+							"header": [
+								{
+									"key": "Content-Type",
+									"value": "application/json",
+									"description": "",
+									"type": "text"
+								}
+							],
+							"cookie": [],
+							"body": "{\n    \"id\": \"0384c08b-4a50-4a3c-96f1-e49c126a416d\",\n    \"timestamp\": \"2024-08-01T18:03:34.639+02:00\",\n    \"http_status_code\": 400,\n    \"error_code\": 40001,\n    \"error_message\": \"Bad Request: Validation Errors\",\n    \"validation_errors\": {\n        \"name\": \"The field name debe coincidir con \\\"ROLE_[A-Z]{1,15}\\\"\",\n        \"description\": \"The field description el tamaño debe estar entre 10 y 300\"\n    }\n}"
+						},
+						{
+							"name": "POST User - 40011",
+							"originalRequest": {
+								"method": "POST",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": "{\r\n    \"id\": 0,\r\n    \"pwd\":\"testingAppV0001\",\r\n    \"username\": \"sdjr2_001\",\r\n    \"nickname\": \"erCalvo_-_21\",\r\n    \"email\": \"sdjr2_001@gmail.com\",\r\n    \"roles\": [\r\n        \"ROLE_MEMBER\"\r\n    ]\r\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "{{schema}}://{{server}}{{port}}/{{basePath}}/users",
+									"protocol": "{{schema}}",
+									"host": [
+										"{{server}}{{port}}"
+									],
+									"path": [
+										"{{basePath}}",
+										"users"
+									]
+								}
+							},
+							"status": "Bad Request",
+							"code": 400,
+							"_postman_previewlanguage": "json",
+							"header": [
+								{
+									"key": "Vary",
+									"value": "Origin"
+								},
+								{
+									"key": "Vary",
+									"value": "Access-Control-Request-Method"
+								},
+								{
+									"key": "Vary",
+									"value": "Access-Control-Request-Headers"
+								},
+								{
+									"key": "X-Content-Type-Options",
+									"value": "nosniff"
+								},
+								{
+									"key": "X-XSS-Protection",
+									"value": "0"
+								},
+								{
+									"key": "Cache-Control",
+									"value": "no-cache, no-store, max-age=0, must-revalidate"
+								},
+								{
+									"key": "Pragma",
+									"value": "no-cache"
+								},
+								{
+									"key": "Expires",
+									"value": "0"
+								},
+								{
+									"key": "X-Frame-Options",
+									"value": "DENY"
+								},
+								{
+									"key": "Content-Type",
+									"value": "application/json"
+								},
+								{
+									"key": "Transfer-Encoding",
+									"value": "chunked"
+								},
+								{
+									"key": "Date",
+									"value": "Sat, 03 Aug 2024 17:12:13 GMT"
+								},
+								{
+									"key": "Connection",
+									"value": "close"
+								}
+							],
+							"cookie": [],
+							"body": "{\n    \"id\": \"9b5891ec-6d08-45c2-9e65-d02d05c4c51b\",\n    \"timestamp\": \"2024-08-03T19:12:13.802+02:00\",\n    \"http_status_code\": 400,\n    \"error_code\": 40011,\n    \"error_message\": \"Bad Request: There is a record with the same unique fields\"\n}"
+						}
+					]
+				},
+				{
+					"name": "PUT User",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{token}}",
+									"type": "string"
+								}
+							]
+						},
+						"method": "PUT",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"username\": \"sdjr2_001\",\r\n    \"pwd\": \"0123456789\",\r\n    \"nickname\": \"erCalvo_-_21\",\r\n    \"email\": \"sdjr2_001@gmail.com\",\r\n    \"roles\": [\r\n        \"ROLE_ADMIN\",\r\n        \"ROLE_MEMBER\"\r\n    ],\r\n    \"is_enabled\": true,\r\n    \"last_access\": \"04/08/2024 19:30:00\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{schema}}://{{server}}{{port}}/{{basePath}}/users/:userId",
+							"protocol": "{{schema}}",
+							"host": [
+								"{{server}}{{port}}"
+							],
+							"path": [
+								"{{basePath}}",
+								"users",
+								":userId"
+							],
+							"variable": [
+								{
+									"key": "userId",
+									"value": "1"
+								}
+							]
+						}
+					},
+					"response": [
+						{
+							"name": "PUT Role - 200",
+							"originalRequest": {
+								"method": "PUT",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": "{\r\n    \"name\": \"ROLE_RR\",\r\n    \"description\": \"Testing with UPDATE Role\"\r\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "{{schema}}://{{server}}{{port}}/{{basePath}}/roles/:rolesId",
+									"protocol": "{{schema}}",
+									"host": [
+										"{{server}}{{port}}"
+									],
+									"path": [
+										"{{basePath}}",
+										"roles",
+										":rolesId"
+									],
+									"variable": [
+										{
+											"key": "rolesId",
+											"value": "4"
+										}
+									]
+								}
+							},
+							"status": "OK",
+							"code": 200,
+							"_postman_previewlanguage": "json",
+							"header": [
+								{
+									"key": "Content-Type",
+									"value": "application/json",
+									"description": "",
+									"type": "text"
+								}
+							],
+							"cookie": [],
+							"body": "{\n    \"id\": 4,\n    \"name\": \"ROLE_RR\",\n    \"description\": \"Testing with UPDATE Role\"\n}"
+						},
+						{
+							"name": "PUT Role - 40001",
+							"originalRequest": {
+								"method": "PUT",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": "{\r\n    \"name\": \"ROLE_R2\",\r\n    \"description\": \"Testing\"\r\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "{{schema}}://{{server}}{{port}}/{{basePath}}/roles/:rolesId",
+									"protocol": "{{schema}}",
+									"host": [
+										"{{server}}{{port}}"
+									],
+									"path": [
+										"{{basePath}}",
+										"roles",
+										":rolesId"
+									],
+									"variable": [
+										{
+											"key": "rolesId",
+											"value": "4"
+										}
+									]
+								}
+							},
+							"status": "Bad Request",
+							"code": 400,
+							"_postman_previewlanguage": "json",
+							"header": [
+								{
+									"key": "Content-Type",
+									"value": "application/json",
+									"description": "",
+									"type": "text"
+								}
+							],
+							"cookie": [],
+							"body": "{\n    \"id\": \"0c91dda0-ab85-4a34-b4ee-4e4754cc9b21\",\n    \"timestamp\": \"2024-08-01T18:10:20.527+02:00\",\n    \"http_status_code\": 400,\n    \"error_code\": 40001,\n    \"error_message\": \"Bad Request: Validation Errors\",\n    \"validation_errors\": {\n        \"name\": \"The field name debe coincidir con \\\"ROLE_[A-Z]{1,15}\\\"\",\n        \"description\": \"The field description el tamaño debe estar entre 10 y 300\"\n    }\n}"
+						},
+						{
+							"name": "PUT Role - 40011",
+							"originalRequest": {
+								"method": "PUT",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": "{\r\n    \"name\": \"ROLE_ADMIN\",\r\n    \"description\": \"Testing with UPDATE Role\"\r\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "{{schema}}://{{server}}{{port}}/{{basePath}}/roles/:rolesId",
+									"protocol": "{{schema}}",
+									"host": [
+										"{{server}}{{port}}"
+									],
+									"path": [
+										"{{basePath}}",
+										"roles",
+										":rolesId"
+									],
+									"variable": [
+										{
+											"key": "rolesId",
+											"value": "4"
+										}
+									]
+								}
+							},
+							"status": "Bad Request",
+							"code": 400,
+							"_postman_previewlanguage": "json",
+							"header": [
+								{
+									"key": "Content-Type",
+									"value": "application/json",
+									"description": "",
+									"type": "text"
+								}
+							],
+							"cookie": [],
+							"body": "{\n    \"id\": \"d6db4003-a276-4275-bf60-1b2b727bc891\",\n    \"timestamp\": \"2024-08-01T17:47:57.816+02:00\",\n    \"http_status_code\": 400,\n    \"error_code\": 40011,\n    \"error_message\": \"Bad Request: There is a record with the same unique fields\"\n}"
+						},
+						{
+							"name": "PUT Role - 40401",
+							"originalRequest": {
+								"method": "PUT",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": "{\r\n    \"name\": \"ROLE_RR\",\r\n    \"description\": \"Testing with UPDATE Role\"\r\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "{{schema}}://{{server}}{{port}}/{{basePath}}/roles/:rolesId",
+									"protocol": "{{schema}}",
+									"host": [
+										"{{server}}{{port}}"
+									],
+									"path": [
+										"{{basePath}}",
+										"roles",
+										":rolesId"
+									],
+									"variable": [
+										{
+											"key": "rolesId",
+											"value": "100"
+										}
+									]
+								}
+							},
+							"status": "Not Found",
+							"code": 404,
+							"_postman_previewlanguage": "json",
+							"header": [
+								{
+									"key": "Content-Type",
+									"value": "application/json",
+									"description": "",
+									"type": "text"
+								}
+							],
+							"cookie": [],
+							"body": "{\n    \"id\": \"422d69ab-353e-4064-85aa-5a50549f152f\",\n    \"timestamp\": \"2024-08-01T17:44:32.732+02:00\",\n    \"http_status_code\": 404,\n    \"error_code\": 40401,\n    \"error_message\": \"Not Found: There is no record with that identifier\",\n    \"ex_message\": \"No value present\",\n    \"ex_track_trace\": \"[java.base/java.util.Optional.orElseThrow(Optional.java:377), com.sdjr2.rest_contact_meanssb.services.auth.RoleServiceImpl.checkExistsById(RoleServiceImpl.java:165), com.sdjr2.rest_contact_meanssb.services.auth.RoleServiceImpl.update(RoleServiceImpl.java:203), java.base/jdk.internal.reflect.NativeMethodAccessorImpl.invoke0(Native Method), java.base/jdk.internal.reflect.NativeMethodAccessorImpl.invoke(NativeMethodAccessorImpl.java:77), java.base/jdk.internal.reflect.DelegatingMethodAccessorImpl.invoke(DelegatingMethodAccessorImpl.java:43), java.base/java.lang.reflect.Method.invoke(Method.java:568), org.springframework.aop.support.AopUtils.invokeJoinpointUsingReflection(AopUtils.java:354), org.springframework.aop.framework.ReflectiveMethodInvocation.invokeJoinpoint(ReflectiveMethodInvocation.java:196), org.springframework.aop.framework.ReflectiveMethodInvocation.proceed(ReflectiveMethodInvocation.java:163), org.springframework.aop.framework.CglibAopProxy$CglibMethodInvocation.proceed(CglibAopProxy.java:768), org.springframework.transaction.interceptor.TransactionInterceptor$1.proceedWithInvocation(TransactionInterceptor.java:123), org.springframework.transaction.interceptor.TransactionAspectSupport.invokeWithinTransaction(TransactionAspectSupport.java:392), org.springframework.transaction.interceptor.TransactionInterceptor.invoke(TransactionInterceptor.java:119), org.springframework.aop.framework.ReflectiveMethodInvocation.proceed(ReflectiveMethodInvocation.java:184), org.springframework.aop.framework.CglibAopProxy$CglibMethodInvocation.proceed(CglibAopProxy.java:768), org.springframework.aop.framework.CglibAopProxy$DynamicAdvisedInterceptor.intercept(CglibAopProxy.java:720), com.sdjr2.rest_contact_meanssb.services.auth.RoleServiceImpl$$SpringCGLIB$$0.update(<generated>), com.sdjr2.rest_contact_meanssb.controllers.auth.RoleController.update(RoleController.java:81), java.base/jdk.internal.reflect.NativeMethodAccessorImpl.invoke0(Native Method), java.base/jdk.internal.reflect.NativeMethodAccessorImpl.invoke(NativeMethodAccessorImpl.java:77), java.base/jdk.internal.reflect.DelegatingMethodAccessorImpl.invoke(DelegatingMethodAccessorImpl.java:43), java.base/java.lang.reflect.Method.invoke(Method.java:568), org.springframework.web.method.support.InvocableHandlerMethod.doInvoke(InvocableHandlerMethod.java:255), org.springframework.web.method.support.InvocableHandlerMethod.invokeForRequest(InvocableHandlerMethod.java:188), org.springframework.web.servlet.mvc.method.annotation.ServletInvocableHandlerMethod.invokeAndHandle(ServletInvocableHandlerMethod.java:118), org.springframework.web.servlet.mvc.method.annotation.RequestMappingHandlerAdapter.invokeHandlerMethod(RequestMappingHandlerAdapter.java:926), org.springframework.web.servlet.mvc.method.annotation.RequestMappingHandlerAdapter.handleInternal(RequestMappingHandlerAdapter.java:831), org.springframework.web.servlet.mvc.method.AbstractHandlerMethodAdapter.handle(AbstractHandlerMethodAdapter.java:87), org.springframework.web.servlet.DispatcherServlet.doDispatch(DispatcherServlet.java:1089), org.springframework.web.servlet.DispatcherServlet.doService(DispatcherServlet.java:979), org.springframework.web.servlet.FrameworkServlet.processRequest(FrameworkServlet.java:1014), org.springframework.web.servlet.FrameworkServlet.doPut(FrameworkServlet.java:925), jakarta.servlet.http.HttpServlet.service(HttpServlet.java:593), org.springframework.web.servlet.FrameworkServlet.service(FrameworkServlet.java:885), jakarta.servlet.http.HttpServlet.service(HttpServlet.java:658), org.apache.catalina.core.ApplicationFilterChain.internalDoFilter(ApplicationFilterChain.java:195), org.apache.catalina.core.ApplicationFilterChain.doFilter(ApplicationFilterChain.java:140), org.apache.tomcat.websocket.server.WsFilter.doFilter(WsFilter.java:51), org.apache.catalina.core.ApplicationFilterChain.internalDoFilter(ApplicationFilterChain.java:164), org.apache.catalina.core.ApplicationFilterChain.doFilter(ApplicationFilterChain.java:140), org.springframework.web.filter.RequestContextFilter.doFilterInternal(RequestContextFilter.java:100), org.springframework.web.filter.OncePerRequestFilter.doFilter(OncePerRequestFilter.java:116), org.apache.catalina.core.ApplicationFilterChain.internalDoFilter(ApplicationFilterChain.java:164), org.apache.catalina.core.ApplicationFilterChain.doFilter(ApplicationFilterChain.java:140), org.springframework.web.filter.FormContentFilter.doFilterInternal(FormContentFilter.java:93), org.springframework.web.filter.OncePerRequestFilter.doFilter(OncePerRequestFilter.java:116), org.apache.catalina.core.ApplicationFilterChain.internalDoFilter(ApplicationFilterChain.java:164), org.apache.catalina.core.ApplicationFilterChain.doFilter(ApplicationFilterChain.java:140), org.springframework.web.filter.CharacterEncodingFilter.doFilterInternal(CharacterEncodingFilter.java:201), org.springframework.web.filter.OncePerRequestFilter.doFilter(OncePerRequestFilter.java:116), org.apache.catalina.core.ApplicationFilterChain.internalDoFilter(ApplicationFilterChain.java:164), org.apache.catalina.core.ApplicationFilterChain.doFilter(ApplicationFilterChain.java:140), org.apache.catalina.core.StandardWrapperValve.invoke(StandardWrapperValve.java:167), org.apache.catalina.core.StandardContextValve.invoke(StandardContextValve.java:90), org.apache.catalina.authenticator.AuthenticatorBase.invoke(AuthenticatorBase.java:482), org.apache.catalina.core.StandardHostValve.invoke(StandardHostValve.java:115), org.apache.catalina.valves.ErrorReportValve.invoke(ErrorReportValve.java:93), org.apache.catalina.core.StandardEngineValve.invoke(StandardEngineValve.java:74), org.apache.catalina.connector.CoyoteAdapter.service(CoyoteAdapter.java:344), org.apache.coyote.http11.Http11Processor.service(Http11Processor.java:389), org.apache.coyote.AbstractProcessorLight.process(AbstractProcessorLight.java:63), org.apache.coyote.AbstractProtocol$ConnectionHandler.process(AbstractProtocol.java:896), org.apache.tomcat.util.net.NioEndpoint$SocketProcessor.doRun(NioEndpoint.java:1741), org.apache.tomcat.util.net.SocketProcessorBase.run(SocketProcessorBase.java:52), org.apache.tomcat.util.threads.ThreadPoolExecutor.runWorker(ThreadPoolExecutor.java:1190), org.apache.tomcat.util.threads.ThreadPoolExecutor$Worker.run(ThreadPoolExecutor.java:659), org.apache.tomcat.util.threads.TaskThread$WrappingRunnable.run(TaskThread.java:63), java.base/java.lang.Thread.run(Thread.java:833)]\"\n}"
+						}
+					]
+				}
+			]
+		},
+		{
+			"name": "AUTH - ROLE",
+			"item": [
+				{
+					"name": "GET Role ALL",
+					"request": {
+						"auth": {
+							"type": "noauth"
+						},
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{schema}}://{{server}}{{port}}/{{basePath}}/roles",
+							"protocol": "{{schema}}",
+							"host": [
+								"{{server}}{{port}}"
+							],
+							"path": [
+								"{{basePath}}",
+								"roles"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "GET Role ALL with Page",
+					"request": {
+						"auth": {
+							"type": "noauth"
+						},
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{schema}}://{{server}}{{port}}/{{basePath}}/roles/pagination?offset=0&limit=2",
+							"protocol": "{{schema}}",
+							"host": [
+								"{{server}}{{port}}"
+							],
+							"path": [
+								"{{basePath}}",
+								"roles",
+								"pagination"
+							],
+							"query": [
+								{
+									"key": "offset",
+									"value": "0"
+								},
+								{
+									"key": "limit",
+									"value": "2"
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "GET Role ALL with Search",
+					"protocolProfileBehavior": {
+						"disableBodyPruning": true
+					},
+					"request": {
+						"auth": {
+							"type": "noauth"
+						},
+						"method": "GET",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"offset\": 0,\r\n    \"limit\": 3,\r\n    \"sorts\": [\r\n        {\r\n            \"field\": \"NAME\",\r\n            \"direction\": \"ASC\"\r\n        }\r\n    ],\r\n    \"filters\": [\r\n        {\r\n            \"field\": \"NAME\",\r\n            \"operator_type\": \"SW\",\r\n            \"values\": [\r\n                \"ROLE_\"\r\n            ]\r\n        }\r\n    ]\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{schema}}://{{server}}{{port}}/{{basePath}}/roles/search",
+							"protocol": "{{schema}}",
+							"host": [
+								"{{server}}{{port}}"
+							],
+							"path": [
+								"{{basePath}}",
+								"roles",
+								"search"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "GET Role ONE",
+					"request": {
+						"auth": {
+							"type": "noauth"
+						},
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{schema}}://{{server}}{{port}}/{{basePath}}/roles/:roleId",
+							"protocol": "{{schema}}",
+							"host": [
+								"{{server}}{{port}}"
+							],
+							"path": [
+								"{{basePath}}",
+								"roles",
+								":roleId"
+							],
+							"variable": [
+								{
+									"key": "roleId",
+									"value": "1"
+								}
+							]
+						}
+					},
+					"response": [
+						{
+							"name": "GET Role ONE - 200",
+							"originalRequest": {
+								"method": "GET",
+								"header": [],
+								"url": {
+									"raw": "{{schema}}://{{server}}{{port}}/{{basePath}}/roles/:roleId",
+									"protocol": "{{schema}}",
+									"host": [
+										"{{server}}{{port}}"
+									],
+									"path": [
+										"{{basePath}}",
+										"roles",
+										":roleId"
+									],
+									"variable": [
+										{
+											"key": "roleId",
+											"value": "1"
+										}
+									]
+								}
+							},
+							"status": "OK",
+							"code": 200,
+							"_postman_previewlanguage": "json",
+							"header": [
+								{
+									"key": "Content-Type",
+									"value": "application/json",
+									"description": "",
+									"type": "text"
+								}
+							],
+							"cookie": [],
+							"body": "{\n    \"id\": 1,\n    \"name\": \"ROLE_ADMIN\",\n    \"description\": \"Monitors and manages both the configuration and functionalities of an application\"\n}"
+						},
+						{
+							"name": "GET Role ONE - 40401",
+							"originalRequest": {
+								"method": "GET",
+								"header": [],
+								"url": {
+									"raw": "{{schema}}://{{server}}{{port}}/{{basePath}}/roles/:roleId",
+									"protocol": "{{schema}}",
+									"host": [
+										"{{server}}{{port}}"
+									],
+									"path": [
+										"{{basePath}}",
+										"roles",
+										":roleId"
+									],
+									"variable": [
+										{
+											"key": "roleId",
+											"value": "100"
+										}
+									]
+								}
+							},
+							"status": "Not Found",
+							"code": 404,
+							"_postman_previewlanguage": "json",
+							"header": [
+								{
+									"key": "Content-Type",
+									"value": "application/json",
+									"description": "",
+									"type": "text"
+								}
+							],
+							"cookie": [],
+							"body": "{\n    \"id\": \"f27504c3-698e-455e-8a82-39cad15b9736\",\n    \"timestamp\": \"2024-08-01T17:55:23.311+02:00\",\n    \"http_status_code\": 404,\n    \"error_code\": 40401,\n    \"error_message\": \"Not Found: There is no record with that identifier\",\n    \"ex_message\": \"No value present\",\n    \"ex_track_trace\": \"[java.base/java.util.Optional.orElseThrow(Optional.java:377), com.sdjr2.rest_contact_meanssb.services.auth.RoleServiceImpl.checkExistsById(RoleServiceImpl.java:165), com.sdjr2.rest_contact_meanssb.services.auth.RoleServiceImpl.getOneById(RoleServiceImpl.java:152), java.base/jdk.internal.reflect.NativeMethodAccessorImpl.invoke0(Native Method), java.base/jdk.internal.reflect.NativeMethodAccessorImpl.invoke(NativeMethodAccessorImpl.java:77), java.base/jdk.internal.reflect.DelegatingMethodAccessorImpl.invoke(DelegatingMethodAccessorImpl.java:43), java.base/java.lang.reflect.Method.invoke(Method.java:568), org.springframework.aop.support.AopUtils.invokeJoinpointUsingReflection(AopUtils.java:354), org.springframework.aop.framework.ReflectiveMethodInvocation.invokeJoinpoint(ReflectiveMethodInvocation.java:196), org.springframework.aop.framework.ReflectiveMethodInvocation.proceed(ReflectiveMethodInvocation.java:163), org.springframework.aop.framework.CglibAopProxy$CglibMethodInvocation.proceed(CglibAopProxy.java:768), org.springframework.transaction.interceptor.TransactionInterceptor$1.proceedWithInvocation(TransactionInterceptor.java:123), org.springframework.transaction.interceptor.TransactionAspectSupport.invokeWithinTransaction(TransactionAspectSupport.java:392), org.springframework.transaction.interceptor.TransactionInterceptor.invoke(TransactionInterceptor.java:119), org.springframework.aop.framework.ReflectiveMethodInvocation.proceed(ReflectiveMethodInvocation.java:184), org.springframework.aop.framework.CglibAopProxy$CglibMethodInvocation.proceed(CglibAopProxy.java:768), org.springframework.aop.framework.CglibAopProxy$DynamicAdvisedInterceptor.intercept(CglibAopProxy.java:720), com.sdjr2.rest_contact_meanssb.services.auth.RoleServiceImpl$$SpringCGLIB$$0.getOneById(<generated>), com.sdjr2.rest_contact_meanssb.controllers.auth.RoleController.getOneById(RoleController.java:66), java.base/jdk.internal.reflect.NativeMethodAccessorImpl.invoke0(Native Method), java.base/jdk.internal.reflect.NativeMethodAccessorImpl.invoke(NativeMethodAccessorImpl.java:77), java.base/jdk.internal.reflect.DelegatingMethodAccessorImpl.invoke(DelegatingMethodAccessorImpl.java:43), java.base/java.lang.reflect.Method.invoke(Method.java:568), org.springframework.web.method.support.InvocableHandlerMethod.doInvoke(InvocableHandlerMethod.java:255), org.springframework.web.method.support.InvocableHandlerMethod.invokeForRequest(InvocableHandlerMethod.java:188), org.springframework.web.servlet.mvc.method.annotation.ServletInvocableHandlerMethod.invokeAndHandle(ServletInvocableHandlerMethod.java:118), org.springframework.web.servlet.mvc.method.annotation.RequestMappingHandlerAdapter.invokeHandlerMethod(RequestMappingHandlerAdapter.java:926), org.springframework.web.servlet.mvc.method.annotation.RequestMappingHandlerAdapter.handleInternal(RequestMappingHandlerAdapter.java:831), org.springframework.web.servlet.mvc.method.AbstractHandlerMethodAdapter.handle(AbstractHandlerMethodAdapter.java:87), org.springframework.web.servlet.DispatcherServlet.doDispatch(DispatcherServlet.java:1089), org.springframework.web.servlet.DispatcherServlet.doService(DispatcherServlet.java:979), org.springframework.web.servlet.FrameworkServlet.processRequest(FrameworkServlet.java:1014), org.springframework.web.servlet.FrameworkServlet.doGet(FrameworkServlet.java:903), jakarta.servlet.http.HttpServlet.service(HttpServlet.java:564), org.springframework.web.servlet.FrameworkServlet.service(FrameworkServlet.java:885), jakarta.servlet.http.HttpServlet.service(HttpServlet.java:658), org.apache.catalina.core.ApplicationFilterChain.internalDoFilter(ApplicationFilterChain.java:195), org.apache.catalina.core.ApplicationFilterChain.doFilter(ApplicationFilterChain.java:140), org.apache.tomcat.websocket.server.WsFilter.doFilter(WsFilter.java:51), org.apache.catalina.core.ApplicationFilterChain.internalDoFilter(ApplicationFilterChain.java:164), org.apache.catalina.core.ApplicationFilterChain.doFilter(ApplicationFilterChain.java:140), org.springframework.web.filter.RequestContextFilter.doFilterInternal(RequestContextFilter.java:100), org.springframework.web.filter.OncePerRequestFilter.doFilter(OncePerRequestFilter.java:116), org.apache.catalina.core.ApplicationFilterChain.internalDoFilter(ApplicationFilterChain.java:164), org.apache.catalina.core.ApplicationFilterChain.doFilter(ApplicationFilterChain.java:140), org.springframework.web.filter.FormContentFilter.doFilterInternal(FormContentFilter.java:93), org.springframework.web.filter.OncePerRequestFilter.doFilter(OncePerRequestFilter.java:116), org.apache.catalina.core.ApplicationFilterChain.internalDoFilter(ApplicationFilterChain.java:164), org.apache.catalina.core.ApplicationFilterChain.doFilter(ApplicationFilterChain.java:140), org.springframework.web.filter.CharacterEncodingFilter.doFilterInternal(CharacterEncodingFilter.java:201), org.springframework.web.filter.OncePerRequestFilter.doFilter(OncePerRequestFilter.java:116), org.apache.catalina.core.ApplicationFilterChain.internalDoFilter(ApplicationFilterChain.java:164), org.apache.catalina.core.ApplicationFilterChain.doFilter(ApplicationFilterChain.java:140), org.apache.catalina.core.StandardWrapperValve.invoke(StandardWrapperValve.java:167), org.apache.catalina.core.StandardContextValve.invoke(StandardContextValve.java:90), org.apache.catalina.authenticator.AuthenticatorBase.invoke(AuthenticatorBase.java:482), org.apache.catalina.core.StandardHostValve.invoke(StandardHostValve.java:115), org.apache.catalina.valves.ErrorReportValve.invoke(ErrorReportValve.java:93), org.apache.catalina.core.StandardEngineValve.invoke(StandardEngineValve.java:74), org.apache.catalina.connector.CoyoteAdapter.service(CoyoteAdapter.java:344), org.apache.coyote.http11.Http11Processor.service(Http11Processor.java:389), org.apache.coyote.AbstractProcessorLight.process(AbstractProcessorLight.java:63), org.apache.coyote.AbstractProtocol$ConnectionHandler.process(AbstractProtocol.java:896), org.apache.tomcat.util.net.NioEndpoint$SocketProcessor.doRun(NioEndpoint.java:1741), org.apache.tomcat.util.net.SocketProcessorBase.run(SocketProcessorBase.java:52), org.apache.tomcat.util.threads.ThreadPoolExecutor.runWorker(ThreadPoolExecutor.java:1190), org.apache.tomcat.util.threads.ThreadPoolExecutor$Worker.run(ThreadPoolExecutor.java:659), org.apache.tomcat.util.threads.TaskThread$WrappingRunnable.run(TaskThread.java:63), java.base/java.lang.Thread.run(Thread.java:833)]\"\n}"
+						}
+					]
+				},
+				{
+					"name": "POST Role",
+					"request": {
+						"auth": {
+							"type": "noauth"
+						},
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"id\": 0,\r\n    \"name\": \"ROLE_RR\",\r\n    \"description\": \"Testing with POST Role\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{schema}}://{{server}}{{port}}/{{basePath}}/roles",
+							"protocol": "{{schema}}",
+							"host": [
+								"{{server}}{{port}}"
+							],
+							"path": [
+								"{{basePath}}",
+								"roles"
+							]
+						}
+					},
+					"response": [
+						{
+							"name": "POST Role - 201",
+							"originalRequest": {
+								"method": "POST",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": "{\r\n    \"id\": 0,\r\n    \"name\": \"ROLE_TESTING\",\r\n    \"description\": \"Testing with POST Role\"\r\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "{{schema}}://{{server}}{{port}}/{{basePath}}/roles",
+									"protocol": "{{schema}}",
+									"host": [
+										"{{server}}{{port}}"
+									],
+									"path": [
+										"{{basePath}}",
+										"roles"
+									]
+								}
+							},
+							"status": "Created",
+							"code": 201,
+							"_postman_previewlanguage": "json",
+							"header": [
+								{
+									"key": "Content-Type",
+									"value": "application/json",
+									"description": "",
+									"type": "text"
+								}
+							],
+							"cookie": [],
+							"body": "{\n    \"id\": 4,\n    \"name\": \"ROLE_TESTING\",\n    \"description\": \"Testing with POST Role\"\n}"
+						},
+						{
+							"name": "POST Role - 40001",
+							"originalRequest": {
+								"method": "POST",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": "{\r\n    \"id\": 0,\r\n    \"name\": \"ROLE_R2\",\r\n    \"description\": \"Testing\"\r\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "{{schema}}://{{server}}{{port}}/{{basePath}}/roles",
+									"protocol": "{{schema}}",
+									"host": [
+										"{{server}}{{port}}"
+									],
+									"path": [
+										"{{basePath}}",
+										"roles"
+									]
+								}
+							},
+							"status": "Bad Request",
+							"code": 400,
+							"_postman_previewlanguage": "json",
+							"header": [
+								{
+									"key": "Content-Type",
+									"value": "application/json",
+									"description": "",
+									"type": "text"
+								}
+							],
+							"cookie": [],
+							"body": "{\n    \"id\": \"0384c08b-4a50-4a3c-96f1-e49c126a416d\",\n    \"timestamp\": \"2024-08-01T18:03:34.639+02:00\",\n    \"http_status_code\": 400,\n    \"error_code\": 40001,\n    \"error_message\": \"Bad Request: Validation Errors\",\n    \"validation_errors\": {\n        \"name\": \"The field name debe coincidir con \\\"ROLE_[A-Z]{1,15}\\\"\",\n        \"description\": \"The field description el tamaño debe estar entre 10 y 300\"\n    }\n}"
+						},
+						{
+							"name": "POST Role - 40011",
+							"originalRequest": {
+								"method": "POST",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": "{\r\n    \"id\": 0,\r\n    \"name\": \"ROLE_ADMIN\",\r\n    \"description\": \"Testing with POST Role\"\r\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "{{schema}}://{{server}}{{port}}/{{basePath}}/roles",
+									"protocol": "{{schema}}",
+									"host": [
+										"{{server}}{{port}}"
+									],
+									"path": [
+										"{{basePath}}",
+										"roles"
+									]
+								}
+							},
+							"status": "Bad Request",
+							"code": 400,
+							"_postman_previewlanguage": "json",
+							"header": [
+								{
+									"key": "Content-Type",
+									"value": "application/json",
+									"description": "",
+									"type": "text"
+								}
+							],
+							"cookie": [],
+							"body": "{\n    \"id\": \"31f0e2ad-76a5-42f2-9e24-a1b8c384509e\",\n    \"timestamp\": \"2024-08-01T17:57:48.704+02:00\",\n    \"http_status_code\": 400,\n    \"error_code\": 40011,\n    \"error_message\": \"Bad Request: There is a record with the same unique fields\"\n}"
+						}
+					]
+				},
+				{
+					"name": "PUT Role",
+					"request": {
+						"auth": {
+							"type": "noauth"
+						},
+						"method": "PUT",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"name\": \"ROLE_RR\",\r\n    \"description\": \"Testing with UPDATE Role\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{schema}}://{{server}}{{port}}/{{basePath}}/roles/:rolesId",
+							"protocol": "{{schema}}",
+							"host": [
+								"{{server}}{{port}}"
+							],
+							"path": [
+								"{{basePath}}",
+								"roles",
+								":rolesId"
+							],
+							"variable": [
+								{
+									"key": "rolesId",
+									"value": "4"
+								}
+							]
+						}
+					},
+					"response": [
+						{
+							"name": "PUT Role - 200",
+							"originalRequest": {
+								"method": "PUT",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": "{\r\n    \"name\": \"ROLE_RR\",\r\n    \"description\": \"Testing with UPDATE Role\"\r\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "{{schema}}://{{server}}{{port}}/{{basePath}}/roles/:rolesId",
+									"protocol": "{{schema}}",
+									"host": [
+										"{{server}}{{port}}"
+									],
+									"path": [
+										"{{basePath}}",
+										"roles",
+										":rolesId"
+									],
+									"variable": [
+										{
+											"key": "rolesId",
+											"value": "4"
+										}
+									]
+								}
+							},
+							"status": "OK",
+							"code": 200,
+							"_postman_previewlanguage": "json",
+							"header": [
+								{
+									"key": "Content-Type",
+									"value": "application/json",
+									"description": "",
+									"type": "text"
+								}
+							],
+							"cookie": [],
+							"body": "{\n    \"id\": 4,\n    \"name\": \"ROLE_RR\",\n    \"description\": \"Testing with UPDATE Role\"\n}"
+						},
+						{
+							"name": "PUT Role - 40001",
+							"originalRequest": {
+								"method": "PUT",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": "{\r\n    \"name\": \"ROLE_R2\",\r\n    \"description\": \"Testing\"\r\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "{{schema}}://{{server}}{{port}}/{{basePath}}/roles/:rolesId",
+									"protocol": "{{schema}}",
+									"host": [
+										"{{server}}{{port}}"
+									],
+									"path": [
+										"{{basePath}}",
+										"roles",
+										":rolesId"
+									],
+									"variable": [
+										{
+											"key": "rolesId",
+											"value": "4"
+										}
+									]
+								}
+							},
+							"status": "Bad Request",
+							"code": 400,
+							"_postman_previewlanguage": "json",
+							"header": [
+								{
+									"key": "Content-Type",
+									"value": "application/json",
+									"description": "",
+									"type": "text"
+								}
+							],
+							"cookie": [],
+							"body": "{\n    \"id\": \"0c91dda0-ab85-4a34-b4ee-4e4754cc9b21\",\n    \"timestamp\": \"2024-08-01T18:10:20.527+02:00\",\n    \"http_status_code\": 400,\n    \"error_code\": 40001,\n    \"error_message\": \"Bad Request: Validation Errors\",\n    \"validation_errors\": {\n        \"name\": \"The field name debe coincidir con \\\"ROLE_[A-Z]{1,15}\\\"\",\n        \"description\": \"The field description el tamaño debe estar entre 10 y 300\"\n    }\n}"
+						},
+						{
+							"name": "PUT Role - 40011",
+							"originalRequest": {
+								"method": "PUT",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": "{\r\n    \"name\": \"ROLE_ADMIN\",\r\n    \"description\": \"Testing with UPDATE Role\"\r\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "{{schema}}://{{server}}{{port}}/{{basePath}}/roles/:rolesId",
+									"protocol": "{{schema}}",
+									"host": [
+										"{{server}}{{port}}"
+									],
+									"path": [
+										"{{basePath}}",
+										"roles",
+										":rolesId"
+									],
+									"variable": [
+										{
+											"key": "rolesId",
+											"value": "4"
+										}
+									]
+								}
+							},
+							"status": "Bad Request",
+							"code": 400,
+							"_postman_previewlanguage": "json",
+							"header": [
+								{
+									"key": "Content-Type",
+									"value": "application/json",
+									"description": "",
+									"type": "text"
+								}
+							],
+							"cookie": [],
+							"body": "{\n    \"id\": \"d6db4003-a276-4275-bf60-1b2b727bc891\",\n    \"timestamp\": \"2024-08-01T17:47:57.816+02:00\",\n    \"http_status_code\": 400,\n    \"error_code\": 40011,\n    \"error_message\": \"Bad Request: There is a record with the same unique fields\"\n}"
+						},
+						{
+							"name": "PUT Role - 40401",
+							"originalRequest": {
+								"method": "PUT",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": "{\r\n    \"name\": \"ROLE_RR\",\r\n    \"description\": \"Testing with UPDATE Role\"\r\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "{{schema}}://{{server}}{{port}}/{{basePath}}/roles/:rolesId",
+									"protocol": "{{schema}}",
+									"host": [
+										"{{server}}{{port}}"
+									],
+									"path": [
+										"{{basePath}}",
+										"roles",
+										":rolesId"
+									],
+									"variable": [
+										{
+											"key": "rolesId",
+											"value": "100"
+										}
+									]
+								}
+							},
+							"status": "Not Found",
+							"code": 404,
+							"_postman_previewlanguage": "json",
+							"header": [
+								{
+									"key": "Content-Type",
+									"value": "application/json",
+									"description": "",
+									"type": "text"
+								}
+							],
+							"cookie": [],
+							"body": "{\n    \"id\": \"422d69ab-353e-4064-85aa-5a50549f152f\",\n    \"timestamp\": \"2024-08-01T17:44:32.732+02:00\",\n    \"http_status_code\": 404,\n    \"error_code\": 40401,\n    \"error_message\": \"Not Found: There is no record with that identifier\",\n    \"ex_message\": \"No value present\",\n    \"ex_track_trace\": \"[java.base/java.util.Optional.orElseThrow(Optional.java:377), com.sdjr2.rest_contact_meanssb.services.auth.RoleServiceImpl.checkExistsById(RoleServiceImpl.java:165), com.sdjr2.rest_contact_meanssb.services.auth.RoleServiceImpl.update(RoleServiceImpl.java:203), java.base/jdk.internal.reflect.NativeMethodAccessorImpl.invoke0(Native Method), java.base/jdk.internal.reflect.NativeMethodAccessorImpl.invoke(NativeMethodAccessorImpl.java:77), java.base/jdk.internal.reflect.DelegatingMethodAccessorImpl.invoke(DelegatingMethodAccessorImpl.java:43), java.base/java.lang.reflect.Method.invoke(Method.java:568), org.springframework.aop.support.AopUtils.invokeJoinpointUsingReflection(AopUtils.java:354), org.springframework.aop.framework.ReflectiveMethodInvocation.invokeJoinpoint(ReflectiveMethodInvocation.java:196), org.springframework.aop.framework.ReflectiveMethodInvocation.proceed(ReflectiveMethodInvocation.java:163), org.springframework.aop.framework.CglibAopProxy$CglibMethodInvocation.proceed(CglibAopProxy.java:768), org.springframework.transaction.interceptor.TransactionInterceptor$1.proceedWithInvocation(TransactionInterceptor.java:123), org.springframework.transaction.interceptor.TransactionAspectSupport.invokeWithinTransaction(TransactionAspectSupport.java:392), org.springframework.transaction.interceptor.TransactionInterceptor.invoke(TransactionInterceptor.java:119), org.springframework.aop.framework.ReflectiveMethodInvocation.proceed(ReflectiveMethodInvocation.java:184), org.springframework.aop.framework.CglibAopProxy$CglibMethodInvocation.proceed(CglibAopProxy.java:768), org.springframework.aop.framework.CglibAopProxy$DynamicAdvisedInterceptor.intercept(CglibAopProxy.java:720), com.sdjr2.rest_contact_meanssb.services.auth.RoleServiceImpl$$SpringCGLIB$$0.update(<generated>), com.sdjr2.rest_contact_meanssb.controllers.auth.RoleController.update(RoleController.java:81), java.base/jdk.internal.reflect.NativeMethodAccessorImpl.invoke0(Native Method), java.base/jdk.internal.reflect.NativeMethodAccessorImpl.invoke(NativeMethodAccessorImpl.java:77), java.base/jdk.internal.reflect.DelegatingMethodAccessorImpl.invoke(DelegatingMethodAccessorImpl.java:43), java.base/java.lang.reflect.Method.invoke(Method.java:568), org.springframework.web.method.support.InvocableHandlerMethod.doInvoke(InvocableHandlerMethod.java:255), org.springframework.web.method.support.InvocableHandlerMethod.invokeForRequest(InvocableHandlerMethod.java:188), org.springframework.web.servlet.mvc.method.annotation.ServletInvocableHandlerMethod.invokeAndHandle(ServletInvocableHandlerMethod.java:118), org.springframework.web.servlet.mvc.method.annotation.RequestMappingHandlerAdapter.invokeHandlerMethod(RequestMappingHandlerAdapter.java:926), org.springframework.web.servlet.mvc.method.annotation.RequestMappingHandlerAdapter.handleInternal(RequestMappingHandlerAdapter.java:831), org.springframework.web.servlet.mvc.method.AbstractHandlerMethodAdapter.handle(AbstractHandlerMethodAdapter.java:87), org.springframework.web.servlet.DispatcherServlet.doDispatch(DispatcherServlet.java:1089), org.springframework.web.servlet.DispatcherServlet.doService(DispatcherServlet.java:979), org.springframework.web.servlet.FrameworkServlet.processRequest(FrameworkServlet.java:1014), org.springframework.web.servlet.FrameworkServlet.doPut(FrameworkServlet.java:925), jakarta.servlet.http.HttpServlet.service(HttpServlet.java:593), org.springframework.web.servlet.FrameworkServlet.service(FrameworkServlet.java:885), jakarta.servlet.http.HttpServlet.service(HttpServlet.java:658), org.apache.catalina.core.ApplicationFilterChain.internalDoFilter(ApplicationFilterChain.java:195), org.apache.catalina.core.ApplicationFilterChain.doFilter(ApplicationFilterChain.java:140), org.apache.tomcat.websocket.server.WsFilter.doFilter(WsFilter.java:51), org.apache.catalina.core.ApplicationFilterChain.internalDoFilter(ApplicationFilterChain.java:164), org.apache.catalina.core.ApplicationFilterChain.doFilter(ApplicationFilterChain.java:140), org.springframework.web.filter.RequestContextFilter.doFilterInternal(RequestContextFilter.java:100), org.springframework.web.filter.OncePerRequestFilter.doFilter(OncePerRequestFilter.java:116), org.apache.catalina.core.ApplicationFilterChain.internalDoFilter(ApplicationFilterChain.java:164), org.apache.catalina.core.ApplicationFilterChain.doFilter(ApplicationFilterChain.java:140), org.springframework.web.filter.FormContentFilter.doFilterInternal(FormContentFilter.java:93), org.springframework.web.filter.OncePerRequestFilter.doFilter(OncePerRequestFilter.java:116), org.apache.catalina.core.ApplicationFilterChain.internalDoFilter(ApplicationFilterChain.java:164), org.apache.catalina.core.ApplicationFilterChain.doFilter(ApplicationFilterChain.java:140), org.springframework.web.filter.CharacterEncodingFilter.doFilterInternal(CharacterEncodingFilter.java:201), org.springframework.web.filter.OncePerRequestFilter.doFilter(OncePerRequestFilter.java:116), org.apache.catalina.core.ApplicationFilterChain.internalDoFilter(ApplicationFilterChain.java:164), org.apache.catalina.core.ApplicationFilterChain.doFilter(ApplicationFilterChain.java:140), org.apache.catalina.core.StandardWrapperValve.invoke(StandardWrapperValve.java:167), org.apache.catalina.core.StandardContextValve.invoke(StandardContextValve.java:90), org.apache.catalina.authenticator.AuthenticatorBase.invoke(AuthenticatorBase.java:482), org.apache.catalina.core.StandardHostValve.invoke(StandardHostValve.java:115), org.apache.catalina.valves.ErrorReportValve.invoke(ErrorReportValve.java:93), org.apache.catalina.core.StandardEngineValve.invoke(StandardEngineValve.java:74), org.apache.catalina.connector.CoyoteAdapter.service(CoyoteAdapter.java:344), org.apache.coyote.http11.Http11Processor.service(Http11Processor.java:389), org.apache.coyote.AbstractProcessorLight.process(AbstractProcessorLight.java:63), org.apache.coyote.AbstractProtocol$ConnectionHandler.process(AbstractProtocol.java:896), org.apache.tomcat.util.net.NioEndpoint$SocketProcessor.doRun(NioEndpoint.java:1741), org.apache.tomcat.util.net.SocketProcessorBase.run(SocketProcessorBase.java:52), org.apache.tomcat.util.threads.ThreadPoolExecutor.runWorker(ThreadPoolExecutor.java:1190), org.apache.tomcat.util.threads.ThreadPoolExecutor$Worker.run(ThreadPoolExecutor.java:659), org.apache.tomcat.util.threads.TaskThread$WrappingRunnable.run(TaskThread.java:63), java.base/java.lang.Thread.run(Thread.java:833)]\"\n}"
+						}
+					]
+				},
+				{
+					"name": "DELETE Role",
+					"request": {
+						"auth": {
+							"type": "noauth"
+						},
+						"method": "DELETE",
+						"header": [],
+						"url": {
+							"raw": "{{schema}}://{{server}}{{port}}/{{basePath}}/roles/:roleId",
+							"protocol": "{{schema}}",
+							"host": [
+								"{{server}}{{port}}"
+							],
+							"path": [
+								"{{basePath}}",
+								"roles",
+								":roleId"
+							],
+							"variable": [
+								{
+									"key": "roleId",
+									"value": "1"
+								}
+							]
+						}
+					},
+					"response": [
+						{
+							"name": "DELETE Role - 204",
+							"originalRequest": {
+								"method": "DELETE",
+								"header": [],
+								"url": {
+									"raw": "{{schema}}://{{server}}{{port}}/{{basePath}}/roles/:roleId",
+									"protocol": "{{schema}}",
+									"host": [
+										"{{server}}{{port}}"
+									],
+									"path": [
+										"{{basePath}}",
+										"roles",
+										":roleId"
+									],
+									"variable": [
+										{
+											"key": "roleId",
+											"value": "1"
+										}
+									]
+								}
+							},
+							"status": "No Content",
+							"code": 204,
+							"_postman_previewlanguage": "json",
+							"header": [
+								{
+									"key": "Content-Type",
+									"value": "application/json",
+									"description": "",
+									"type": "text"
+								}
+							],
+							"cookie": [],
+							"body": ""
+						},
+						{
+							"name": "DELETE Role - 40401",
+							"originalRequest": {
+								"method": "DELETE",
+								"header": [],
+								"url": {
+									"raw": "{{schema}}://{{server}}{{port}}/{{basePath}}/roles/:roleId",
+									"protocol": "{{schema}}",
+									"host": [
+										"{{server}}{{port}}"
+									],
+									"path": [
+										"{{basePath}}",
+										"roles",
+										":roleId"
+									],
+									"variable": [
+										{
+											"key": "roleId",
+											"value": "100"
+										}
+									]
+								}
+							},
+							"status": "Not Found",
+							"code": 404,
+							"_postman_previewlanguage": "json",
+							"header": [
+								{
+									"key": "Content-Type",
+									"value": "application/json",
+									"description": "",
+									"type": "text"
+								}
+							],
+							"cookie": [],
+							"body": "{\n    \"id\": \"b189f5c5-bd60-4dcd-86cd-5beca6413920\",\n    \"timestamp\": \"2024-08-01T18:17:19.795+02:00\",\n    \"http_status_code\": 404,\n    \"error_code\": 40401,\n    \"error_message\": \"Not Found: There is no record with that identifier\",\n    \"ex_message\": \"No value present\",\n    \"ex_track_trace\": \"[java.base/java.util.Optional.orElseThrow(Optional.java:377), com.sdjr2.rest_contact_meanssb.services.auth.RoleServiceImpl.checkExistsById(RoleServiceImpl.java:165), com.sdjr2.rest_contact_meanssb.services.auth.RoleServiceImpl.delete(RoleServiceImpl.java:215), java.base/jdk.internal.reflect.NativeMethodAccessorImpl.invoke0(Native Method), java.base/jdk.internal.reflect.NativeMethodAccessorImpl.invoke(NativeMethodAccessorImpl.java:77), java.base/jdk.internal.reflect.DelegatingMethodAccessorImpl.invoke(DelegatingMethodAccessorImpl.java:43), java.base/java.lang.reflect.Method.invoke(Method.java:568), org.springframework.aop.support.AopUtils.invokeJoinpointUsingReflection(AopUtils.java:354), org.springframework.aop.framework.ReflectiveMethodInvocation.invokeJoinpoint(ReflectiveMethodInvocation.java:196), org.springframework.aop.framework.ReflectiveMethodInvocation.proceed(ReflectiveMethodInvocation.java:163), org.springframework.aop.framework.CglibAopProxy$CglibMethodInvocation.proceed(CglibAopProxy.java:768), org.springframework.transaction.interceptor.TransactionInterceptor$1.proceedWithInvocation(TransactionInterceptor.java:123), org.springframework.transaction.interceptor.TransactionAspectSupport.invokeWithinTransaction(TransactionAspectSupport.java:392), org.springframework.transaction.interceptor.TransactionInterceptor.invoke(TransactionInterceptor.java:119), org.springframework.aop.framework.ReflectiveMethodInvocation.proceed(ReflectiveMethodInvocation.java:184), org.springframework.aop.framework.CglibAopProxy$CglibMethodInvocation.proceed(CglibAopProxy.java:768), org.springframework.aop.framework.CglibAopProxy$DynamicAdvisedInterceptor.intercept(CglibAopProxy.java:720), com.sdjr2.rest_contact_meanssb.services.auth.RoleServiceImpl$$SpringCGLIB$$0.delete(<generated>), com.sdjr2.rest_contact_meanssb.controllers.auth.RoleController.delete(RoleController.java:86), java.base/jdk.internal.reflect.NativeMethodAccessorImpl.invoke0(Native Method), java.base/jdk.internal.reflect.NativeMethodAccessorImpl.invoke(NativeMethodAccessorImpl.java:77), java.base/jdk.internal.reflect.DelegatingMethodAccessorImpl.invoke(DelegatingMethodAccessorImpl.java:43), java.base/java.lang.reflect.Method.invoke(Method.java:568), org.springframework.web.method.support.InvocableHandlerMethod.doInvoke(InvocableHandlerMethod.java:255), org.springframework.web.method.support.InvocableHandlerMethod.invokeForRequest(InvocableHandlerMethod.java:188), org.springframework.web.servlet.mvc.method.annotation.ServletInvocableHandlerMethod.invokeAndHandle(ServletInvocableHandlerMethod.java:118), org.springframework.web.servlet.mvc.method.annotation.RequestMappingHandlerAdapter.invokeHandlerMethod(RequestMappingHandlerAdapter.java:926), org.springframework.web.servlet.mvc.method.annotation.RequestMappingHandlerAdapter.handleInternal(RequestMappingHandlerAdapter.java:831), org.springframework.web.servlet.mvc.method.AbstractHandlerMethodAdapter.handle(AbstractHandlerMethodAdapter.java:87), org.springframework.web.servlet.DispatcherServlet.doDispatch(DispatcherServlet.java:1089), org.springframework.web.servlet.DispatcherServlet.doService(DispatcherServlet.java:979), org.springframework.web.servlet.FrameworkServlet.processRequest(FrameworkServlet.java:1014), org.springframework.web.servlet.FrameworkServlet.doDelete(FrameworkServlet.java:936), jakarta.servlet.http.HttpServlet.service(HttpServlet.java:596), org.springframework.web.servlet.FrameworkServlet.service(FrameworkServlet.java:885), jakarta.servlet.http.HttpServlet.service(HttpServlet.java:658), org.apache.catalina.core.ApplicationFilterChain.internalDoFilter(ApplicationFilterChain.java:195), org.apache.catalina.core.ApplicationFilterChain.doFilter(ApplicationFilterChain.java:140), org.apache.tomcat.websocket.server.WsFilter.doFilter(WsFilter.java:51), org.apache.catalina.core.ApplicationFilterChain.internalDoFilter(ApplicationFilterChain.java:164), org.apache.catalina.core.ApplicationFilterChain.doFilter(ApplicationFilterChain.java:140), org.springframework.web.filter.RequestContextFilter.doFilterInternal(RequestContextFilter.java:100), org.springframework.web.filter.OncePerRequestFilter.doFilter(OncePerRequestFilter.java:116), org.apache.catalina.core.ApplicationFilterChain.internalDoFilter(ApplicationFilterChain.java:164), org.apache.catalina.core.ApplicationFilterChain.doFilter(ApplicationFilterChain.java:140), org.springframework.web.filter.FormContentFilter.doFilterInternal(FormContentFilter.java:93), org.springframework.web.filter.OncePerRequestFilter.doFilter(OncePerRequestFilter.java:116), org.apache.catalina.core.ApplicationFilterChain.internalDoFilter(ApplicationFilterChain.java:164), org.apache.catalina.core.ApplicationFilterChain.doFilter(ApplicationFilterChain.java:140), org.springframework.web.filter.CharacterEncodingFilter.doFilterInternal(CharacterEncodingFilter.java:201), org.springframework.web.filter.OncePerRequestFilter.doFilter(OncePerRequestFilter.java:116), org.apache.catalina.core.ApplicationFilterChain.internalDoFilter(ApplicationFilterChain.java:164), org.apache.catalina.core.ApplicationFilterChain.doFilter(ApplicationFilterChain.java:140), org.apache.catalina.core.StandardWrapperValve.invoke(StandardWrapperValve.java:167), org.apache.catalina.core.StandardContextValve.invoke(StandardContextValve.java:90), org.apache.catalina.authenticator.AuthenticatorBase.invoke(AuthenticatorBase.java:482), org.apache.catalina.core.StandardHostValve.invoke(StandardHostValve.java:115), org.apache.catalina.valves.ErrorReportValve.invoke(ErrorReportValve.java:93), org.apache.catalina.core.StandardEngineValve.invoke(StandardEngineValve.java:74), org.apache.catalina.connector.CoyoteAdapter.service(CoyoteAdapter.java:344), org.apache.coyote.http11.Http11Processor.service(Http11Processor.java:389), org.apache.coyote.AbstractProcessorLight.process(AbstractProcessorLight.java:63), org.apache.coyote.AbstractProtocol$ConnectionHandler.process(AbstractProtocol.java:896), org.apache.tomcat.util.net.NioEndpoint$SocketProcessor.doRun(NioEndpoint.java:1741), org.apache.tomcat.util.net.SocketProcessorBase.run(SocketProcessorBase.java:52), org.apache.tomcat.util.threads.ThreadPoolExecutor.runWorker(ThreadPoolExecutor.java:1190), org.apache.tomcat.util.threads.ThreadPoolExecutor$Worker.run(ThreadPoolExecutor.java:659), org.apache.tomcat.util.threads.TaskThread$WrappingRunnable.run(TaskThread.java:63), java.base/java.lang.Thread.run(Thread.java:833)]\"\n}"
+						}
+					]
+				}
+			]
+		},
+		{
+			"name": "ADDRESS",
+			"item": [
+				{
+					"name": "GET Address ALL",
+					"request": {
+						"auth": {
+							"type": "noauth"
+						},
+						"method": "GET",
+						"header": [],
 						"url": {
 							"raw": "{{schema}}://{{server}}{{port}}/{{basePath}}/addresses",
 							"protocol": "{{schema}}",
@@ -40,20 +1485,13 @@
 					"response": []
 				},
 				{
-					"name": "GET Addresses ALL with Page",
-					"protocolProfileBehavior": {
-						"disableBodyPruning": true
-					},
+					"name": "GET Address ALL with Page",
 					"request": {
 						"auth": {
 							"type": "noauth"
 						},
 						"method": "GET",
 						"header": [],
-						"body": {
-							"mode": "raw",
-							"raw": ""
-						},
 						"url": {
 							"raw": "{{schema}}://{{server}}{{port}}/{{basePath}}/addresses/pagination?offset=0&limit=2",
 							"protocol": "{{schema}}",
@@ -80,7 +1518,7 @@
 					"response": []
 				},
 				{
-					"name": "GET Addresses ALL with Search",
+					"name": "GET Address ALL with Search",
 					"protocolProfileBehavior": {
 						"disableBodyPruning": true
 					},
@@ -92,7 +1530,7 @@
 						"header": [],
 						"body": {
 							"mode": "raw",
-							"raw": "{\r\n    \"offset\": 0,\r\n    \"limit\": 3,\r\n    \"sorts\": [],\r\n    \"filters\": [\r\n        {\r\n            \"field\": \"town\",\r\n            \"operator_type\": \"EQ\",\r\n            \"values\": [\r\n                \"El Viso del Alcor\"\r\n            ]\r\n        }\r\n    ]\r\n}",
+							"raw": "{\r\n    \"offset\": 0,\r\n    \"limit\": 3,\r\n    \"sorts\": [\r\n        {\r\n            \"field\": \"STREET\",\r\n            \"direction\": \"DESC\"\r\n        },\r\n        {\r\n            \"field\": \"TOWN\",\r\n            \"direction\": \"ASC\"\r\n        }\r\n    ],\r\n    \"filters\": [\r\n        {\r\n            \"field\": \"ID\",\r\n            \"operator_type\": \"EQ\",\r\n            \"values\": [\r\n                2\r\n            ]\r\n        },\r\n        {\r\n            \"field\": \"STREET\",\r\n            \"operator_type\": \"IN\",\r\n            \"values\": [\r\n                \"Corredera\",\r\n                \"Velázquez\"\r\n            ]\r\n        },\r\n        {\r\n            \"field\": \"TOWN\",\r\n            \"operator_type\": \"EQ\",\r\n            \"values\": [\r\n                \"El Viso del Alcor\"\r\n            ]\r\n        }\r\n    ]\r\n}",
 							"options": {
 								"raw": {
 									"language": "json"
@@ -115,8 +1553,11 @@
 					"response": []
 				},
 				{
-					"name": "GET Addresses ONE",
+					"name": "GET Address ONE",
 					"request": {
+						"auth": {
+							"type": "noauth"
+						},
 						"method": "GET",
 						"header": [],
 						"url": {
@@ -133,7 +1574,7 @@
 							"variable": [
 								{
 									"key": "addressId",
-									"value": "1"
+									"value": "7"
 								}
 							]
 						}
@@ -141,13 +1582,16 @@
 					"response": []
 				},
 				{
-					"name": "POST Addresses",
+					"name": "POST Address",
 					"request": {
+						"auth": {
+							"type": "noauth"
+						},
 						"method": "POST",
 						"header": [],
 						"body": {
 							"mode": "raw",
-							"raw": "{\r\n    \"id\": 0,\r\n    \"street\": \"Rosario\",\r\n    \"number\": 13,\r\n    \"town\": \"Mairena del Alcor\",\r\n    \"city\": \"Sevilla\",\r\n    \"country\": \"España\",\r\n    \"longitude\": \"-5.7199300\",\r\n    \"latitude\": \"37.891060\",\r\n    \"postal_code\": 41510,\r\n    \"additional_info\": \"Casa Palacios\"\r\n}",
+							"raw": "{\r\n    \"id\": 0,\r\n    \"street\": \"Super Norte\",\r\n    \"number\": 126,\r\n    \"letter\": \"C\",\r\n    \"town\": \"Carmona\",\r\n    \"city\": \"Sevilla\",\r\n    \"country\": \"España\",\r\n    \"longitude\": \"-5.7199300\",\r\n    \"latitude\": \"37.091060\",\r\n    \"postal_code\": 41410,\r\n    \"additional_info\": \"Tienda de Bicicletas\"\r\n}",
 							"options": {
 								"raw": {
 									"language": "json"
@@ -169,13 +1613,16 @@
 					"response": []
 				},
 				{
-					"name": "PUT Addresses",
+					"name": "PUT Address",
 					"request": {
+						"auth": {
+							"type": "noauth"
+						},
 						"method": "PUT",
 						"header": [],
 						"body": {
 							"mode": "raw",
-							"raw": "{\r\n    \"id\": 5,\r\n    \"street\": \"Jesus Nazareno\",\r\n    \"number\": 22,\r\n    \"town\": \"El Visio del Alcohol\",\r\n    \"city\": \"Sevilla\",\r\n    \"country\": \"España\",\r\n    \"longitude\": \"-5.7199300\",\r\n    \"latitude\": \"37.391060\",\r\n    \"postal_code\": 41520,\r\n    \"additional_info\": \"Almacén deportivo Auxiliar\"\r\n}",
+							"raw": "{\r\n    \"id\": 7,\r\n    \"street\": \"Super Norte\",\r\n    \"number\": 126,\r\n    \"letter\": \"C\",\r\n    \"town\": \"Carmona\",\r\n    \"city\": \"Sevilla\",\r\n    \"country\": \"España\",\r\n    \"longitude\": \"-5.7199300\",\r\n    \"latitude\": \"37.091060\",\r\n    \"postal_code\": 41410,\r\n    \"additional_info\": \"Tienda de Bicicletas Balbino\"\r\n}",
 							"options": {
 								"raw": {
 									"language": "json"
@@ -196,7 +1643,7 @@
 							"variable": [
 								{
 									"key": "addressId",
-									"value": "5"
+									"value": "7"
 								}
 							]
 						}
@@ -204,7 +1651,7 @@
 					"response": []
 				},
 				{
-					"name": "PATCH Addresses",
+					"name": "PATCH Address",
 					"request": {
 						"method": "PATCH",
 						"header": [],
@@ -234,8 +1681,11 @@
 					"response": []
 				},
 				{
-					"name": "DELETE Addresses",
+					"name": "DELETE Address",
 					"request": {
+						"auth": {
+							"type": "noauth"
+						},
 						"method": "DELETE",
 						"header": [],
 						"url": {
@@ -261,6 +1711,51 @@
 				}
 			],
 			"description": "It is an entity that represents a physical address, some of its attributes are :"
+		},
+		{
+			"name": "PSOT Login",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"const jsonData = pm.response.json();\r",
+							"\r",
+							"pm.environment.set(\"token\", jsonData.token);"
+						],
+						"type": "text/javascript",
+						"packages": {}
+					}
+				}
+			],
+			"request": {
+				"auth": {
+					"type": "noauth"
+				},
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n    //\"username\": \"sdjr2_001\",      // ADMIN, MEMBER\r\n    //\"username\": \"rbg_001\",        // MEMBER\r\n    \"username\": \"test_00\",          // USER : enabled\r\n    //\"username\": \"test_01\",        // USER : disabled\r\n    \"password\": \"0123456789\"\r\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "{{schema}}://{{server}}{{port}}/{{basePath}}/login",
+					"protocol": "{{schema}}",
+					"host": [
+						"{{server}}{{port}}"
+					],
+					"path": [
+						"{{basePath}}",
+						"login"
+					]
+				}
+			},
+			"response": []
 		}
 	]
 }

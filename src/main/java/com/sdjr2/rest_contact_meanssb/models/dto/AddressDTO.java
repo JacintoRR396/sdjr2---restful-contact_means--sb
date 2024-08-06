@@ -6,6 +6,8 @@ import com.sdjr2.rest_contact_meanssb.utils.UConstants;
 import jakarta.validation.constraints.*;
 import lombok.*;
 
+import java.io.Serial;
+import java.io.Serializable;
 import java.util.Comparator;
 
 /**
@@ -17,7 +19,7 @@ import java.util.Comparator;
  * @author Jacinto R^2
  * @version 1.0
  * @category DTO
- * @upgrade 24/07/30
+ * @upgrade 24/08/01
  * @since 23/06/11
  */
 @NoArgsConstructor
@@ -26,7 +28,10 @@ import java.util.Comparator;
 @Setter
 @Builder
 @JsonInclude(JsonInclude.Include.NON_NULL)
-public class AddressDTO implements BaseDTO, Comparable<AddressDTO> {
+public class AddressDTO implements BaseDTO, Comparable<AddressDTO>, Serializable {
+
+	@Serial
+	private static final long serialVersionUID = -6649157406633205057L;
 
 	public static final String ATTR_ID = "id";
 	public static final String ATTR_STREET = "street";
@@ -46,7 +51,7 @@ public class AddressDTO implements BaseDTO, Comparable<AddressDTO> {
 	private Long id;
 
 	@NotNull
-	@Pattern(regexp = UConstants.STREET_REGEX)
+	@Pattern(regexp = UConstants.REGEX_STREET)
 	private String street;
 
 	@NotNull
@@ -54,16 +59,16 @@ public class AddressDTO implements BaseDTO, Comparable<AddressDTO> {
 	@Digits(integer = 5, fraction = 0)
 	private Integer number;
 
-	@Pattern(regexp = UConstants.LETTER_REGEX)
+	@Pattern(regexp = UConstants.REGEX_LETTER)
 	private String letter = UConstants.NOT_APPLY;
 
-	@Pattern(regexp = UConstants.TOWN_REGEX)
+	@Pattern(regexp = UConstants.REGEX_TOWN)
 	private String town;
 
-	@Pattern(regexp = UConstants.CITY_REGEX)
+	@Pattern(regexp = UConstants.REGEX_CITY)
 	private String city;
 
-	@Pattern(regexp = UConstants.COUNTRY_REGEX)
+	@Pattern(regexp = UConstants.REGEX_COUNTRY)
 	private String country;
 
 	@NotNull
@@ -72,10 +77,10 @@ public class AddressDTO implements BaseDTO, Comparable<AddressDTO> {
 	@JsonProperty(ATTR_POSTAL_CODE)
 	private Integer postalCode;
 
-	@Pattern(regexp = UConstants.LATITUDE_LONGITUDE_REGEX)
+	@Pattern(regexp = UConstants.REGEX_LATITUDE_LONGITUDE)
 	private String longitude;
 
-	@Pattern(regexp = UConstants.LATITUDE_LONGITUDE_REGEX)
+	@Pattern(regexp = UConstants.REGEX_LATITUDE_LONGITUDE)
 	private String latitude;
 
 	@Pattern(regexp = UConstants.ADDITIONAL_INFO_REGEX)

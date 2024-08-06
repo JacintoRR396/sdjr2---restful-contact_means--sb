@@ -5,6 +5,7 @@ import com.sdjr2.rest_contact_meanssb.exceptions.CustomException;
 import com.sdjr2.rest_contact_meanssb.models.dto.AddressDTO;
 import com.sdjr2.rest_contact_meanssb.models.dto.search.SearchBodyDTO;
 import com.sdjr2.rest_contact_meanssb.models.entities.AddressEntity;
+import com.sdjr2.rest_contact_meanssb.models.enums.auth.RoleTypeEnum;
 import com.sdjr2.rest_contact_meanssb.models.enums.search.AddressFilterFieldEnum;
 import com.sdjr2.rest_contact_meanssb.models.enums.search.AddressSortFieldEnum;
 import com.sdjr2.rest_contact_meanssb.models.mappers.AddressMapper;
@@ -21,7 +22,6 @@ import org.springframework.data.jpa.domain.Specification;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
-import java.util.ArrayList;
 import java.util.List;
 import java.util.NoSuchElementException;
 import java.util.Objects;
@@ -34,7 +34,7 @@ import java.util.Objects;
  * @author Jacinto R^2
  * @version 1.0
  * @category Service
- * @upgrade 24/07/30
+ * @upgrade 24/08/01
  * @since 23/06/10
  */
 @Service
@@ -46,6 +46,11 @@ public class AddressServiceImpl implements AddressService {
 	 * Address mapper object
 	 */
 	private final AddressMapper addressMapper;
+
+	/**
+	 * Address specifications object
+	 */
+	private final AddressSpecifications addressSpecs;
 
 	/**
 	 * Address repository object
@@ -88,27 +93,10 @@ public class AddressServiceImpl implements AddressService {
 				pageEntities.getTotalElements() );
 	}
 
-	/**
-	 * Create a page request according to a search body dto.
-	 *
-	 * @param searchBodyDTO dto with search parameters about pagination, sort and filter.
-	 * @return a page request {@link PageRequest} for pagination with possible ordering.
-	 */
-	private PageRequest createPageRequestWithPaginationAndSort ( SearchBodyDTO searchBodyDTO ) {
-		if ( Objects.nonNull( searchBodyDTO.getSorts() ) && !searchBodyDTO.getSorts().isEmpty() ) {
-			List<Sort.Order> orders = new ArrayList<>();
-			searchBodyDTO.getSorts().forEach( sortDTO -> {
-				try {
-					AddressSortFieldEnum sortFieldEnum = AddressSortFieldEnum.fromValue( sortDTO.getField() );
-					orders.add( new Sort.Order( sortDTO.getDirection(), sortFieldEnum.getFieldMySQL() ) );
-				} catch ( CustomException ex ) {
-					throw new CustomException( ex, AppExceptionCodeEnum.STATUS_40002 );
-				}
-			} );
-			return PageRequest.of( searchBodyDTO.getOffset(), searchBodyDTO.getLimit(), Sort.by( orders ) );
-		} else {
-			return PageRequest.of( searchBodyDTO.getOffset(), searchBodyDTO.getLimit() );
-		}
+	@Override
+	public Sort.Order createSortOrder ( String field, Sort.Direction direction ) {
+		AddressSortFieldEnum sortFieldEnum = AddressSortFieldEnum.fromValue( field );
+		return new Sort.Order( direction, sortFieldEnum.getFieldMySQL() );
 	}
 
 	/**
@@ -124,17 +112,17 @@ public class AddressServiceImpl implements AddressService {
 			AddressFilterFieldEnum.AddressFiltersRequest filtersRequest =
 					AddressFilterFieldEnum.getFiltersReqFromSearchDTO( searchBodyDTO.getFilters() );
 			specification = Specification
-					.where( AddressSpecifications.hasValuesInt(
+					.where( this.addressSpecs.hasValuesInt(
 							AddressFilterFieldEnum.ID.getFieldMySQL(), filtersRequest.getOpIds(), filtersRequest.getIds() ) )
-					.and( AddressSpecifications.hasValuesStr(
+					.and( this.addressSpecs.hasValuesStr(
 							AddressFilterFieldEnum.STREET.getFieldMySQL(), filtersRequest.getOpStreets(), filtersRequest.getStreets() ) )
-					.and( AddressSpecifications.hasValuesStr(
+					.and( this.addressSpecs.hasValuesStr(
 							AddressFilterFieldEnum.TOWN.getFieldMySQL(), filtersRequest.getOpTowns(), filtersRequest.getTowns() ) )
-					.and( AddressSpecifications.hasValuesStr(
+					.and( this.addressSpecs.hasValuesStr(
 							AddressFilterFieldEnum.CITY.getFieldMySQL(), filtersRequest.getOpCities(), filtersRequest.getCities() ) )
-					.and( AddressSpecifications.hasValuesStr(
+					.and( this.addressSpecs.hasValuesStr(
 							AddressFilterFieldEnum.COUNTRY.getFieldMySQL(), filtersRequest.getOpCountries(), filtersRequest.getCountries() ) )
-					.and( AddressSpecifications.hasValuesStr(
+					.and( this.addressSpecs.hasValuesStr(
 							AddressFilterFieldEnum.POSTAL_CODE.getFieldMySQL(), filtersRequest.getOpPostalCodes(), filtersRequest.getPostalCodes() ) );
 		}
 
@@ -169,14 +157,14 @@ public class AddressServiceImpl implements AddressService {
 		this.checkNotExistsByUniqueAttrs( addressDTO.getId(), addressDTO.getStreet(), addressDTO.getNumber().toString(),
 				addressDTO.getLetter(), addressDTO.getPostalCode().toString() );
 
-		AddressEntity entityReq = this.addressMapper.toEntity( addressDTO, null, null );
+		AddressEntity entityReq = this.addressMapper.toEntity( addressDTO, RoleTypeEnum.ROLE_ADMIN.name(), null );
 		AddressEntity entityDB = this.addressRepo.save( entityReq );
 
 		return this.addressMapper.toDTO( entityDB );
 	}
 
 	/**
-	 * Check if an entity not exists by its unique attributes, otherwise throw an exception STATUS_40010.
+	 * Check if an entity not exists by its unique attributes, otherwise throw an exception STATUS_40011.
 	 *
 	 * @param id         element identifier.
 	 * @param street     first element of the pk.
@@ -189,7 +177,7 @@ public class AddressServiceImpl implements AddressService {
 				.ifPresent( entityDB -> {
 					// 1º about create and 2º about update
 					if ( id == 0L || !Objects.equals( id, entityDB.getId() ) ) {
-						throw new CustomException( AppExceptionCodeEnum.STATUS_40010 );
+						throw new CustomException( AppExceptionCodeEnum.STATUS_40011 );
 					}
 				} );
 	}
@@ -197,12 +185,13 @@ public class AddressServiceImpl implements AddressService {
 	@Override
 	@Transactional
 	public AddressDTO update ( Long id, AddressDTO addressDTO ) {
-		this.checkNotExistsByUniqueAttrs( id, addressDTO.getStreet(), addressDTO.getNumber().toString(),
-				addressDTO.getLetter(), addressDTO.getPostalCode().toString() );
+		addressDTO.setId( id );
 
+		this.checkNotExistsByUniqueAttrs( addressDTO.getId(), addressDTO.getStreet(), addressDTO.getNumber().toString(),
+				addressDTO.getLetter(), addressDTO.getPostalCode().toString() );
 		AddressEntity entityDB = this.checkExistsById( addressDTO.getId() );
 
-		AddressEntity entityReq = this.addressMapper.toEntity( addressDTO, entityDB, "SDJR2" );
+		AddressEntity entityReq = this.addressMapper.toEntity( addressDTO, RoleTypeEnum.ROLE_MEMBER.name(), entityDB );
 		entityDB = this.addressRepo.save( entityReq );
 
 		return this.addressMapper.toDTO( entityDB );
