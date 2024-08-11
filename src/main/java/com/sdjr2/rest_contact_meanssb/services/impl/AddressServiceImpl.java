@@ -11,7 +11,6 @@ import com.sdjr2.rest_contact_meanssb.services.AddressService;
 import com.sdjr2.sb.library_commons.exceptions.AppExceptionCodeEnum;
 import com.sdjr2.sb.library_commons.exceptions.CustomException;
 import com.sdjr2.sb.library_commons.models.dto.search.SearchBodyDTO;
-import com.sdjr2.sb.library_commons.models.enums.RoleTypeEnum;
 import lombok.RequiredArgsConstructor;
 import org.springframework.context.annotation.Primary;
 import org.springframework.data.domain.Page;
@@ -19,6 +18,7 @@ import org.springframework.data.domain.PageImpl;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Sort;
 import org.springframework.data.jpa.domain.Specification;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -157,7 +157,8 @@ public class AddressServiceImpl implements AddressService {
 		this.checkNotExistsByUniqueAttrs( addressDTO.getId(), addressDTO.getStreet(), addressDTO.getNumber().toString(),
 				addressDTO.getLetter(), addressDTO.getPostalCode().toString() );
 
-		AddressEntity entityReq = this.addressMapper.toEntity( addressDTO, RoleTypeEnum.ROLE_ADMIN.name(), null );
+		String role = this.getRoleFromRequest( SecurityContextHolder.getContext() );
+		AddressEntity entityReq = this.addressMapper.toEntity( addressDTO, role, null );
 		AddressEntity entityDB = this.addressRepo.save( entityReq );
 
 		return this.addressMapper.toDTO( entityDB );
@@ -191,7 +192,8 @@ public class AddressServiceImpl implements AddressService {
 				addressDTO.getLetter(), addressDTO.getPostalCode().toString() );
 		AddressEntity entityDB = this.checkExistsById( addressDTO.getId() );
 
-		AddressEntity entityReq = this.addressMapper.toEntity( addressDTO, RoleTypeEnum.ROLE_MEMBER.name(), entityDB );
+		String role = this.getRoleFromRequest( SecurityContextHolder.getContext() );
+		AddressEntity entityReq = this.addressMapper.toEntity( addressDTO, role, entityDB );
 		entityDB = this.addressRepo.save( entityReq );
 
 		return this.addressMapper.toDTO( entityDB );

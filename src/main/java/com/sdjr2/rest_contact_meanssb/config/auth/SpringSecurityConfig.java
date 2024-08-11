@@ -43,9 +43,9 @@ public class SpringSecurityConfig {
 
 	private static final String[] AUTH_WHITE_LIST = {
 			"/h2-console/**",
+			"/v2/api-docs/**",
 			"/v3/api-docs/**",
 			"/swagger-ui/**",
-			"/v2/api-docs/**",
 			"/swagger-resources/**",
 			"/console/**"
 	};
@@ -68,17 +68,23 @@ public class SpringSecurityConfig {
 	public SecurityFilterChain filterChain ( HttpSecurity http ) throws
 																															 Exception {
 		return http.authorizeHttpRequests( auth -> auth
+						// Generic
 						.requestMatchers( SpringSecurityConfig.AUTH_WHITE_LIST ).permitAll()
+						// Users
 						.requestMatchers( HttpMethod.GET, "/users" ).permitAll()
 						.requestMatchers( HttpMethod.GET, "/users/**" ).hasAnyRole(
 								RoleTypeEnum.ROLE_ADMIN.getValueSimple(), RoleTypeEnum.ROLE_MEMBER.getValueSimple() )
-						.requestMatchers( HttpMethod.POST, "/users" ).permitAll()
+						.requestMatchers( HttpMethod.POST, "/users" ).hasAnyRole(
+								RoleTypeEnum.ROLE_ADMIN.getValueSimple(), RoleTypeEnum.ROLE_MEMBER.getValueSimple(),
+								RoleTypeEnum.ROLE_USER.getValueSimple() )
 						.requestMatchers( HttpMethod.PUT, "/users/{userId}" ).hasAnyRole(
 								RoleTypeEnum.ROLE_ADMIN.getValueSimple(), RoleTypeEnum.ROLE_MEMBER.getValueSimple() )
 						.requestMatchers( HttpMethod.DELETE, "/users/{userId}" ).hasAnyRole(
 								RoleTypeEnum.ROLE_ADMIN.getValueSimple() )
+						// Roles
 						.requestMatchers( "/roles" ).hasRole( RoleTypeEnum.ROLE_ADMIN.getValueSimple() )
 						.requestMatchers( "/roles/**" ).hasRole( RoleTypeEnum.ROLE_ADMIN.getValueSimple() )
+						// Addresses
 						.requestMatchers( "/addresses" ).permitAll()
 						.anyRequest().authenticated()
 				)

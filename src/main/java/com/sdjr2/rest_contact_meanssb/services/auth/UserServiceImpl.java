@@ -18,6 +18,7 @@ import org.springframework.data.domain.PageImpl;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Sort;
 import org.springframework.data.jpa.domain.Specification;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -34,7 +35,7 @@ import java.util.Optional;
  * @author Jacinto R^2
  * @version 1.0
  * @category Service
- * @upgrade 24/08/04
+ * @upgrade 24/08/11
  * @since 24/08/02
  */
 @Service
@@ -169,7 +170,8 @@ public class UserServiceImpl implements UserService {
 		// Validation its id in the DTO through @UserExistsById
 		this.checkNotExistsByUniqueAttrs( dto.getId(), dto.getUsername() );
 
-		UserEntity entityReq = this.userMapper.toEntity( dto, RoleTypeEnum.ROLE_ADMIN.name(), null );
+		String role = this.getRoleFromRequest( SecurityContextHolder.getContext() );
+		UserEntity entityReq = this.userMapper.toEntity( dto, role, null );
 		UserEntity entityDB = this.userRepo.save( entityReq );
 
 		return this.userMapper.toDTO( entityDB );
@@ -200,7 +202,8 @@ public class UserServiceImpl implements UserService {
 		UserEntity entityDB = this.checkExistsById( dto.getId() );
 		this.checkNotExistsByUniqueAttrs( dto.getId(), dto.getUsername() );
 
-		UserEntity entityReq = this.userMapper.toEntity( dto, RoleTypeEnum.ROLE_MEMBER.name(), entityDB );
+		String role = this.getRoleFromRequest( SecurityContextHolder.getContext() );
+		UserEntity entityReq = this.userMapper.toEntity( dto, role, entityDB );
 		entityDB = this.userRepo.save( entityReq );
 
 		return this.userMapper.toDTO( entityDB );
@@ -209,7 +212,6 @@ public class UserServiceImpl implements UserService {
 	@Override
 	@Transactional
 	public void delete ( Long id ) {
-		// Validation its id in the DTO through @UserExistsById
 		UserEntity entityDB = this.checkExistsById( id );
 
 		this.userRepo.delete( entityDB );
