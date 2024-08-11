@@ -1,11 +1,11 @@
 package com.sdjr2.rest_contact_meanssb.config.exceptions;
 
-import com.sdjr2.rest_contact_meanssb.exceptions.AppExceptionCodeEnum;
-import com.sdjr2.rest_contact_meanssb.exceptions.CustomException;
 import com.sdjr2.rest_contact_meanssb.models.mappers.RespEntityErrorMapper;
-import com.sdjr2.rest_contact_meanssb.models.dto.errors.RespEntityErrorDTO;
-import com.sdjr2.rest_contact_meanssb.utils.UConstants;
 import com.sdjr2.rest_contact_meanssb.utils.UDateTimeService;
+import com.sdjr2.sb.library_commons.exceptions.AppExceptionCodeEnum;
+import com.sdjr2.sb.library_commons.exceptions.CustomException;
+import com.sdjr2.sb.library_commons.models.dto.errors.RespEntityErrorDTO;
+import com.sdjr2.sb.library_commons.utils.UConstants;
 import lombok.AllArgsConstructor;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -40,7 +40,7 @@ import java.util.Objects;
  * @author Jacinto R^2
  * @version 1.0
  * @category Config
- * @upgrade 24/06/18
+ * @upgrade 24/08/11
  * @since 24/06/14
  */
 @RestControllerAdvice

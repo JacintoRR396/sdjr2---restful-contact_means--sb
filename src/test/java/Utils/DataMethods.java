@@ -1,15 +1,15 @@
 package Utils;
 
 import com.sdjr2.rest_contact_meanssb.models.dto.AddressDTO;
-import com.sdjr2.rest_contact_meanssb.models.dto.search.FilterDTO;
-import com.sdjr2.rest_contact_meanssb.models.dto.search.OrderDTO;
-import com.sdjr2.rest_contact_meanssb.models.dto.search.SearchBodyDTO;
 import com.sdjr2.rest_contact_meanssb.models.entities.AddressEntity;
-import com.sdjr2.rest_contact_meanssb.models.entities.AuditableEntity;
 import com.sdjr2.rest_contact_meanssb.models.enums.search.AddressFilterFieldEnum;
 import com.sdjr2.rest_contact_meanssb.models.enums.search.AddressSortFieldEnum;
-import com.sdjr2.rest_contact_meanssb.models.enums.search.OperatorFilterEnum;
 import com.sdjr2.rest_contact_meanssb.repositories.filters.AddressSpecifications;
+import com.sdjr2.sb.library_commons.models.dto.search.FilterDTO;
+import com.sdjr2.sb.library_commons.models.dto.search.OrderDTO;
+import com.sdjr2.sb.library_commons.models.dto.search.SearchBodyDTO;
+import com.sdjr2.sb.library_commons.models.entities.AuditableEntity;
+import com.sdjr2.sb.library_commons.models.enums.OperatorFilterEnum;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.domain.Sort;

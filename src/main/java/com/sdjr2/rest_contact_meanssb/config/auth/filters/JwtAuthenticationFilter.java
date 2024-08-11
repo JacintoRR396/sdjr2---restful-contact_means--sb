@@ -2,10 +2,10 @@ package com.sdjr2.rest_contact_meanssb.config.auth.filters;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.sdjr2.rest_contact_meanssb.config.auth.TokenJwtConfig;
-import com.sdjr2.rest_contact_meanssb.exceptions.AppExceptionCodeEnum;
-import com.sdjr2.rest_contact_meanssb.exceptions.CustomException;
 import com.sdjr2.rest_contact_meanssb.models.dto.auth.UserAuthReqDTO;
 import com.sdjr2.rest_contact_meanssb.models.dto.auth.UserAuthRespDTO;
+import com.sdjr2.sb.library_commons.exceptions.AppExceptionCodeEnum;
+import com.sdjr2.sb.library_commons.exceptions.CustomException;
 import io.jsonwebtoken.Claims;
 import io.jsonwebtoken.Jwts;
 import jakarta.servlet.FilterChain;
@@ -34,7 +34,7 @@ import java.util.Date;
  * @author Jacinto R^2
  * @version 1.0
  * @category Config
- * @upgrade 24/08/04
+ * @upgrade 24/08/11
  * @since 24/08/03
  */
 public class JwtAuthenticationFilter extends UsernamePasswordAuthenticationFilter {

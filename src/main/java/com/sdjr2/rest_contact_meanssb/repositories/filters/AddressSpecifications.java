@@ -1,6 +1,7 @@
 package com.sdjr2.rest_contact_meanssb.repositories.filters;
 
 import com.sdjr2.rest_contact_meanssb.models.entities.AddressEntity;
+import com.sdjr2.sb.library_commons.repositories.BaseSpecifications;
 import lombok.NoArgsConstructor;
 import org.springframework.stereotype.Component;
 
@@ -14,7 +15,7 @@ import org.springframework.stereotype.Component;
  * @author Jacinto R^2
  * @version 1.0
  * @category Repository (DAO)
- * @upgrade 24/08/01
+ * @upgrade 24/08/11
  * @since 24/07/18
  */
 @Component

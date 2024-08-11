@@ -1,12 +1,12 @@
 package com.sdjr2.rest_contact_meanssb.models.enums.auth;
 
-import com.sdjr2.rest_contact_meanssb.exceptions.AppExceptionCodeEnum;
-import com.sdjr2.rest_contact_meanssb.exceptions.CustomException;
 import com.sdjr2.rest_contact_meanssb.models.dto.auth.UserDTO;
-import com.sdjr2.rest_contact_meanssb.models.dto.search.FilterDTO;
 import com.sdjr2.rest_contact_meanssb.models.entities.auth.UserEntity;
-import com.sdjr2.rest_contact_meanssb.models.enums.search.OperatorFilterEnum;
-import com.sdjr2.rest_contact_meanssb.utils.UConstants;
+import com.sdjr2.sb.library_commons.exceptions.AppExceptionCodeEnum;
+import com.sdjr2.sb.library_commons.exceptions.CustomException;
+import com.sdjr2.sb.library_commons.models.dto.search.FilterDTO;
+import com.sdjr2.sb.library_commons.models.enums.OperatorFilterEnum;
+import com.sdjr2.sb.library_commons.utils.UConstants;
 import lombok.Builder;
 import lombok.Data;
 import lombok.Getter;
@@ -24,7 +24,7 @@ import java.util.List;
  * @author Jacinto R^2
  * @version 1.0
  * @category Enum (Model)
- * @upgrade 24/08/02
+ * @upgrade 24/08/11
  * @since 24/08/01
  */
 @Getter

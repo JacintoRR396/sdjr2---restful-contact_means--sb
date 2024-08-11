@@ -1,16 +1,16 @@
 package com.sdjr2.rest_contact_meanssb.services.auth;
 
-import com.sdjr2.rest_contact_meanssb.exceptions.AppExceptionCodeEnum;
-import com.sdjr2.rest_contact_meanssb.exceptions.CustomException;
 import com.sdjr2.rest_contact_meanssb.models.dto.auth.UserDTO;
-import com.sdjr2.rest_contact_meanssb.models.dto.search.SearchBodyDTO;
 import com.sdjr2.rest_contact_meanssb.models.entities.auth.UserEntity;
-import com.sdjr2.rest_contact_meanssb.models.enums.auth.RoleTypeEnum;
 import com.sdjr2.rest_contact_meanssb.models.enums.auth.UserFilterFieldEnum;
 import com.sdjr2.rest_contact_meanssb.models.enums.auth.UserSortFieldEnum;
 import com.sdjr2.rest_contact_meanssb.models.mappers.auth.UserMapper;
 import com.sdjr2.rest_contact_meanssb.repositories.auth.UserJpaRepository;
 import com.sdjr2.rest_contact_meanssb.repositories.auth.UserSpecifications;
+import com.sdjr2.sb.library_commons.exceptions.AppExceptionCodeEnum;
+import com.sdjr2.sb.library_commons.exceptions.CustomException;
+import com.sdjr2.sb.library_commons.models.dto.search.SearchBodyDTO;
+import com.sdjr2.sb.library_commons.models.enums.RoleTypeEnum;
 import lombok.RequiredArgsConstructor;
 import org.springframework.context.annotation.Primary;
 import org.springframework.data.domain.Page;

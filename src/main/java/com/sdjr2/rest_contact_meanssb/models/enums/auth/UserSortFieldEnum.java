@@ -1,9 +1,9 @@
 package com.sdjr2.rest_contact_meanssb.models.enums.auth;
 
-import com.sdjr2.rest_contact_meanssb.exceptions.AppExceptionCodeEnum;
-import com.sdjr2.rest_contact_meanssb.exceptions.CustomException;
 import com.sdjr2.rest_contact_meanssb.models.dto.auth.UserDTO;
 import com.sdjr2.rest_contact_meanssb.models.entities.auth.UserEntity;
+import com.sdjr2.sb.library_commons.exceptions.AppExceptionCodeEnum;
+import com.sdjr2.sb.library_commons.exceptions.CustomException;
 import lombok.Getter;
 
 /**
@@ -15,7 +15,7 @@ import lombok.Getter;
  * @author Jacinto R^2
  * @version 1.0
  * @category Enum (Model)
- * @upgrade 24/08/01
+ * @upgrade 24/08/11
  * @since 24/08/01
  */
 @Getter

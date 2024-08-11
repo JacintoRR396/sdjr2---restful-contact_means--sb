@@ -11,12 +11,12 @@ import com.fasterxml.jackson.annotation.JsonProperty;
  * @author Jacinto R^2
  * @version 1.0
  * @category Config
- * @upgrade 24/08/04
+ * @upgrade 24/08/11
  * @since 24/08/04
  */
 public abstract class SimpleGrantedAuthorityJsonCreator {
 
 	@JsonCreator
-	public SimpleGrantedAuthorityJsonCreator ( @JsonProperty("authority") String role ) {
+	protected SimpleGrantedAuthorityJsonCreator ( @JsonProperty("authority") String role ) {
 	}
 }

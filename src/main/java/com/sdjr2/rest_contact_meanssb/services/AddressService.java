@@ -4,6 +4,7 @@ import com.sdjr2.rest_contact_meanssb.models.dto.AddressDTO;
 import com.sdjr2.rest_contact_meanssb.models.entities.AddressEntity;
 import com.sdjr2.rest_contact_meanssb.models.mappers.AddressMapper;
 import com.sdjr2.rest_contact_meanssb.repositories.AddressJpaRepository;
+import com.sdjr2.sb.library_commons.services.BaseService;
 
 /**
  * {@link AddressService} interface.

@@ -4,7 +4,7 @@ import com.sdjr2.rest_contact_meanssb.models.dto.auth.RoleDTO;
 import com.sdjr2.rest_contact_meanssb.models.entities.auth.RoleEntity;
 import com.sdjr2.rest_contact_meanssb.models.mappers.auth.RoleMapper;
 import com.sdjr2.rest_contact_meanssb.repositories.auth.RoleJpaRepository;
-import com.sdjr2.rest_contact_meanssb.services.BaseService;
+import com.sdjr2.sb.library_commons.services.BaseService;
 
 /**
  * {@link RoleService} interface.
@@ -20,7 +20,7 @@ import com.sdjr2.rest_contact_meanssb.services.BaseService;
  * @author Jacinto R^2
  * @version 1.0
  * @category Service
- * @upgrade 24/08/01
+ * @upgrade 24/08/11
  * @since 24/08/01
  */
 public interface RoleService extends BaseService<RoleDTO> {

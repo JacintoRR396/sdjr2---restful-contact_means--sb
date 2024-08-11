@@ -2,7 +2,8 @@ package com.sdjr2.rest_contact_meanssb.models.dto;
 
 import com.fasterxml.jackson.annotation.JsonInclude;
 import com.fasterxml.jackson.annotation.JsonProperty;
-import com.sdjr2.rest_contact_meanssb.utils.UConstants;
+import com.sdjr2.sb.library_commons.models.dto.BaseDTO;
+import com.sdjr2.sb.library_commons.utils.UConstants;
 import jakarta.validation.constraints.*;
 import lombok.*;
 
@@ -19,7 +20,7 @@ import java.util.Comparator;
  * @author Jacinto R^2
  * @version 1.0
  * @category DTO
- * @upgrade 24/08/01
+ * @upgrade 24/08/11
  * @since 23/06/11
  */
 @NoArgsConstructor

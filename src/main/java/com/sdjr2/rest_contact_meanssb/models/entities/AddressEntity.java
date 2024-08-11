@@ -1,6 +1,8 @@
 package com.sdjr2.rest_contact_meanssb.models.entities;
 
-import com.sdjr2.rest_contact_meanssb.utils.UConstants;
+import com.sdjr2.sb.library_commons.models.entities.AuditableEntity;
+import com.sdjr2.sb.library_commons.models.entities.BaseEntity;
+import com.sdjr2.sb.library_commons.utils.UConstants;
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
@@ -22,7 +24,7 @@ import java.util.Objects;
  * @author Jacinto R^2
  * @version 1.0
  * @category Entity (ORM)
- * @upgrade 24/07/31
+ * @upgrade 24/08/11
  * @since 23/06/10
  */
 @Entity

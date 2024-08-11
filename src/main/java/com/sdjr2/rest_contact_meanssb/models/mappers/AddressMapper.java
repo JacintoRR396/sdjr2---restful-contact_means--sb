@@ -2,13 +2,12 @@ package com.sdjr2.rest_contact_meanssb.models.mappers;
 
 import com.sdjr2.rest_contact_meanssb.models.dto.AddressDTO;
 import com.sdjr2.rest_contact_meanssb.models.entities.AddressEntity;
-import com.sdjr2.rest_contact_meanssb.models.entities.AuditableEntity;
+import com.sdjr2.sb.library_commons.models.entities.AuditableEntity;
+import com.sdjr2.sb.library_commons.models.mappers.BaseMapper;
 import org.mapstruct.AfterMapping;
 import org.mapstruct.Mapper;
 import org.mapstruct.Mapping;
 import org.mapstruct.MappingTarget;
-
-import java.time.LocalDateTime;
 
 /**
  * {@link AddressMapper} class.
@@ -22,7 +21,7 @@ import java.time.LocalDateTime;
  * @author Jacinto R^2
  * @version 1.0
  * @category Mapper
- * @upgrade 24/08/01
+ * @upgrade 24/08/11
  * @since 23/06/11
  */
 @Mapper(componentModel = "spring")
@@ -51,9 +50,9 @@ public abstract class AddressMapper implements BaseMapper<AddressDTO, AddressEnt
 	/**
 	 * Map address request object to address entity.
 	 *
-	 * @param dto      address request object
+	 * @param dto          address request object
 	 * @param usernameRole username
-	 * @param entityDB address entity in db
+	 * @param entityDB     address entity in db
 	 * @return AddressEntity {@link AddressEntity}
 	 */
 	@Mapping(source = "dto.id", target = "id")
@@ -73,16 +72,16 @@ public abstract class AddressMapper implements BaseMapper<AddressDTO, AddressEnt
 	/**
 	 * Map address request object to address entity with additional logic
 	 *
-	 * @param dto           address request object
+	 * @param dto          address request object
 	 * @param usernameRole username
-	 * @param entityDB      address entity in db
-	 * @param entityReq address entity about req
+	 * @param entityDB     address entity in db
+	 * @param entityReq    address entity about req
 	 * @return AddressEntity {@link AddressEntity}
 	 */
 	@AfterMapping
 	protected AddressEntity afterMappingToEntity ( AddressDTO dto, String usernameRole, AddressEntity entityDB,
 																								 @MappingTarget AddressEntity entityReq ) {
-		AuditableEntity auditableEntity = this.mapAuditableEntity(dto.getId(), usernameRole, entityDB);
+		AuditableEntity auditableEntity = this.mapAuditableEntity( dto.getId(), usernameRole, entityDB );
 		entityReq.setAuditableEntity( auditableEntity );
 
 		return entityReq;

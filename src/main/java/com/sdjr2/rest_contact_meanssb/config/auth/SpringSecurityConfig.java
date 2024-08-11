@@ -2,7 +2,7 @@ package com.sdjr2.rest_contact_meanssb.config.auth;
 
 import com.sdjr2.rest_contact_meanssb.config.auth.filters.JwtAuthenticationFilter;
 import com.sdjr2.rest_contact_meanssb.config.auth.filters.JwtValidationFilter;
-import com.sdjr2.rest_contact_meanssb.models.enums.auth.RoleTypeEnum;
+import com.sdjr2.sb.library_commons.models.enums.RoleTypeEnum;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.web.servlet.FilterRegistrationBean;
 import org.springframework.context.annotation.Bean;
@@ -34,7 +34,7 @@ import java.util.List;
  * @author Jacinto R^2
  * @version 1.0
  * @category Config
- * @upgrade 24/08/04
+ * @upgrade 24/08/11
  * @since 24/08/03
  */
 @Configuration
@@ -89,7 +89,7 @@ public class SpringSecurityConfig {
 						.ignoringRequestMatchers( SpringSecurityConfig.AUTH_WHITE_LIST )
 						.disable() )
 				// when it is consumed by frontends
-				.cors(cors -> cors.configurationSource( this.corsConfigurationSource() ))
+				.cors( cors -> cors.configurationSource( this.corsConfigurationSource() ) )
 				// because the session (user data) is sent in the token, so, https request is stateless.
 				.sessionManagement( manag -> manag.sessionCreationPolicy( SessionCreationPolicy.STATELESS ) )
 				.headers( headers -> headers.frameOptions( HeadersConfigurer.FrameOptionsConfig::disable ) )

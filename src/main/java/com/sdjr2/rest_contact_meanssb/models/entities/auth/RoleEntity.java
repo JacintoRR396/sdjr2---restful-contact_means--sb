@@ -1,7 +1,7 @@
 package com.sdjr2.rest_contact_meanssb.models.entities.auth;
 
-import com.sdjr2.rest_contact_meanssb.models.entities.AuditableEntity;
-import com.sdjr2.rest_contact_meanssb.models.entities.BaseEntity;
+import com.sdjr2.sb.library_commons.models.entities.AuditableEntity;
+import com.sdjr2.sb.library_commons.models.entities.BaseEntity;
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Getter;

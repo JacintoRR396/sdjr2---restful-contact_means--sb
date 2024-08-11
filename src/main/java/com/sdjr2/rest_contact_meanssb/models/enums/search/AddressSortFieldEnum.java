@@ -1,9 +1,9 @@
 package com.sdjr2.rest_contact_meanssb.models.enums.search;
 
-import com.sdjr2.rest_contact_meanssb.exceptions.AppExceptionCodeEnum;
-import com.sdjr2.rest_contact_meanssb.exceptions.CustomException;
 import com.sdjr2.rest_contact_meanssb.models.dto.AddressDTO;
 import com.sdjr2.rest_contact_meanssb.models.entities.AddressEntity;
+import com.sdjr2.sb.library_commons.exceptions.AppExceptionCodeEnum;
+import com.sdjr2.sb.library_commons.exceptions.CustomException;
 import lombok.Getter;
 
 /**
@@ -15,7 +15,7 @@ import lombok.Getter;
  * @author Jacinto R^2
  * @version 1.0
  * @category Enum (Model)
- * @upgrade 24/07/19
+ * @upgrade 24/08/11
  * @since 24/07/18
  */
 @Getter

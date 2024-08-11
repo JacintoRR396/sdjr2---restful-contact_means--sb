@@ -1,7 +1,7 @@
 package com.sdjr2.rest_contact_meanssb.models.dto.auth;
 
 import com.fasterxml.jackson.annotation.JsonInclude;
-import com.sdjr2.rest_contact_meanssb.models.dto.BaseDTO;
+import com.sdjr2.sb.library_commons.models.dto.BaseDTO;
 import jakarta.validation.constraints.NotNull;
 import lombok.*;
 
@@ -17,7 +17,7 @@ import java.io.Serializable;
  * @author Jacinto R^2
  * @version 1.0
  * @category DTO
- * @upgrade 24/08/04
+ * @upgrade 24/08/11
  * @since 24/08/04
  */
 @NoArgsConstructor

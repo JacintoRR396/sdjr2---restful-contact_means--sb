@@ -1,9 +1,9 @@
 package com.sdjr2.rest_contact_meanssb.controllers.auth;
 
-import com.sdjr2.rest_contact_meanssb.controllers.BaseController;
 import com.sdjr2.rest_contact_meanssb.models.dto.auth.UserDTO;
-import com.sdjr2.rest_contact_meanssb.models.dto.search.SearchBodyDTO;
 import com.sdjr2.rest_contact_meanssb.services.auth.UserService;
+import com.sdjr2.sb.library_commons.controllers.BaseController;
+import com.sdjr2.sb.library_commons.models.dto.search.SearchBodyDTO;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;

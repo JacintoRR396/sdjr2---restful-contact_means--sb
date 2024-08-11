@@ -10,8 +10,8 @@
         <relativePath/> <!-- lookup parent from repository -->
     </parent>
 
-    <groupId>com.sdjr2</groupId>
-    <artifactId>rest--contact_means--sb</artifactId>
+    <groupId>com.sdjr2.sb</groupId>
+    <artifactId>restful-contact_means--sb</artifactId>
     <version>0.0.3-SNAPSHOT</version>
     <name>Micro Contact_Means</name>
     <description>Microservice in charge of managing the means of contacts for another micro orchestrator (Spring Boot 3
@@ -43,6 +43,12 @@
     </properties>
 
     <dependencies>
+        <!-- Libraries SDJR2 -->
+        <dependency>
+            <groupId>com.sdjr2.sb</groupId>
+            <artifactId>library-commons--sb</artifactId>
+            <version>0.0.1-SNAPSHOT</version>
+        </dependency>
         <!-- Spring Boot -->
             <!-- Spring Web -->
         <dependency>

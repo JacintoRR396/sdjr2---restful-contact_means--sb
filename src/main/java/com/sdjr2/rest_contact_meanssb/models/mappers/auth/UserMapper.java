@@ -2,11 +2,11 @@ package com.sdjr2.rest_contact_meanssb.models.mappers.auth;
 
 import com.sdjr2.rest_contact_meanssb.models.dto.auth.RoleDTO;
 import com.sdjr2.rest_contact_meanssb.models.dto.auth.UserDTO;
-import com.sdjr2.rest_contact_meanssb.models.entities.AuditableEntity;
 import com.sdjr2.rest_contact_meanssb.models.entities.auth.UserEntity;
-import com.sdjr2.rest_contact_meanssb.models.mappers.BaseMapper;
 import com.sdjr2.rest_contact_meanssb.services.auth.RoleService;
 import com.sdjr2.rest_contact_meanssb.utils.UDateTimeService;
+import com.sdjr2.sb.library_commons.models.entities.AuditableEntity;
+import com.sdjr2.sb.library_commons.models.mappers.BaseMapper;
 import org.mapstruct.*;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.crypto.password.PasswordEncoder;
@@ -26,7 +26,7 @@ import java.util.List;
  * @author Jacinto R^2
  * @version 1.0
  * @category Mapper
- * @upgrade 24/08/03
+ * @upgrade 24/08/11
  * @since 24/08/01
  */
 @Mapper(componentModel = "spring", builder = @Builder(disableBuilder = true))

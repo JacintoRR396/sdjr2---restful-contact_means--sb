@@ -1,8 +1,9 @@
 package com.sdjr2.rest_contact_meanssb.controllers;
 
 import com.sdjr2.rest_contact_meanssb.models.dto.AddressDTO;
-import com.sdjr2.rest_contact_meanssb.models.dto.search.SearchBodyDTO;
 import com.sdjr2.rest_contact_meanssb.services.AddressService;
+import com.sdjr2.sb.library_commons.controllers.BaseController;
+import com.sdjr2.sb.library_commons.models.dto.search.SearchBodyDTO;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
@@ -26,7 +27,7 @@ import java.util.List;
  * @author Jacinto R^2
  * @version 1.0
  * @category Controller
- * @upgrade 24/07/19
+ * @upgrade 24/08/11
  * @since 23/06/10
  */
 @RestController

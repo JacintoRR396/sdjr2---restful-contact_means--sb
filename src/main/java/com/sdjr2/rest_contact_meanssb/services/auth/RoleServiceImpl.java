@@ -1,16 +1,16 @@
 package com.sdjr2.rest_contact_meanssb.services.auth;
 
-import com.sdjr2.rest_contact_meanssb.exceptions.AppExceptionCodeEnum;
-import com.sdjr2.rest_contact_meanssb.exceptions.CustomException;
 import com.sdjr2.rest_contact_meanssb.models.dto.auth.RoleDTO;
-import com.sdjr2.rest_contact_meanssb.models.dto.search.SearchBodyDTO;
 import com.sdjr2.rest_contact_meanssb.models.entities.auth.RoleEntity;
 import com.sdjr2.rest_contact_meanssb.models.enums.auth.RoleFilterFieldEnum;
 import com.sdjr2.rest_contact_meanssb.models.enums.auth.RoleSortFieldEnum;
-import com.sdjr2.rest_contact_meanssb.models.enums.auth.RoleTypeEnum;
 import com.sdjr2.rest_contact_meanssb.models.mappers.auth.RoleMapper;
 import com.sdjr2.rest_contact_meanssb.repositories.auth.RoleJpaRepository;
 import com.sdjr2.rest_contact_meanssb.repositories.auth.RoleSpecifications;
+import com.sdjr2.sb.library_commons.exceptions.AppExceptionCodeEnum;
+import com.sdjr2.sb.library_commons.exceptions.CustomException;
+import com.sdjr2.sb.library_commons.models.dto.search.SearchBodyDTO;
+import com.sdjr2.sb.library_commons.models.enums.RoleTypeEnum;
 import lombok.RequiredArgsConstructor;
 import org.springframework.context.annotation.Primary;
 import org.springframework.data.domain.Page;
@@ -33,7 +33,7 @@ import java.util.Objects;
  * @author Jacinto R^2
  * @version 1.0
  * @category Service
- * @upgrade 24/08/02
+ * @upgrade 24/08/11
  * @since 24/08/01
  */
 @Service
