@@ -1,4 +1,4 @@
-package com.sdjr2.rest_contact_meanssb.repositories;
+package com.sdjr2.rest_contact_meanssb.repositories.mock;
 
 import java.util.List;
 import java.util.Optional;

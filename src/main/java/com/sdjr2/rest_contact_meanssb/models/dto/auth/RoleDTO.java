@@ -18,7 +18,7 @@ import java.io.Serializable;
  * @author Jacinto R^2
  * @version 1.0
  * @category DTO
- * @upgrade 24/08/11
+ * @upgrade 24/08/12
  * @since 24/08/01
  */
 @NoArgsConstructor
@@ -48,7 +48,7 @@ public class RoleDTO implements BaseDTO, Comparable<RoleDTO>, Serializable {
 
 	@NotNull
 	@Size(min = 10, max = 300)
-	@Pattern(regexp = UConstants.ADDITIONAL_INFO_REGEX)
+	@Pattern(regexp = UConstants.REGEX_ADDITIONAL_INFO)
 	private String description;
 
 	/* METHODS OF INSTANCE */

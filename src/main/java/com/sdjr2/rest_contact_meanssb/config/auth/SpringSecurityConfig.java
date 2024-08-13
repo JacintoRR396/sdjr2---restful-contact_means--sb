@@ -34,7 +34,7 @@ import java.util.List;
  * @author Jacinto R^2
  * @version 1.0
  * @category Config
- * @upgrade 24/08/11
+ * @upgrade 24/08/12
  * @since 24/08/03
  */
 @Configuration
@@ -86,6 +86,26 @@ public class SpringSecurityConfig {
 						.requestMatchers( "/roles/**" ).hasRole( RoleTypeEnum.ROLE_ADMIN.getValueSimple() )
 						// Addresses
 						.requestMatchers( "/addresses" ).permitAll()
+						.requestMatchers( HttpMethod.GET, "/addresses/**" ).hasAnyRole(
+								RoleTypeEnum.ROLE_ADMIN.getValueSimple(), RoleTypeEnum.ROLE_MEMBER.getValueSimple() )
+						.requestMatchers( HttpMethod.POST, "/addresses" ).hasAnyRole(
+								RoleTypeEnum.ROLE_ADMIN.getValueSimple(), RoleTypeEnum.ROLE_MEMBER.getValueSimple(),
+								RoleTypeEnum.ROLE_USER.getValueSimple() )
+						.requestMatchers( HttpMethod.PUT, "/addresses/{addressId}" ).hasAnyRole(
+								RoleTypeEnum.ROLE_ADMIN.getValueSimple(), RoleTypeEnum.ROLE_MEMBER.getValueSimple() )
+						.requestMatchers( HttpMethod.DELETE, "/addresses/{addressId}" ).hasAnyRole(
+								RoleTypeEnum.ROLE_ADMIN.getValueSimple() )
+						// Contacts
+						.requestMatchers( "/contacts" ).permitAll()
+						.requestMatchers( HttpMethod.GET, "/contacts/**" ).hasAnyRole(
+								RoleTypeEnum.ROLE_ADMIN.getValueSimple(), RoleTypeEnum.ROLE_MEMBER.getValueSimple() )
+						.requestMatchers( HttpMethod.POST, "/contacts" ).hasAnyRole(
+								RoleTypeEnum.ROLE_ADMIN.getValueSimple(), RoleTypeEnum.ROLE_MEMBER.getValueSimple(),
+								RoleTypeEnum.ROLE_USER.getValueSimple() )
+						.requestMatchers( HttpMethod.PUT, "/contacts/{contactId}" ).hasAnyRole(
+								RoleTypeEnum.ROLE_ADMIN.getValueSimple(), RoleTypeEnum.ROLE_MEMBER.getValueSimple() )
+						.requestMatchers( HttpMethod.DELETE, "/contacts/{contactId}" ).hasAnyRole(
+								RoleTypeEnum.ROLE_ADMIN.getValueSimple() )
 						.anyRequest().authenticated()
 				)
 				.addFilter( new JwtAuthenticationFilter( this.authenticationManager() ) )

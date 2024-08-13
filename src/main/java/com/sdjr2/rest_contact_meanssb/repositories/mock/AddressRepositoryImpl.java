@@ -2,7 +2,6 @@ package com.sdjr2.rest_contact_meanssb.repositories.mock;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.sdjr2.rest_contact_meanssb.models.entities.AddressEntity;
-import com.sdjr2.rest_contact_meanssb.repositories.AddressRepository;
 import org.springframework.core.io.Resource;
 
 import java.io.IOException;

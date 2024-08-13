@@ -20,7 +20,7 @@ import java.util.Comparator;
  * @author Jacinto R^2
  * @version 1.0
  * @category DTO
- * @upgrade 24/08/11
+ * @upgrade 24/08/12
  * @since 23/06/11
  */
 @NoArgsConstructor
@@ -84,7 +84,7 @@ public class AddressDTO implements BaseDTO, Comparable<AddressDTO>, Serializable
 	@Pattern(regexp = UConstants.REGEX_LATITUDE_LONGITUDE)
 	private String latitude;
 
-	@Pattern(regexp = UConstants.ADDITIONAL_INFO_REGEX)
+	@Pattern(regexp = UConstants.REGEX_ADDITIONAL_INFO)
 	@JsonProperty("additional_info")
 	private String additionalInfo;
 
