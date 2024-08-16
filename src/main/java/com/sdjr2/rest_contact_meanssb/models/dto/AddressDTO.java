@@ -20,7 +20,7 @@ import java.util.Comparator;
  * @author Jacinto R^2
  * @version 1.0
  * @category DTO
- * @upgrade 24/08/12
+ * @upgrade 24/08/16
  * @since 23/06/11
  */
 @NoArgsConstructor
@@ -41,10 +41,10 @@ public class AddressDTO implements BaseDTO, Comparable<AddressDTO>, Serializable
 	public static final String ATTR_TOWN = "town";
 	public static final String ATTR_CITY = "city";
 	public static final String ATTR_COUNTRY = "country";
-	public static final String ATTR_POSTAL_CODE = "postal_code";
+	public static final String ATTR_POSTAL_CODE = "postalCode";
 	public static final String ATTR_LONGITUDE = "longitude";
 	public static final String ATTR_LATITUDE = "latitude";
-	public static final String ATTR_ADDITIONAL_INFO = "additional_info";
+	public static final String ATTR_ADDITIONAL_INFO = "additionalInfo";
 
 	/* VARIABLES */
 	@PositiveOrZero
@@ -85,7 +85,7 @@ public class AddressDTO implements BaseDTO, Comparable<AddressDTO>, Serializable
 	private String latitude;
 
 	@Pattern(regexp = UConstants.REGEX_ADDITIONAL_INFO)
-	@JsonProperty("additional_info")
+	@JsonProperty(ATTR_ADDITIONAL_INFO)
 	private String additionalInfo;
 
 	/* METHODS OF INSTANCE */
@@ -118,21 +118,7 @@ public class AddressDTO implements BaseDTO, Comparable<AddressDTO>, Serializable
 
 	@Override
 	public String toString () {
-		final StringBuilder res = new StringBuilder(
-				"The DTO '" + this.getClass().getSimpleName() + "' contains the attributes: \n" );
-		res.append( " - Id » " ).append( this.id ).append( ".\n" );
-		res.append( " - Street » " ).append( this.street ).append( ".\n" );
-		res.append( " - Number » " ).append( this.number ).append( ".\n" );
-		res.append( " - Letter » " ).append( this.letter ).append( ".\n" );
-		res.append( " - Town » " ).append( this.town ).append( ".\n" );
-		res.append( " - City » " ).append( this.city ).append( ".\n" );
-		res.append( " - Country » " ).append( this.country ).append( ".\n" );
-		res.append( " - Postal Code » " ).append( this.postalCode ).append( ".\n" );
-		res.append( " - Longitude » " ).append( this.longitude ).append( ".\n" );
-		res.append( " - Latitude » " ).append( this.latitude ).append( ".\n" );
-		res.append( " - Additional Info » " ).append( this.additionalInfo ).append( ".\n" );
-
-		return res.toString();
+		return BaseDTO.toJsonStr( this );
 	}
 
 	@Override

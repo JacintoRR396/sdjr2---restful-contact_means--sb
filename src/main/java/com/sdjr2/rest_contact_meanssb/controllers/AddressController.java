@@ -2,7 +2,9 @@ package com.sdjr2.rest_contact_meanssb.controllers;
 
 import com.sdjr2.rest_contact_meanssb.models.dto.AddressDTO;
 import com.sdjr2.rest_contact_meanssb.services.AddressService;
+import com.sdjr2.sb.library_commons.config.BaseHandlerLogger;
 import com.sdjr2.sb.library_commons.controllers.BaseController;
+import com.sdjr2.sb.library_commons.controllers.BaseControllerHelper;
 import com.sdjr2.sb.library_commons.models.dto.search.SearchBodyDTO;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.validation.Valid;
@@ -27,7 +29,7 @@ import java.util.List;
  * @author Jacinto R^2
  * @version 1.0
  * @category Controller
- * @upgrade 24/08/11
+ * @upgrade 24/08/16
  * @since 23/06/10
  */
 @RestController
@@ -36,49 +38,75 @@ import java.util.List;
 public class AddressController implements BaseController<AddressDTO> {
 
 	/**
+	 * Address logger object
+	 */
+	BaseHandlerLogger logger = new BaseHandlerLogger( AddressController.class );
+
+	/**
 	 * Address service object
 	 */
 	private final AddressService addressService;
 
 	@GetMapping
 	public ResponseEntity<List<AddressDTO>> getAll ( HttpServletRequest httpServletRequest ) {
-		return new ResponseEntity<>( this.addressService.getAll(), HttpStatus.OK );
+		List<AddressDTO> res = this.addressService.getAll();
+		this.logger.infoResponse( BaseControllerHelper.formatLogContentResp( res.toString() ) );
+
+		return new ResponseEntity<>( res, HttpStatus.OK );
 	}
 
 	@GetMapping(value = "/pagination")
 	public ResponseEntity<Page<AddressDTO>> getAllWithPagination ( HttpServletRequest httpServletRequest,
 																																 @RequestParam(defaultValue = "0", required = false) Integer offset,
 																																 @RequestParam(defaultValue = "5", required = false) Integer limit ) {
-		return new ResponseEntity<>( this.addressService.getAllWithPagination( offset, limit ), HttpStatus.OK );
+		Page<AddressDTO> res = this.addressService.getAllWithPagination( offset, limit );
+		this.logger.infoResponse( BaseControllerHelper.formatLogPageResp( res ) );
+
+		return new ResponseEntity<>( res, HttpStatus.OK );
 	}
 
 	@GetMapping(value = "/search")
 	public ResponseEntity<Page<AddressDTO>> getAllWithSearch ( HttpServletRequest httpServletRequest,
 																														 @Valid @RequestBody SearchBodyDTO searchBodyDTO,
 																														 BindingResult resValidation ) {
+		this.logger.infoRequest( BaseControllerHelper.formatLogBodyReq( searchBodyDTO.toString() ) );
 		this.checkValidation( resValidation );
 
-		return new ResponseEntity<>( this.addressService.getAllWithSearch( searchBodyDTO ), HttpStatus.OK );
+		Page<AddressDTO> res = this.addressService.getAllWithSearch( searchBodyDTO );
+		this.logger.infoResponse( BaseControllerHelper.formatLogPageResp( res ) );
+
+		return new ResponseEntity<>( res, HttpStatus.OK );
 	}
 
 	@GetMapping(value = "/{addressId}")
 	public ResponseEntity<AddressDTO> getOneById ( @PathVariable("addressId") Long id ) {
-		return new ResponseEntity<>( this.addressService.getOneById( id ), HttpStatus.OK );
+		AddressDTO res = this.addressService.getOneById( id );
+		this.logger.infoResponse( BaseControllerHelper.formatLogContentResp( res.toString() ) );
+
+		return new ResponseEntity<>( res, HttpStatus.OK );
 	}
 
 	@PostMapping
 	public ResponseEntity<AddressDTO> create ( @Valid @RequestBody AddressDTO addressDTO, BindingResult resValidation ) {
+		this.logger.infoRequest( BaseControllerHelper.formatLogBodyReq( addressDTO.toString() ) );
 		this.checkValidation( resValidation );
 
-		return new ResponseEntity<>( this.addressService.create( addressDTO ), HttpStatus.CREATED );
+		AddressDTO res = this.addressService.create( addressDTO );
+		this.logger.infoResponse( BaseControllerHelper.formatLogContentResp( res.toString() ) );
+
+		return new ResponseEntity<>( res, HttpStatus.CREATED );
 	}
 
 	@PutMapping(value = "/{addressId}")
 	public ResponseEntity<AddressDTO> update ( @PathVariable("addressId") Long id,
 																						 @Valid @RequestBody AddressDTO addressDTO, BindingResult resValidation ) {
+		this.logger.infoRequest( BaseControllerHelper.formatLogBodyReq( addressDTO.toString() ) );
 		this.checkValidation( resValidation );
 
-		return new ResponseEntity<>( this.addressService.update( id, addressDTO ), HttpStatus.OK );
+		AddressDTO res = this.addressService.update( id, addressDTO );
+		this.logger.infoResponse( BaseControllerHelper.formatLogContentResp( res.toString() ) );
+
+		return new ResponseEntity<>( res, HttpStatus.OK );
 	}
 
 	@DeleteMapping(value = "/{addressId}")

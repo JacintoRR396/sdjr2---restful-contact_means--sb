@@ -124,7 +124,8 @@ public class HandlerExceptionController {
 		CustomException customEx = Objects.nonNull( appExCode )
 				? new CustomException( ex, appExCode, validationErrors ) : ( CustomException ) ex;
 		RespEntityErrorDTO error = this.respEntityErrorMapper.toDTO( customEx, this.uDateTimeService.getTimestamp() );
-		LOGGER.error( UConstants.MSG_BASE_ERROR + error.getErrorCode() + " :: " + error.getExMessage() );
+		LOGGER.error( UConstants.MSG_BASE_ERROR + error.getErrorCode() + " :: " + error.getErrorMessage()
+				+ ". ExMsg: " + error.getExMessage() );
 
 		return new ResponseEntity<>( error, customEx.getAppExCode().getHttpStatusCode() );
 	}
