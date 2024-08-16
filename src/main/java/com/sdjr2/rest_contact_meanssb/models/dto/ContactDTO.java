@@ -83,14 +83,7 @@ public class ContactDTO implements BaseDTO, Comparable<ContactDTO>, Serializable
 
 	@Override
 	public String toString () {
-		final StringBuilder res = new StringBuilder(
-				"The DTO '" + this.getClass().getSimpleName() + "' contains the attributes: \n" );
-		res.append( " - Id » " ).append( this.id ).append( ".\n" );
-		res.append( " - Email » " ).append( this.email ).append( ".\n" );
-		res.append( " - Phone mobile » " ).append( this.phoneMobile ).append( ".\n" );
-		res.append( " - Phone home » " ).append( this.phoneHome ).append( ".\n" );
-
-		return res.toString();
+		return BaseDTO.toJsonStr( this );
 	}
 
 	@Override
