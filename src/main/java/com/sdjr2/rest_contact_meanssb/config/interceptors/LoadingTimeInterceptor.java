@@ -17,7 +17,7 @@ import org.springframework.web.servlet.ModelAndView;
  * @author Jacinto R^2
  * @version 1.0
  * @category Config
- * @upgrade 24/08/15
+ * @upgrade 24/08/17
  * @since 24/06/13
  */
 @Component
@@ -27,6 +27,10 @@ public class LoadingTimeInterceptor implements HandlerInterceptor {
 
 	@Override
 	public boolean preHandle ( HttpServletRequest request, HttpServletResponse response, Object handler ) {
+		if ( !( handler instanceof HandlerMethod ) ) {
+			return true;
+		}
+
 		HandlerMethod controller = ( ( HandlerMethod ) handler );
 		this.logger.info( request.getMethod() + " " + request.getRequestURI() );
 		this.logger.info( controller.getBean().getClass().getSimpleName(), controller.getMethod().getName(),
@@ -41,6 +45,10 @@ public class LoadingTimeInterceptor implements HandlerInterceptor {
 	@Override
 	public void postHandle ( HttpServletRequest request, HttpServletResponse response, Object handler,
 													 ModelAndView modelAndView ) {
+		if ( !( handler instanceof HandlerMethod ) ) {
+			return;
+		}
+
 		long startTime = ( Long ) request.getAttribute( "startTime" );
 		long endTime = System.currentTimeMillis();
 		long timeElapsed = endTime - startTime;

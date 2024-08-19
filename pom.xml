@@ -44,11 +44,13 @@
 
     <dependencies>
         <!-- Libraries SDJR2 -->
+            <!-- Library Commons -->
         <dependency>
             <groupId>com.sdjr2.sb</groupId>
             <artifactId>library-commons--sb</artifactId>
             <version>0.0.1-SNAPSHOT</version>
         </dependency>
+
         <!-- Spring Boot -->
             <!-- Spring Web -->
         <dependency>
@@ -164,8 +166,8 @@
         </dependency>
         <dependency>
             <groupId>org.springdoc</groupId>
-            <artifactId>springdoc-openapi-ui</artifactId>
-            <version>1.7.0</version>
+            <artifactId>springdoc-openapi-starter-webmvc-ui</artifactId>
+            <version>2.6.0</version>
         </dependency>
             <!-- Apache Commons & HTTP Client -->
         <dependency>

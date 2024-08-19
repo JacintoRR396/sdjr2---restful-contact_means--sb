@@ -34,7 +34,7 @@ import java.util.Objects;
  * @author Jacinto R^2
  * @version 1.0
  * @category Service
- * @upgrade 24/08/01
+ * @upgrade 24/08/17
  * @since 23/06/10
  */
 @Service
@@ -154,6 +154,7 @@ public class AddressServiceImpl implements AddressService {
 	@Override
 	@Transactional
 	public AddressDTO create ( AddressDTO addressDTO ) {
+		// Validation its id in the DTO through @AddressExistsById
 		this.checkNotExistsByUniqueAttrs( addressDTO.getId(), addressDTO.getStreet(), addressDTO.getNumber().toString(),
 				addressDTO.getLetter(), addressDTO.getPostalCode().toString() );
 
@@ -188,9 +189,10 @@ public class AddressServiceImpl implements AddressService {
 	public AddressDTO update ( Long id, AddressDTO addressDTO ) {
 		addressDTO.setId( id );
 
+		// Validation its id in the DTO through @AddressExistsById
+		AddressEntity entityDB = this.checkExistsById( addressDTO.getId() );
 		this.checkNotExistsByUniqueAttrs( addressDTO.getId(), addressDTO.getStreet(), addressDTO.getNumber().toString(),
 				addressDTO.getLetter(), addressDTO.getPostalCode().toString() );
-		AddressEntity entityDB = this.checkExistsById( addressDTO.getId() );
 
 		String role = this.getRoleFromRequest( SecurityContextHolder.getContext() );
 		AddressEntity entityReq = this.addressMapper.toEntity( addressDTO, role, entityDB );

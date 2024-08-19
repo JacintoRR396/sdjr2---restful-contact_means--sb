@@ -2,6 +2,7 @@ package com.sdjr2.rest_contact_meanssb.models.dto;
 
 import com.fasterxml.jackson.annotation.JsonInclude;
 import com.fasterxml.jackson.annotation.JsonProperty;
+import com.sdjr2.rest_contact_meanssb.models.validations.AddressExistsById;
 import com.sdjr2.sb.library_commons.models.dto.BaseDTO;
 import com.sdjr2.sb.library_commons.utils.UConstants;
 import jakarta.validation.constraints.*;
@@ -20,7 +21,7 @@ import java.util.Comparator;
  * @author Jacinto R^2
  * @version 1.0
  * @category DTO
- * @upgrade 24/08/16
+ * @upgrade 24/08/17
  * @since 23/06/11
  */
 @NoArgsConstructor
@@ -49,6 +50,7 @@ public class AddressDTO implements BaseDTO, Comparable<AddressDTO>, Serializable
 	/* VARIABLES */
 	@PositiveOrZero
 	@Digits(integer = 8, fraction = 0)
+	@AddressExistsById
 	private Long id;
 
 	@NotNull

@@ -43,8 +43,7 @@ public class SpringSecurityConfig {
 
 	private static final String[] AUTH_WHITE_LIST = {
 			"/h2-console/**",
-			"/v2/api-docs/**",
-			"/v3/api-docs/**",
+			"/api-docs/**",
 			"/swagger-ui/**",
 			"/swagger-resources/**",
 			"/console/**"
