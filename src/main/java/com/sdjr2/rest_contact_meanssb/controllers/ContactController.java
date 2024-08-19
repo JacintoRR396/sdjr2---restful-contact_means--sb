@@ -39,6 +39,7 @@ import java.util.List;
  * @upgrade 24/08/19
  * @since 24/08/12
  */
+@Tag(name = "Contact", description = "Contact management APIs")
 @RestController
 @RequestMapping("/contacts")
 @RequiredArgsConstructor
@@ -55,8 +56,8 @@ public class ContactController implements BaseController<ContactDTO> {
 	private final ContactService contactService;
 
 	@Operation(
-		summary = "Get all contacts from database",
-		description = "Get a list of contacts ordered by its id"
+			summary = "Get all contacts from database",
+			description = "Get a contacts list ordered by its id"
 	)
 	@ResponseStatus(HttpStatus.OK)
 	@GetMapping
@@ -67,7 +68,10 @@ public class ContactController implements BaseController<ContactDTO> {
 		return new ResponseEntity<>( res, HttpStatus.OK );
 	}
 
-	@Operation(summary = "Get all contacts from database with pagination (offset and limit)")
+	@Operation(
+			summary = "Get all contacts from database with pagination",
+			description = "Get a contacts page with pagination that can provide both offset and limit"
+	)
 	@ResponseStatus(HttpStatus.OK)
 	@GetMapping(value = "/pagination")
 	public ResponseEntity<Page<ContactDTO>> getAllWithPagination ( HttpServletRequest httpServletRequest,
@@ -79,7 +83,10 @@ public class ContactController implements BaseController<ContactDTO> {
 		return new ResponseEntity<>( res, HttpStatus.OK );
 	}
 
-	@Operation(summary = "Get all contacts from database with advanced search (offset, limit, sort and filters)")
+	@Operation(
+			summary = "Get all contacts from database with advanced search",
+			description = "Get a contacts page with advanced search that can provide offset, limit, sort and filters"
+	)
 	@ResponseStatus(HttpStatus.OK)
 	@GetMapping(value = "/search")
 	public ResponseEntity<Page<ContactDTO>> getAllWithSearch ( HttpServletRequest httpServletRequest,
@@ -96,12 +103,10 @@ public class ContactController implements BaseController<ContactDTO> {
 
 	@Operation(summary = "Get a contact by its id")
 	@ApiResponses(value = {
-		@ApiResponse(responseCode = "200", description = "Contact found by its id",
-			content = { @Content(mediaType = "application/json", schema = @Schema(implementation = ContactDTO.class)) }),
-		@ApiResponse(responseCode = "400", description = "Invalid id supplied",
-			content = { @Content(mediaType = "application/json", schema = @Schema(implementation = RespEntityErrorDTO.class)) }),
-		@ApiResponse(responseCode = "404", description = "Contact not found",
-			content = { @Content(mediaType = "application/json", schema = @Schema(implementation = RespEntityErrorDTO.class)) }) })
+			@ApiResponse(responseCode = "200", description = "Contact found by its id",
+					content = { @Content(mediaType = "application/json", schema = @Schema(implementation = ContactDTO.class)) }),
+			@ApiResponse(responseCode = "404", description = "Contact not found",
+					content = { @Content(mediaType = "application/json", schema = @Schema(implementation = RespEntityErrorDTO.class)) }) })
 	@GetMapping(value = "/{contactId}")
 	public ResponseEntity<ContactDTO> getOneById ( @PathVariable("contactId") Long id ) {
 		ContactDTO res = this.contactService.getOneById( id );
@@ -110,7 +115,10 @@ public class ContactController implements BaseController<ContactDTO> {
 		return new ResponseEntity<>( res, HttpStatus.OK );
 	}
 
-	@Operation(summary = "Create a contact")
+	@Operation(
+			summary = "Create a contact",
+			description = "Create a contact where its email attribute must be unique"
+	)
 	@ResponseStatus(HttpStatus.CREATED)
 	@PostMapping
 	public ResponseEntity<ContactDTO> create ( @Valid @RequestBody ContactDTO contactDTO, BindingResult resValidation ) {
@@ -123,7 +131,10 @@ public class ContactController implements BaseController<ContactDTO> {
 		return new ResponseEntity<>( res, HttpStatus.CREATED );
 	}
 
-	@Operation(summary = "Update a contact by its id")
+	@Operation(
+			summary = "Update a contact by its id",
+			description = "Update a contact by its id, its email attribute must be unique"
+	)
 	@ResponseStatus(HttpStatus.OK)
 	@PutMapping(value = "/{contactId}")
 	public ResponseEntity<ContactDTO> update ( @PathVariable("contactId") Long id,

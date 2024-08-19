@@ -22,7 +22,7 @@ import java.io.Serializable;
  * @author Jacinto R^2
  * @version 1.0
  * @category Entity (ORM)
- * @upgrade 24/08/12
+ * @upgrade 24/08/19
  * @since 24/08/12
  */
 @Entity
@@ -53,7 +53,7 @@ public class ContactEntity implements BaseEntity, Serializable {
 	/**
 	 * email attribute
 	 */
-	@Column(name = ATTR_EMAIL, nullable = false, unique = true, length = 40)
+	@Column(name = ATTR_EMAIL, unique = true, nullable = false, length = 40)
 	private String email;
 
 	/**
