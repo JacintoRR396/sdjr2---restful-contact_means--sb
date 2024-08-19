@@ -23,7 +23,8 @@ import org.springframework.core.io.Resource;
  */
 @PropertySources({
 		@PropertySource("classpath:/properties/global.properties"),
-		@PropertySource("classpath:/properties/messages.properties")
+		@PropertySource("classpath:/properties/messages.properties"),
+		@PropertySource("classpath:/properties/openapi.properties")
 })
 @Configuration
 public class AppConfig {

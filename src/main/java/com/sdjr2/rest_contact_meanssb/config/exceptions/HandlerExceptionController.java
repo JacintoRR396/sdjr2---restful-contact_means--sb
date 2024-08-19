@@ -12,6 +12,7 @@ import org.slf4j.LoggerFactory;
 import org.springframework.beans.ConversionNotSupportedException;
 import org.springframework.beans.TypeMismatchException;
 import org.springframework.boot.context.properties.bind.BindException;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.http.converter.HttpMessageNotReadableException;
 import org.springframework.http.converter.HttpMessageNotWritableException;
@@ -23,6 +24,7 @@ import org.springframework.web.bind.MissingPathVariableException;
 import org.springframework.web.bind.MissingServletRequestParameterException;
 import org.springframework.web.bind.ServletRequestBindingException;
 import org.springframework.web.bind.annotation.ExceptionHandler;
+import org.springframework.web.bind.annotation.ResponseStatus;
 import org.springframework.web.bind.annotation.RestControllerAdvice;
 import org.springframework.web.context.request.async.AsyncRequestTimeoutException;
 import org.springframework.web.multipart.support.MissingServletRequestPartException;
@@ -40,7 +42,7 @@ import java.util.Objects;
  * @author Jacinto R^2
  * @version 1.0
  * @category Config
- * @upgrade 24/08/11
+ * @upgrade 24/08/19
  * @since 24/06/14
  */
 @RestControllerAdvice
@@ -69,6 +71,7 @@ public class HandlerExceptionController {
 			// HandlerMethodValidationException
 			BindException.class
 	})
+	@ResponseStatus(HttpStatus.BAD_REQUEST)
 	public ResponseEntity<RespEntityErrorDTO> handleEx400 ( Exception ex ) {
 		return this.createRespEntityError( ex, AppExceptionCodeEnum.STATUS_40000, null );
 	}
@@ -77,6 +80,7 @@ public class HandlerExceptionController {
 			NoHandlerFoundException.class,
 			NoResourceFoundException.class
 	})
+	@ResponseStatus(HttpStatus.NOT_FOUND)
 	public ResponseEntity<RespEntityErrorDTO> handleEx404 ( Exception ex ) {
 		return this.createRespEntityError( ex, AppExceptionCodeEnum.STATUS_40400, null );
 	}
@@ -84,6 +88,7 @@ public class HandlerExceptionController {
 	@ExceptionHandler({
 			HttpRequestMethodNotSupportedException.class
 	})
+	@ResponseStatus(HttpStatus.METHOD_NOT_ALLOWED)
 	public ResponseEntity<RespEntityErrorDTO> handleEx405 ( Exception ex ) {
 		return this.createRespEntityError( ex, AppExceptionCodeEnum.STATUS_40500, null );
 	}
@@ -91,6 +96,7 @@ public class HandlerExceptionController {
 	@ExceptionHandler({
 			HttpMediaTypeNotAcceptableException.class
 	})
+	@ResponseStatus(HttpStatus.NOT_ACCEPTABLE)
 	public ResponseEntity<RespEntityErrorDTO> handleEx406 ( Exception ex ) {
 		return this.createRespEntityError( ex, AppExceptionCodeEnum.STATUS_40600, null );
 	}
@@ -98,6 +104,7 @@ public class HandlerExceptionController {
 	@ExceptionHandler({
 			HttpMediaTypeNotSupportedException.class
 	})
+	@ResponseStatus(HttpStatus.UNSUPPORTED_MEDIA_TYPE)
 	public ResponseEntity<RespEntityErrorDTO> handleEx415 ( Exception ex ) {
 		return this.createRespEntityError( ex, AppExceptionCodeEnum.STATUS_41500, null );
 	}
@@ -108,6 +115,7 @@ public class HandlerExceptionController {
 			ConversionNotSupportedException.class,
 			HttpMessageNotWritableException.class
 	})
+	@ResponseStatus(HttpStatus.INTERNAL_SERVER_ERROR)
 	public ResponseEntity<RespEntityErrorDTO> handleEx500 ( Exception ex ) {
 		return this.createRespEntityError( ex, AppExceptionCodeEnum.STATUS_50000, null );
 	}
@@ -115,6 +123,7 @@ public class HandlerExceptionController {
 	@ExceptionHandler({
 			AsyncRequestTimeoutException.class
 	})
+	@ResponseStatus(HttpStatus.SERVICE_UNAVAILABLE)
 	public ResponseEntity<RespEntityErrorDTO> handleEx503 ( Exception ex ) {
 		return this.createRespEntityError( ex, AppExceptionCodeEnum.STATUS_50300, null );
 	}

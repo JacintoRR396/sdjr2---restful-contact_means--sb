@@ -1,6 +1,7 @@
 package com.sdjr2.rest_contact_meanssb;
 
 import com.sdjr2.rest_contact_meanssb.config.properties.GlobalProperties;
+import com.sdjr2.rest_contact_meanssb.config.properties.OpenApiProperties;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.boot.context.properties.EnableConfigurationProperties;
@@ -9,7 +10,7 @@ import org.springframework.data.web.config.EnableSpringDataWebSupport;
 import static org.springframework.data.web.config.EnableSpringDataWebSupport.PageSerializationMode.VIA_DTO;
 
 @SpringBootApplication
-@EnableConfigurationProperties({ GlobalProperties.class })
+@EnableConfigurationProperties({ GlobalProperties.class, OpenApiProperties.class })
 @EnableSpringDataWebSupport(pageSerializationMode = VIA_DTO)
 public class MicroContactMeansApplication {
 

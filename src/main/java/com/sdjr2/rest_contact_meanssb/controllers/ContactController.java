@@ -5,7 +5,14 @@ import com.sdjr2.rest_contact_meanssb.services.ContactService;
 import com.sdjr2.sb.library_commons.config.BaseHandlerLogger;
 import com.sdjr2.sb.library_commons.controllers.BaseController;
 import com.sdjr2.sb.library_commons.controllers.BaseControllerHelper;
+import com.sdjr2.sb.library_commons.models.dto.errors.RespEntityErrorDTO;
 import com.sdjr2.sb.library_commons.models.dto.search.SearchBodyDTO;
+import io.swagger.v3.oas.annotations.Operation;
+import io.swagger.v3.oas.annotations.media.Content;
+import io.swagger.v3.oas.annotations.media.Schema;
+import io.swagger.v3.oas.annotations.responses.ApiResponse;
+import io.swagger.v3.oas.annotations.responses.ApiResponses;
+import io.swagger.v3.oas.annotations.tags.Tag;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
@@ -29,7 +36,7 @@ import java.util.List;
  * @author Jacinto R^2
  * @version 1.0
  * @category Controller
- * @upgrade 24/08/16
+ * @upgrade 24/08/19
  * @since 24/08/12
  */
 @RestController
@@ -47,6 +54,11 @@ public class ContactController implements BaseController<ContactDTO> {
 	 */
 	private final ContactService contactService;
 
+	@Operation(
+		summary = "Get all contacts from database",
+		description = "Get a list of contacts ordered by its id"
+	)
+	@ResponseStatus(HttpStatus.OK)
 	@GetMapping
 	public ResponseEntity<List<ContactDTO>> getAll ( HttpServletRequest httpServletRequest ) {
 		List<ContactDTO> res = this.contactService.getAll();
@@ -55,6 +67,8 @@ public class ContactController implements BaseController<ContactDTO> {
 		return new ResponseEntity<>( res, HttpStatus.OK );
 	}
 
+	@Operation(summary = "Get all contacts from database with pagination (offset and limit)")
+	@ResponseStatus(HttpStatus.OK)
 	@GetMapping(value = "/pagination")
 	public ResponseEntity<Page<ContactDTO>> getAllWithPagination ( HttpServletRequest httpServletRequest,
 																																 @RequestParam(defaultValue = "0", required = false) Integer offset,
@@ -65,6 +79,8 @@ public class ContactController implements BaseController<ContactDTO> {
 		return new ResponseEntity<>( res, HttpStatus.OK );
 	}
 
+	@Operation(summary = "Get all contacts from database with advanced search (offset, limit, sort and filters)")
+	@ResponseStatus(HttpStatus.OK)
 	@GetMapping(value = "/search")
 	public ResponseEntity<Page<ContactDTO>> getAllWithSearch ( HttpServletRequest httpServletRequest,
 																														 @Valid @RequestBody SearchBodyDTO searchBodyDTO,
@@ -78,6 +94,14 @@ public class ContactController implements BaseController<ContactDTO> {
 		return new ResponseEntity<>( res, HttpStatus.OK );
 	}
 
+	@Operation(summary = "Get a contact by its id")
+	@ApiResponses(value = {
+		@ApiResponse(responseCode = "200", description = "Contact found by its id",
+			content = { @Content(mediaType = "application/json", schema = @Schema(implementation = ContactDTO.class)) }),
+		@ApiResponse(responseCode = "400", description = "Invalid id supplied",
+			content = { @Content(mediaType = "application/json", schema = @Schema(implementation = RespEntityErrorDTO.class)) }),
+		@ApiResponse(responseCode = "404", description = "Contact not found",
+			content = { @Content(mediaType = "application/json", schema = @Schema(implementation = RespEntityErrorDTO.class)) }) })
 	@GetMapping(value = "/{contactId}")
 	public ResponseEntity<ContactDTO> getOneById ( @PathVariable("contactId") Long id ) {
 		ContactDTO res = this.contactService.getOneById( id );
@@ -86,6 +110,8 @@ public class ContactController implements BaseController<ContactDTO> {
 		return new ResponseEntity<>( res, HttpStatus.OK );
 	}
 
+	@Operation(summary = "Create a contact")
+	@ResponseStatus(HttpStatus.CREATED)
 	@PostMapping
 	public ResponseEntity<ContactDTO> create ( @Valid @RequestBody ContactDTO contactDTO, BindingResult resValidation ) {
 		this.logger.infoRequest( BaseControllerHelper.formatLogBodyReq( contactDTO.toString() ) );
@@ -97,6 +123,8 @@ public class ContactController implements BaseController<ContactDTO> {
 		return new ResponseEntity<>( res, HttpStatus.CREATED );
 	}
 
+	@Operation(summary = "Update a contact by its id")
+	@ResponseStatus(HttpStatus.OK)
 	@PutMapping(value = "/{contactId}")
 	public ResponseEntity<ContactDTO> update ( @PathVariable("contactId") Long id,
 																						 @Valid @RequestBody ContactDTO contactDTO, BindingResult resValidation ) {
@@ -109,6 +137,8 @@ public class ContactController implements BaseController<ContactDTO> {
 		return new ResponseEntity<>( res, HttpStatus.OK );
 	}
 
+	@Operation(summary = "Delete a contact by its id")
+	@ResponseStatus(HttpStatus.NO_CONTENT)
 	@DeleteMapping(value = "/{contactId}")
 	public ResponseEntity<Void> delete ( @PathVariable("contactId") Long id ) {
 		this.contactService.delete( id );

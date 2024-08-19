@@ -6,6 +6,8 @@ import com.sdjr2.sb.library_commons.config.BaseHandlerLogger;
 import com.sdjr2.sb.library_commons.controllers.BaseController;
 import com.sdjr2.sb.library_commons.controllers.BaseControllerHelper;
 import com.sdjr2.sb.library_commons.models.dto.search.SearchBodyDTO;
+import io.swagger.v3.oas.annotations.Operation;
+import io.swagger.v3.oas.annotations.tags.Tag;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
@@ -29,7 +31,7 @@ import java.util.List;
  * @author Jacinto R^2
  * @version 1.0
  * @category Controller
- * @upgrade 24/08/16
+ * @upgrade 24/08/19
  * @since 23/06/10
  */
 @RestController
@@ -47,6 +49,11 @@ public class AddressController implements BaseController<AddressDTO> {
 	 */
 	private final AddressService addressService;
 
+	@Operation(
+		summary = "Get all addresses from database",
+		description = "Get a list of addresses ordered by its id"
+	)
+	@ResponseStatus(HttpStatus.OK)
 	@GetMapping
 	public ResponseEntity<List<AddressDTO>> getAll ( HttpServletRequest httpServletRequest ) {
 		List<AddressDTO> res = this.addressService.getAll();
